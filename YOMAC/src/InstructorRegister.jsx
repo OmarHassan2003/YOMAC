@@ -3,25 +3,55 @@ import { useState } from "react";
 
 export default function InstructorRegister() {
   const [email, setEmail] = useState("");
-  const [userName, setuserName] = useState("");
-  const [password, setpassword] = useState("");
-  const [firstName, setfirstName] = useState("");
-  const [lastName, setlastName] = useState("");
-  const [bio, setbio] = useState("");
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [Bio, setBio] = useState("");
   const [socialMedia, setSocialMedia] = useState([]);
+  const [currSocial, setCurrSocial] = useState("");
+
   const handleRegister = (e) => {
     e.preventDefault();
+
+    const user = {
+      name: `${firstName} ${lastName}`,
+      email,
+      username,
+      password,
+      Bio,
+      socialMedia,
+    };
+
+    console.log(user);
+
+    fetch("http://localhost:3500/api/auth/instrutor_sign_up", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        body: JSON.stringify(user),
+      },
+    }).then(() => console.log("new instructor added"));
   };
+
+  const addSocialMedia = () => {
+    if (
+      currSocial.trim !== "" &&
+      currSocial.includes("@") &&
+      currSocial.slice(currSocial.indexOf("@") + 1) !== ""
+    ) {
+      setSocialMedia([...socialMedia, currSocial]);
+      setCurrSocial("");
+    }
+  };
+
+  const removeSocialMedia = (index) => {
+    setSocialMedia(socialMedia.filter((_, i) => i !== index));
+  };
+
   return (
     <div className="login-container">
-      <div
-        style={{
-          flex: 1,
-          backgroundColor: "rgb(73, 187, 189)",
-          borderRadius: "40px",
-          padding: "20px 40px 20px 40px",
-        }}
-      >
+      <div className="login-register-description">
         <h1>Teach Online with ease</h1>
         <h2>
           Teach with ease on YOMAC! Our platform empowers instructors to create
@@ -37,7 +67,7 @@ export default function InstructorRegister() {
           type="text"
           required
           value={firstName}
-          onChange={(e) => setfirstName(e.target.value)}
+          onChange={(e) => setFirstName(e.target.value)}
           placeholder="Enter your first name"
           style={{ marginBottom: "30px" }}
         />
@@ -47,7 +77,7 @@ export default function InstructorRegister() {
           type="text"
           required
           value={lastName}
-          onChange={(e) => setlastName(e.target.value)}
+          onChange={(e) => setLastName(e.target.value)}
           placeholder="Enter your last name"
           style={{ marginBottom: "30px" }}
         />
@@ -66,8 +96,8 @@ export default function InstructorRegister() {
           className="input-textbox"
           type="text"
           required
-          value={userName}
-          onChange={(e) => setuserName(e.target.value)}
+          value={username}
+          onChange={(e) => setUserName(e.target.value)}
           placeholder="Enter your user name"
           style={{ marginBottom: "30px" }}
         />
@@ -77,7 +107,7 @@ export default function InstructorRegister() {
           type="text"
           required
           value={password}
-          onChange={(e) => setpassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="Enter your password"
           style={{ marginBottom: "10px" }}
         />
@@ -86,8 +116,8 @@ export default function InstructorRegister() {
           className="input-textbox"
           type="text"
           required
-          value={bio}
-          onChange={(e) => setbio(e.target.value)}
+          value={Bio}
+          onChange={(e) => setBio(e.target.value)}
           placeholder="Enter your bio"
           style={{ marginBottom: "30px" }}
         />
@@ -95,12 +125,32 @@ export default function InstructorRegister() {
         <input
           className="input-textbox"
           type="text"
-          required
-          value={Soc}
-          onChange={(e) => setbio(e.target.value)}
-          placeholder="Enter your bio"
-          style={{ marginBottom: "30px" }}
+          value={currSocial}
+          onChange={(e) => setCurrSocial(e.target.value)}
+          placeholder="Enter a social media account"
+          style={{ marginBottom: "10px" }}
         />
+        <button
+          className="add-socialmedia-button"
+          type="button"
+          onClick={addSocialMedia}
+        >
+          Add Account
+        </button>
+        <ul>
+          {socialMedia.map((account, index) => (
+            <li key={index} style={{ marginBottom: "10px" }}>
+              {account}{" "}
+              <button
+                className="remove-socialmedia"
+                type="button"
+                onClick={() => removeSocialMedia(index)}
+              >
+                Remove
+              </button>
+            </li>
+          ))}
+        </ul>
         <div
           style={{
             display: "flex",
@@ -108,13 +158,7 @@ export default function InstructorRegister() {
             marginBottom: "30px",
           }}
         >
-          <button
-            className="login-register-button"
-            style={{
-              display: "inline-block",
-              marginTop: "20px",
-            }}
-          >
+          <button className="login-register-button" type="submit">
             Register
           </button>
         </div>

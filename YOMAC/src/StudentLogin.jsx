@@ -1,9 +1,23 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function StudentLogin() {
+  const [username, setUsername] = useState("");
+  const [password, setpassword] = useState("");
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+
+    const user = {
+      username,
+      password,
+    };
+
+    console.log(user);
+  };
   return (
     <div className="login-container">
-      <div style={{ flex: 1 }}>
+      <div className="login-register-description">
         <h1>Studying Online is now much easier</h1>
         <h2>
           YOMAC is an interesting platform that will teach you in a much more
@@ -11,11 +25,13 @@ export default function StudentLogin() {
           categories
         </h2>
       </div>
-      <form style={{ paddingLeft: "100px" }}>
+      <form style={{ paddingLeft: "100px" }} onSubmit={handleRegister}>
         <h3 style={{ marginBottom: "15px" }}>Username</h3>
         <input
           className="input-textbox"
           type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           placeholder="Enter your user name"
           style={{ marginBottom: "30px" }}
         />
@@ -23,6 +39,8 @@ export default function StudentLogin() {
         <input
           className="input-textbox"
           type="text"
+          value={password}
+          onChange={(e) => setpassword(e.target.value)}
           placeholder="Enter your password"
           style={{ marginBottom: "10px" }}
         />
@@ -40,13 +58,7 @@ export default function StudentLogin() {
             marginBottom: "30px",
           }}
         >
-          <button
-            className="login-register-button"
-            style={{
-              display: "inline-block",
-              marginTop: "20px",
-            }}
-          >
+          <button className="login-register-button" type="submit">
             Login
           </button>
         </div>

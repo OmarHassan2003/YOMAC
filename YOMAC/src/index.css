@@ -39,8 +39,8 @@
   display: flex;
   flex: 1;
   justify-content: space-around;
-  align-items: center; /* Center the content vertically */
-  min-height: 400px; /* Minimum height for vertical centering */
+  align-items: center;
+  min-height: 400px;
 }
 
 .usertype a {
@@ -52,6 +52,8 @@
   border-radius: 30px;
   padding: 10px 40px;
   cursor: pointer;
+  background-color: rgb(73, 187, 189);
+  border: none;
 }
 
 .input-textbox {
@@ -59,23 +61,60 @@
   width: 500px;
   height: 50px;
   border-style: solid;
-  border-color: grey;
+  border-color: rgb(73, 187, 189);
   padding-left: 20px;
+  font-size: 15px;
+  color: grey;
+  outline: none;
 }
 
 .login-register-button {
   border-radius: 20px;
   padding: 10px 70px;
-  border-style: solid;
-  border-color: grey;
   cursor: pointer;
+  display: inline-block;
+  margin-top: 20px;
+  background-color: rgb(73, 187, 189);
+  border: none;
 }
 
 .switch-login {
   border-radius: 20px;
   padding: 10px 50px;
-  border-style: solid;
-  border-color: grey;
   margin-top: 10px;
   cursor: pointer;
+  background-color: rgb(73, 187, 189);
+  border: none;
+}
+
+.remove-socialmedia {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: "5px";
+}
+
+.add-socialmedia-button {
+  display: block;
+  margin-bottom: 20px;
+  padding: 7px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(73, 187, 189);
+}
+
+.login-register-description {
+  flex: 1;
+  background-color: rgba(73, 187, 189, 0.6);
+  border-radius: 40px;
+  padding: 20px 40px 20px 40px;
+}
+
+.login-register-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
