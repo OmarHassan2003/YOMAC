@@ -8,6 +8,7 @@ import StudentLogin from "./StudentLogin";
 import InstructorLogin from "./InstructorLogin";
 import StudentRegister from "./StudentRegister";
 import InstructorRegister from "./InstructorRegister";
+import Course from "./Course";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/instructorlogin" element={<InstructorLogin />} />
         <Route path="studentregister" element={<StudentRegister />} />
         <Route path="instructorregister" element={<InstructorRegister />} />
+        <Route path="/course" element={<Course />} />
       </Routes>
     </div>
   );
