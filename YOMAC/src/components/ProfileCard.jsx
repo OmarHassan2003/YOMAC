@@ -1,8 +1,9 @@
 import React from "react";
+import messi from "../assets/3mk.jpg"
 
 const PorfileCard = () => {
   const obj = {
-    img: "images/3mk.jpg",
+    img: messi,
     name: "Farag beh",
     about:
       "Be the last one out to get this dough? No way Love one of you bucket headed hoes? No way Hit the streets, then we break the code? No way Hit the brakes when they on patrol? No way ",

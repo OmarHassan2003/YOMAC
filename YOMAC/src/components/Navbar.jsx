@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
+import ronaldo from "../assets/ronaldo.webp"
 
 export default function Navbar() {
   return (
     <nav className="navbar">
-      <img src="images/8198-1694609670.webp" />
+      <img src={ronaldo} />
       <div>
         <Link to="/">Home</Link>
         <Link to="/course">Courses</Link>

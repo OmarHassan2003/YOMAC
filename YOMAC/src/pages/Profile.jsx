@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import PorfileCard from "./ProfileCard";
-import ProfileSettings from "./ProfileSettings";
+import PorfileCard from "../components/ProfileCard";
+import ProfileSettings from "../pages/ProfileSettings";
 
 const Profile = () => {
   return (
