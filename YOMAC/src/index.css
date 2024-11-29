@@ -118,3 +118,12 @@
   flex-direction: column;
   align-items: center;
 }
+
+.login-type-label {
+  margin-bottom: 20px;
+  background: linear-gradient(to right, rgb(73, 187, 189), rgb(50, 199, 102));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
