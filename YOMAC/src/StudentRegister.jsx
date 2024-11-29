@@ -3,19 +3,21 @@ import { useState } from "react";
 
 export default function StudentRegister() {
   const [email, setEmail] = useState("");
-  const [userName, setuserName] = useState("");
-  const [password, setpassword] = useState("");
-  const [firstName, setfirstName] = useState("");
-  const [lastName, setlastName] = useState("");
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const handleRegister = (e) => {
     e.preventDefault();
 
     const user = {
       name: `${firstName} ${lastName}`,
       email,
-      userName,
+      username,
       password,
     };
+
+    console.log(user);
 
     fetch("http://localhost:3500/api/auth/student_sign_up", {
       method: "POST",
@@ -23,19 +25,12 @@ export default function StudentRegister() {
         "Content-Type": "application/json",
         body: JSON.stringify(user),
       },
-    }).then(() => console.log("new blog added"));
+    }).then(() => console.log("new student added"));
   };
 
   return (
     <div className="login-container">
-      <div
-        style={{
-          flex: 1,
-          backgroundColor: "rgb(73, 187, 189)",
-          borderRadius: "40px",
-          padding: "20px 40px 20px 40px",
-        }}
-      >
+      <div className="login-register-description">
         <h1>Studying Online is now much easier</h1>
         <h2>
           YOMAC is an interesting platform that will teach you in a much more
@@ -50,7 +45,7 @@ export default function StudentRegister() {
           type="text"
           required
           value={firstName}
-          onChange={(e) => setfirstName(e.target.value)}
+          onChange={(e) => setFirstName(e.target.value)}
           placeholder="Enter your first name"
           style={{ marginBottom: "30px" }}
         />
@@ -60,7 +55,7 @@ export default function StudentRegister() {
           type="text"
           required
           value={lastName}
-          onChange={(e) => setlastName(e.target.value)}
+          onChange={(e) => setLastName(e.target.value)}
           placeholder="Enter your last name"
           style={{ marginBottom: "30px" }}
         />
@@ -80,8 +75,8 @@ export default function StudentRegister() {
           className="input-textbox"
           type="text"
           required
-          value={userName}
-          onChange={(e) => setuserName(e.target.value)}
+          value={username}
+          onChange={(e) => setUserName(e.target.value)}
           placeholder="Enter your user name"
           style={{ marginBottom: "30px" }}
         />
@@ -91,7 +86,7 @@ export default function StudentRegister() {
           type="text"
           required
           value={password}
-          onChange={(e) => setpassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="Enter your password"
           style={{ marginBottom: "10px" }}
         />
@@ -102,14 +97,7 @@ export default function StudentRegister() {
             marginBottom: "30px",
           }}
         >
-          <button
-            className="login-register-button"
-            style={{
-              display: "inline-block",
-              marginTop: "20px",
-            }}
-            type="sumbit"
-          >
+          <button className="login-register-button" type="submit">
             Register
           </button>
         </div>
