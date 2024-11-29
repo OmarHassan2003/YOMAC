@@ -127,3 +127,153 @@
   color: transparent;
   -webkit-text-fill-color: transparent;
 }
+
+.login-type-label {
+  margin-bottom: 20px;
+  background: linear-gradient(to right, rgb(73, 187, 189), rgb(50, 199, 102));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.course-page {
+  width: 100%;
+  max-width: 1350px;
+  margin: 20px auto;
+  background: #fff;
+  padding: 20px;
+  display: flex;
+  gap :20px;
+}
+
+.video-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.course-video {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.course-body{
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px 15px;
+}
+.video-section h1 {
+  font-size: 24px;
+  margin: 10px 0;
+  color: #333;
+}
+
+.video-section .author {
+  font-size: 14px;
+  color: #666;
+}
+
+
+.description {
+  margin-bottom: 20px;
+}
+
+.description h2,
+.description h3 {
+  font-size: 18px;
+  color: #333;
+}
+
+.description ul {
+  list-style: disc;
+  margin-left: 20px;
+}
+
+.content-list {
+  width: 40%;
+  max-width: 1200px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.content-list h2 {
+  font-size: 18px;
+  color: #333;
+}
+
+.modules {
+  margin-top: 10px;
+}
+
+.module {
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.module-header {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.module-header h3 {
+  font-size: 16px;
+  color: #333;
+}
+
+.lessons {
+  padding: 10px 0;
+  border-top: 1px solid #ddd;
+  margin-top: 10px;
+}
+
+.lesson {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.course-navbar {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #ddd;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #666;
+}
+
+.tab:hover {
+  color: #333;
+}
+
+.tab.active {
+  color: #333;
+  font-weight: bold;
+  border-bottom: 3px solid #00c9a7; 
+}
+
+.tab-content {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #555;
+}
+
+.hidden{
+  display: none;
+}
