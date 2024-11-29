@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  font-family: "Quicksand";
+  color: #333;
+}
+
+.login-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px 150px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 100px 40px 100px;
+}
+
+.navbar img {
+  border-radius: 40px;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.navbar a {
+  margin-left: 16px;
+  text-decoration: none;
+  padding: 6px;
+}
+
+.remember-input {
+  display: block;
+}
+
+.usertype {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+  align-items: center; /* Center the content vertically */
+  min-height: 400px; /* Minimum height for vertical centering */
+}
+
+.usertype a {
+  text-decoration: none;
+  color: black;
+}
+
+.usertype button {
+  border-radius: 30px;
+  padding: 10px 40px;
+  cursor: pointer;
+}
+
+.input-textbox {
+  border-radius: 30px;
+  width: 500px;
+  height: 50px;
+  border-style: solid;
+  border-color: grey;
+  padding-left: 20px;
+}
+
+.login-register-button {
+  border-radius: 20px;
+  padding: 10px 70px;
+  border-style: solid;
+  border-color: grey;
+  cursor: pointer;
+}
+
+.switch-login {
+  border-radius: 20px;
+  padding: 10px 50px;
+  border-style: solid;
+  border-color: grey;
+  margin-top: 10px;
+  cursor: pointer;
+}
