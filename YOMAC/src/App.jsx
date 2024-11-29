@@ -9,6 +9,7 @@ import InstructorLogin from "./InstructorLogin";
 import StudentRegister from "./StudentRegister";
 import InstructorRegister from "./InstructorRegister";
 import Course from "./Course";
+import Profile from "./Profile";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="studentregister" element={<StudentRegister />} />
         <Route path="instructorregister" element={<InstructorRegister />} />
         <Route path="/course" element={<Course />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </div>
   );
