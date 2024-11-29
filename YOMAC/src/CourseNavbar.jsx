@@ -65,7 +65,7 @@ const Navbar = ({ onTabChange }) => {
         </div>
       )}
       {activeTab === "q&a" && (
-        <div className="q&a">
+        <div className="qna">
           {messages.map((message) => (
             <div key={message.id} className="message">
               <p>{message.question}</p>
