@@ -10,8 +10,12 @@ import Register from "./pages/Register";
 import { Routes, Route } from "react-router-dom";
 import StudentLogin from "./pages/StudentLogin";
 import InstructorLogin from "./pages/InstructorLogin";
+import { useDispatch } from "react-redux";
+import { StudentLoginAPI } from "./RTK/Slices/AuthorizationSlice";
 
 function App() {
+  const dispatch = useDispatch();
+  dispatch(StudentLoginAPI());
   return (
     <div>
       <Navbar />
