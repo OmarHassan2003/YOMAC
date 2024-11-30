@@ -31,6 +31,9 @@ const AuthorizationSlice = createSlice({
     },
     extraReducers: builder => 
         builder
+            .addCase(StudentLoginAPI.pending, (state, action) => {
+              // for loading  
+            })
             .addCase(StudentLoginAPI.fulfilled, (state, action) => {
                 // state.name = action.payload;
             })
