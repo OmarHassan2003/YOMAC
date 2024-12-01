@@ -4,8 +4,7 @@
   justify-content: space-between;
   height: 100vh;
   background-color: rgb(73, 187, 189);
-  border-bottom-left-radius: 150px;
-  border-bottom-right-radius: 150px;
+  border-radius: 0 0 40% 40%;
   padding: 50px 100px;
   position: relative;
   z-index: -1;

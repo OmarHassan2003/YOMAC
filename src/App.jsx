@@ -17,7 +17,7 @@ function App() {
   const dispatch = useDispatch();
   dispatch(StudentLoginAPI());
   return (
-    <div className="main-container">
+    <div>
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
