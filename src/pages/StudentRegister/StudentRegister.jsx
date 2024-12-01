@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import "./StudentRegister.css";
 
 export default function StudentRegister() {
   const [email, setEmail] = useState("");

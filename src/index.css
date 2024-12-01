@@ -1,144 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 * {
   margin: 0;
   font-family: "Quicksand";
   color: #333;
-}
-
-.login-container {
-  display: flex;
-  justify-content: space-between;
-  padding: 40px 150px;
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 100px 40px 100px;
-}
-
-.navbar img {
-  border-radius: 40px;
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-}
-
-.navbar a {
-  margin-left: 16px;
-  text-decoration: none;
-  padding: 6px;
-}
-
-.remember-input {
-  display: block;
-}
-
-.usertype {
-  display: flex;
-  flex: 1;
-  justify-content: space-around;
-  align-items: center;
-  min-height: 400px;
-}
-
-.usertype a {
-  text-decoration: none;
-  color: black;
-}
-
-.usertype button {
-  border-radius: 30px;
-  padding: 10px 40px;
-  cursor: pointer;
-  background-color: rgb(73, 187, 189);
-  border: none;
-}
-
-.input-textbox {
-  border-radius: 30px;
-  width: 500px;
-  height: 50px;
-  border-style: solid;
-  border-color: rgb(73, 187, 189);
-  padding-left: 20px;
-  font-size: 15px;
-  color: grey;
-  outline: none;
-}
-
-.login-register-button {
-  border-radius: 20px;
-  padding: 10px 70px;
-  cursor: pointer;
-  display: inline-block;
-  margin-top: 20px;
-  background-color: rgb(73, 187, 189);
-  border: none;
-}
-
-.switch-login {
-  border-radius: 20px;
-  padding: 10px 50px;
-  margin-top: 10px;
-  cursor: pointer;
-  background-color: rgb(73, 187, 189);
-  border: none;
-}
-
-.remove-socialmedia {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 5px;
-  cursor: pointer;
-  border-radius: "5px";
-}
-
-.add-socialmedia-button {
-  display: block;
-  margin-bottom: 20px;
-  padding: 7px;
-  cursor: pointer;
-  border-radius: 5px;
-  border: none;
-  background-color: rgb(73, 187, 189);
-}
-
-.login-register-description {
-  flex: 1;
-  background-color: rgba(73, 187, 189, 0.6);
-  border-radius: 40px;
-  padding: 20px 40px 20px 40px;
-}
-
-.login-register-link {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.login-type-label {
-  margin-bottom: 20px;
-  background: linear-gradient(to right, rgb(73, 187, 189), rgb(50, 199, 102));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-}
-
-.login-type-label {
-  margin-bottom: 20px;
-  background: linear-gradient(to right, rgb(73, 187, 189), rgb(50, 199, 102));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
+  box-sizing: border-box;
+  padding: 0;
 }
 
 .course-page {
@@ -148,7 +19,7 @@
   background: #fff;
   padding: 20px;
   display: flex;
-  justify-content:center;
+  justify-content: center;
   gap: 20px;
 }
 
@@ -159,7 +30,8 @@
 }
 
 .course-video {
-  width: 100%;;
+  width: 100%;
+  height: 450px;
   border-radius: 10px;
   margin-bottom: 20px;
 }

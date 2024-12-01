@@ -1,15 +1,15 @@
 import "./App.css";
-import StudentRegister from "./pages/StudentRegister";
-import InstructorRegister from "./pages/InstructorRegister";
+import StudentRegister from "./pages/StudentRegister/StudentRegister.jsx";
+import InstructorRegister from "./pages/InstructorRegister/InstructorRegister.jsx";
 import Course from "./components/Course";
 import Profile from "./pages/Profile";
-import Navbar from "./components/Navbar";
-import HomePage from "./pages/Homepage";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Navbar from "./components/Navbar/Navbar.jsx";
+import HomePage from "./pages/Homepage/Homepage.jsx";
+import Login from "./pages/Login/Login.jsx";
+import Register from "./pages/Register/Register.jsx";
 import { Routes, Route } from "react-router-dom";
-import StudentLogin from "./pages/StudentLogin";
-import InstructorLogin from "./pages/InstructorLogin";
+import StudentLogin from "./pages/StudentLogin/StudentLogin.jsx";
+import InstructorLogin from "./pages/InstructorLogin/InstructorLogin.jsx";
 import { useDispatch } from "react-redux";
 import { StudentLoginAPI } from "./RTK/Slices/AuthorizationSlice";
 
@@ -17,7 +17,7 @@ function App() {
   const dispatch = useDispatch();
   dispatch(StudentLoginAPI());
   return (
-    <div>
+    <div className="main-container">
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />

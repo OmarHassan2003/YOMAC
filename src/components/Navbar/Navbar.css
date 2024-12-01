@@ -1,0 +1,19 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 100px 40px 100px;
+  align-items: center;
+}
+
+.navbar img {
+  border-radius: 40px;
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+}
+
+.navbar a {
+  margin-left: 16px;
+  text-decoration: none;
+  padding: 6px;
+}

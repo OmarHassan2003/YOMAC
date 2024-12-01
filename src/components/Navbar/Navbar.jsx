@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import ronaldo from "../assets/ronaldo.webp"
+import ronaldo from "../../assets/ronaldo.webp";
+import "./Navbar.css";
 
 export default function Navbar() {
   return (

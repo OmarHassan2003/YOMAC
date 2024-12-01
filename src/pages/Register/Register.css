@@ -1,0 +1,35 @@
+.usertype {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 400px;
+}
+
+.usertype a {
+  text-decoration: none;
+  color: black;
+}
+
+.usertype button {
+  border-radius: 30px;
+  padding: 10px 40px;
+  cursor: pointer;
+  background-color: rgb(73, 187, 189);
+  border: none;
+}
+
+.login-register-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-type-label {
+  margin-bottom: 20px;
+  background: linear-gradient(to right, rgb(73, 187, 189), rgb(50, 199, 102));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}

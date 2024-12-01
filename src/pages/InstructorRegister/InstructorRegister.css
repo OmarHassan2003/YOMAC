@@ -1,0 +1,62 @@
+.login-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px 150px;
+}
+
+.login-register-description {
+  flex: 1;
+  background-color: rgba(73, 187, 189, 0.6);
+  border-radius: 40px;
+  padding: 20px 40px 20px 40px;
+}
+
+.login-register-button {
+  border-radius: 20px;
+  padding: 10px 70px;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 20px;
+  background-color: rgb(73, 187, 189);
+  border: none;
+}
+
+.input-textbox {
+  border-radius: 30px;
+  width: 500px;
+  height: 50px;
+  border-style: solid;
+  border-color: rgb(73, 187, 189);
+  padding-left: 20px;
+  font-size: 15px;
+  color: grey;
+  outline: none;
+}
+
+.add-socialmedia-button {
+  display: block;
+  margin-bottom: 20px;
+  padding: 7px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(73, 187, 189);
+}
+
+.remove-socialmedia {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: "5px";
+}
+
+.switch-login {
+  border-radius: 20px;
+  padding: 10px 50px;
+  margin-top: 10px;
+  cursor: pointer;
+  background-color: rgb(73, 187, 189);
+  border: none;
+}

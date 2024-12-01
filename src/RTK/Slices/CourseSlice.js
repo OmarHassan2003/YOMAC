@@ -30,7 +30,7 @@ export const getCourse = createAsyncThunk(
         headers: {
           "Content-Type": "application/json",
           token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMDczMTU4LCJpYXQiOjE3MzMwNzE2NTgsImp0aSI6IjM0ODgyMzMzNGZmNzQ1YWQ5OWVhNjgzYzk5NmEzMjIzIiwiaWQiOjEsInJvbGUiOiJzdHVkZW50In0.xHpvspQ9VMshO7926KGjXTGTnhRfypNuMJwnXdMn08E",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMDc5NjAyLCJpYXQiOjE3MzMwNzgxMDIsImp0aSI6Ijc2ZTkxYTFlNTk3NjQ2ZjZhZGI0MDY2ZjU3ZWFkNTkxIiwiaWQiOjEsInJvbGUiOiJzdHVkZW50In0.Kvjd01SD7Pol8Y4V--noEVZ_Gee1lxVmv2hHDd3OcwE",
         },
       });
       // console.log(response);

@@ -1,0 +1,42 @@
+.first-page {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
+  background-color: rgb(73, 187, 189);
+  border-bottom-left-radius: 150px;
+  border-bottom-right-radius: 150px;
+  padding: 50px 100px;
+  position: relative;
+  z-index: -1;
+  margin-top: -105px; /* Adjust to overlap with the navbar */
+}
+
+.text-content {
+  max-width: 50%;
+}
+
+.text-content h1 {
+  font-size: 48px;
+  color: white;
+  font-weight: bold;
+}
+
+.text-content h1 .highlighted {
+  color: orange;
+}
+
+.text-content h2 {
+  font-size: 24px;
+  color: white;
+  margin-top: 20px;
+}
+
+.image-container {
+  max-width: 40%;
+}
+
+.image-container img {
+  width: 50%;
+  height: auto;
+}
