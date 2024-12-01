@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-const CourseNavbar = () => {
+const CourseNavbar = ({ course }) => {
   const [activeTab, setActiveTab] = useState("overview");
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     // onTabChange(tab);
   };
-  // const course = fetch("http://localhost:3500/api/auth/get_single_course/2");
+
   const messages = [
     {
       id: 1,
@@ -53,12 +53,9 @@ const CourseNavbar = () => {
           className={`description ${activeTab !== "overview" ? "hidden" : ""}`}
         >
           <h2>Course Description</h2>
+          <p>{course.description}</p>
           <p>
-            Progressively synthesize clicks-and-mortar infrastructures for
-            impactful quality vectors...
-          </p>
-          <p>
-            <strong>Course Duration</strong> <span>68 hrs</span>
+            <strong>Course Duration</strong> <span>{course.duration}</span>
           </p>
         </div>
         <div className={`qna ${activeTab !== "q&a" ? "hidden" : ""}`}>
