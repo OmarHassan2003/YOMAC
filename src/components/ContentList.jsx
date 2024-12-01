@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { setCurrSection, setCurrVid } from "../RTK/Slices/CourseSlice";
+import { useDispatch } from "react-redux";
 
-const ContentList = () => {
+const ContentList = ({ course }) => {
   const [activeModule, setActiveModule] = useState(null);
 
+  const sections = course.sections;
   const modules = [
     {
       id: 1,
@@ -35,31 +38,50 @@ const ContentList = () => {
       ],
     },
   ];
-
   const toggleModule = (id) => {
     setActiveModule(activeModule === id ? null : id);
   };
+  const dispatch = useDispatch();
+  const updateCurrentVideo = (video) => {
+    dispatch(setCurrVid(video));
+  };
 
+  const updateCurrentSection = (section) => {
+    dispatch(setCurrSection(section));
+  };
+  const changeVid = (vidId, secId) => {
+    const sec = course.sections.find((el) => el.coursesectionid === secId);
+    updateCurrentSection(sec);
+    const vid = sec.videos.find((el) => el.videoid === vidId);
+    updateCurrentVideo(vid);
+    console.log(vid, sec);
+    console.log(course.currVid, course.currSection);
+  };
   return (
     <div className="content-list">
       <h2>Course Content</h2>
-      <p>Lecture (15) Total (5.5 hrs)</p>
       <div className="modules">
-        {modules.map((module) => (
-          <div key={module.id} className="module">
+        {sections.map((module) => (
+          <div key={module.coursesectionid} className="module">
             <div
               className="module-header"
-              onClick={() => toggleModule(module.id)}
+              onClick={() => toggleModule(module.coursesectionid)}
             >
               <h3>{module.title}</h3>
               <span>{module.duration}</span>
             </div>
-            {activeModule === module.id && (
+            {activeModule === module.coursesectionid && (
               <div className="lessons">
-                {module.lessons.map((lesson) => (
-                  <div key={lesson.id} className="lesson">
-                    <p>{lesson.title}</p>
-                    <span>{lesson.duration}</span>
+                {module.videos.map((video) => (
+                  <div
+                    key={video.videoid}
+                    className="lesson"
+                    onClick={() =>
+                      changeVid(video.videoid, module.coursesectionid)
+                    }
+                  >
+                    <p>{video.title}</p>
+                    <span>{video.videoduration}</span>
                   </div>
                 ))}
               </div>

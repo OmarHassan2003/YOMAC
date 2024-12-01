@@ -1,23 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CourseNavbar from "./CourseNavbar";
 
-const LessonContent = () => {
+const LessonContent = ({ course }) => {
   return (
-    <div className="course-body">
-      <div className="video-section">
-        <iframe
+    <div key={course.currVid?.videoid} className="course-body">
+      <div key={course.currVid?.videoid} className="video-section">
+        <video
           className="course-video"
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=Vw7e9w-vDl6QTNeo"
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullscreen
-        ></iframe>
-        <h1>Introduction Figma Basic to Advance</h1>
-        <p className="author">By William Joe | Figma</p>
+          src={course.currVid?.videolink}
+          autoPlay
+          controls
+        ></video>
+        <h1>{course.currVid?.title}</h1>
+        {/* <p className="author">By William Joe | Figma</p> */}
       </div>
-      <CourseNavbar />
+      <CourseNavbar course={course} />
     </div>
   );
 };

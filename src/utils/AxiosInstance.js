@@ -10,8 +10,8 @@ function GetNumber() {
 
 YomacApi.interceptors.response.use(
     (response) => {
-        console.log(response.data);
-        return response;
+      // console.log(response.data);
+      return response;
     },
     async (error) => {
         console.log(error);
