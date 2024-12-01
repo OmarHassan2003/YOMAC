@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const Navbar = ({ onTabChange }) => {
+const CourseNavbar = () => {
   const [activeTab, setActiveTab] = useState("overview");
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
-    onTabChange(tab);
+    // onTabChange(tab);
   };
-
+  // const course = fetch("http://localhost:3500/api/auth/get_single_course/2");
   const messages = [
     {
       id: 1,
@@ -48,24 +48,20 @@ const Navbar = ({ onTabChange }) => {
           Reviews
         </div>
       </div>
-      {activeTab === "overview" && (
-        <div className="description">
+      <div className="navcontent">
+        <div
+          className={`description ${activeTab !== "overview" ? "hidden" : ""}`}
+        >
           <h2>Course Description</h2>
           <p>
             Progressively synthesize clicks-and-mortar infrastructures for
             impactful quality vectors...
           </p>
-          <h3>Course Outcomes</h3>
-          <ul>
-            <li>15 lectures and 5.5 hours of content</li>
-            <li>Basics designing in Figma</li>
-            <li>Live project end-to-end software</li>
-            <li>Design mobile and desktop apps</li>
-          </ul>
+          <p>
+            <strong>Course Duration</strong> <span>68 hrs</span>
+          </p>
         </div>
-      )}
-      {activeTab === "q&a" && (
-        <div className="qna">
+        <div className={`qna ${activeTab !== "q&a" ? "hidden" : ""}`}>
           {messages.map((message) => (
             <div key={message.id} className="message">
               <p>{message.question}</p>
@@ -73,9 +69,9 @@ const Navbar = ({ onTabChange }) => {
             </div>
           ))}
         </div>
-      )}
+      </div>
     </div>
   );
 };
 
-export default Navbar;
+export default CourseNavbar;
