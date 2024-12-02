@@ -1,18 +1,25 @@
+.base-color {
+  color: rgb(47, 50, 125);
+}
+
+.homepage p {
+  color: #696984;
+  font-size: 17px;
+}
+
 .first-page {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   height: 100vh;
   background-color: rgb(73, 187, 189);
-  border-radius: 0 0 40% 40%;
-  padding: 50px 100px;
+  border-radius: 0 0 43% 43%;
+  padding-left: 100px;
   position: relative;
-  z-index: -1;
-  margin-top: -105px; /* Adjust to overlap with the navbar */
+  overflow: hidden;
 }
 
 .text-content {
-  max-width: 50%;
+  max-width: 42%;
+  top: 20%;
+  position: absolute;
 }
 
 .text-content h1 {
@@ -32,10 +39,162 @@
 }
 
 .image-container {
+  position: absolute;
+  bottom: 0;
+  right: 10%;
   max-width: 40%;
+  overflow: hidden;
 }
 
 .image-container img {
-  width: 50%;
+  width: 100%;
   height: auto;
+  object-fit: contain;
+}
+
+.join-yomac-button {
+  border-radius: 40px;
+  padding: 15px 35px;
+  margin-top: 30px;
+  cursor: pointer;
+  border: none;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  z-index: 100;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 80px;
+  margin-top: 150px;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.highlight {
+  color: rgb(0, 203, 184);
+}
+
+.features {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 130px;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.feature {
+  text-align: center;
+  width: 300px;
+  box-shadow: 0px 10px 60px rgba(38, 45, 118, 0.09);
+  border-radius: 20px;
+}
+
+.icon-placeholder1 {
+  background-color: #5b72ee;
+}
+
+.icon-placeholder2 {
+  background-color: #00cbb8;
+}
+
+.icon-placeholder3 {
+  background-color: #29b9e7;
+}
+
+.feature div {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.icon-placeholder1 img {
+  width: 33px;
+  height: 46px;
+  object-fit: cover;
+}
+
+.icon-placeholder2 img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.icon-placeholder3 img {
+  width: 40px;
+  height: 35px;
+  object-fit: cover;
+}
+
+.about {
+  text-align: center;
+  margin-bottom: 150px;
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.about h1 {
+  font-size: 32px;
+  margin-bottom: 30px;
+}
+
+.cards {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 80px;
+}
+
+.card {
+  text-align: center;
+  position: relative;
+}
+
+.card h3 {
+  color: white;
+  top: 35%;
+  position: absolute;
+  left: 20%;
+  right: 20%;
+}
+
+.card img {
+  max-width: 480px;
+  flex: 1;
+  height: auto;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.card a {
+  top: 50%;
+  position: absolute;
+  left: 20%;
+  right: 20%;
+}
+
+.card button {
+  border-radius: 25px;
+  padding: 15px 25px;
+  cursor: pointer;
+  background: #23bdee;
+
+  color: white;
+}
+
+.classroom {
+  padding-left: 200px;
+  padding-right: 200px;
+  margin-bottom: 200px;
+  max-width: 1000px;
+}
+
+.classroom h2 {
+  margin-bottom: 20px;
+  font-size: 32px;
 }

@@ -12,6 +12,10 @@
   padding: 0;
 }
 
+body {
+  padding-top: 85px;
+}
+
 .course-page {
   width: 100%;
   max-width: 1550px;
