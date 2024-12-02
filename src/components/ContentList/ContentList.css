@@ -1,0 +1,51 @@
+.content-list {
+    width: 40%;
+    max-width: 350px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .content-list h2 {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .modules {
+    margin-top: 10px;
+  }
+  
+  .module {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  .module-header {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  
+  .module-header h3 {
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .lessons {
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+    margin-top: 10px;
+  }
+  
+  .lesson {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  

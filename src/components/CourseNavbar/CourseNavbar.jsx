@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import "../CourseNavbar/CourseNavbar.css";
 const CourseNavbar = ({ course }) => {
   const [activeTab, setActiveTab] = useState("overview");
 

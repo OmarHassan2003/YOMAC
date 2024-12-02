@@ -22,7 +22,7 @@ export const getStudent = createAsyncThunk(
         headers: {
           "Content-Type": "application/json",
           token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMDk4ODc5LCJpYXQiOjE3MzMwOTczNzksImp0aSI6IjVmOTZiYWM2ZjA0ZDRmMzFhNzNmOTYwNDlmMTk3NWZmIiwiaWQiOjEsInJvbGUiOiJzdHVkZW50In0.rNAYZLDUt98VdvoTZ2EbqrTy3x3h2sp-KU5Da9ZPBiI",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMTQ3NDMxLCJpYXQiOjE3MzMxNDU5MzEsImp0aSI6IjZmZWQ5OWY5ZGZiMDRlZWVhOGJhNDAwZDUzOWJkMDY2IiwiaWQiOjEsInJvbGUiOiJzdHVkZW50In0.MpnpHAwTeg09lZ6rMnc-j4VDq96Ve3c5paRMYeITUP8",
         },
       });
       // console.log(response);

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { setCurrSection, setCurrVid } from "../RTK/Slices/CourseSlice";
+import { setCurrSection, setCurrVid } from "../../RTK/Slices/CourseSlice";
 import { useDispatch } from "react-redux";
-
+import "../ContentList/ContentList.css";
 const ContentList = ({ course }) => {
   const [activeModule, setActiveModule] = useState(null);
 

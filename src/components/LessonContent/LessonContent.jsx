@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import CourseNavbar from "./CourseNavbar";
-
+import CourseNavbar from "../CourseNavbar/CourseNavbar.jsx";
+import "../LessonContent/LessonContent.css";
 const LessonContent = ({ course }) => {
   return (
     <div key={course.currVid?.videoid} className="course-body">
@@ -12,7 +12,6 @@ const LessonContent = ({ course }) => {
           controls
         ></video>
         <h1>{course.currVid?.title}</h1>
-        {/* <p className="author">By William Joe | Figma</p> */}
       </div>
       <CourseNavbar course={course} />
     </div>
