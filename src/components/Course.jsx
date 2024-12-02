@@ -9,9 +9,9 @@ const Course = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCourse(2));
+    console.log(course);
   }, []);
 
-  console.log(course);
   return (
     <div key={course.courseid} className="course-page">
       <LessonContent course={course} />

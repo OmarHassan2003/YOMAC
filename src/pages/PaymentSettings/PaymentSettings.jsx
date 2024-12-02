@@ -1,4 +1,4 @@
-import React from "react";
+import "./PaymentSettings.css";
 
 const PaymentSettings = () => {
   return (

@@ -1,7 +1,7 @@
-import React from "react";
-import messi from "../assets/3mk.jpg"
+import messi from "../../assets/3mk.jpg";
+import "./ProfileCard.css";
 
-const PorfileCard = () => {
+const PorfileCard = ({ data }) => {
   const obj = {
     img: messi,
     name: "Farag beh",
@@ -14,19 +14,24 @@ const PorfileCard = () => {
     supports: ["football", "omar 5wl", "wafa 3rs"],
     contestsWon: 25,
   };
+  let coursesCompleted = 0;
+  let courseInProgress = 0;
+  data.courses_progress.map((curr) =>
+    curr.progress === 100 ? coursesCompleted++ : courseInProgress++
+  );
   return (
     <div className="sidebar">
-      <img src={obj.img} class="profile-photo" />
-      <div class="user-name">{obj.name}</div>
-      <div class="status-badge">{obj.statusBadge}</div>
-      <div class="stat">
+      <img src={data.profilepic} className="profile-photo" />
+      <div className="user-name">{data.studentname}</div>
+      <div className="status-badge">{data.username}</div>
+      <div className="stat">
         <div>
-          <strong>{obj.courseInProgress}</strong>
+          <strong>{courseInProgress}</strong>
           <br />
           Courses in Progress
         </div>
         <div>
-          <strong>{obj.coursesCompleted}</strong>
+          <strong>{coursesCompleted}</strong>
           <br />
           Courses Completed
         </div>
@@ -41,9 +46,9 @@ const PorfileCard = () => {
         )}
       </div>
       <h3>Support</h3>
-      <ul class="support-list">
-        {obj.supports.map((curr) => (
-          <li>{curr}</li>
+      <ul className="support-list">
+        {obj.supports.map((curr, index) => (
+          <li key={index}>{curr}</li>
         ))}
       </ul>
     </div>
