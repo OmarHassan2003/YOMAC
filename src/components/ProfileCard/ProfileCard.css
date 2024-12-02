@@ -1,0 +1,53 @@
+.sidebar {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 30%;
+}
+
+.profile-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto;
+  display: block;
+}
+
+.user-name {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.status-badge {
+  display: inline-block;
+  background-color: #f88b8b;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.sidebar .stat {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.support-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 30px;
+}
+
+.support-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  font-size: 16px;
+}

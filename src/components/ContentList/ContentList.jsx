@@ -1,43 +1,11 @@
 import React, { useState } from "react";
-import { setCurrSection, setCurrVid } from "../RTK/Slices/CourseSlice";
+import { setCurrSection, setCurrVid } from "../../RTK/Slices/CourseSlice";
 import { useDispatch } from "react-redux";
-
+import "../ContentList/ContentList.css";
 const ContentList = ({ course }) => {
   const [activeModule, setActiveModule] = useState(null);
 
   const sections = course.sections;
-  const modules = [
-    {
-      id: 1,
-      title: "Module 1",
-      duration: "54 Min",
-      lessons: [
-        { id: 1, title: "Getting started lessons", duration: "20 min" },
-        { id: 2, title: "Overview about basic tools", duration: "30 min" },
-        { id: 3, title: "Visual design using tools", duration: "40 min" },
-      ],
-    },
-    {
-      id: 2,
-      title: "Module 2",
-      duration: "54 Min",
-      lessons: [
-        { id: 1, title: "Getting started lessons", duration: "20 min" },
-        { id: 2, title: "Overview about basic tools", duration: "30 min" },
-        { id: 3, title: "Visual design using tools", duration: "40 min" },
-      ],
-    },
-    {
-      id: 3,
-      title: "Module 3",
-      duration: "54 Min",
-      lessons: [
-        { id: 1, title: "Getting started lessons", duration: "20 min" },
-        { id: 2, title: "Overview about basic tools", duration: "30 min" },
-        { id: 3, title: "Visual design using tools", duration: "40 min" },
-      ],
-    },
-  ];
   const toggleModule = (id) => {
     setActiveModule(activeModule === id ? null : id);
   };

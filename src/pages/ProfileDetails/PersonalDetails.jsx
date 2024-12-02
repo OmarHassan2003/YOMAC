@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import "./PersonalDetails.css";
 
-const PersonalDetails = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
+const PersonalDetails = ({ data }) => {
+  const [firstName, setFirstName] = useState(data.studentname.split(" ")[0]);
+  const [lastName, setLastName] = useState(data.studentname.split(" ")[1]);
+  const [email, setEmail] = useState(data.email);
+  const [username, setUsername] = useState(data.username);
   const [password, setPassword] = useState("");
 
   const handleSave = (e) => {
@@ -22,38 +23,20 @@ const PersonalDetails = () => {
     console.log(user);
   };
   const handleCancel = () => {
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setUsername("");
+    setFirstName(data.studentname.split(" ")[0]);
+    setLastName(data.studentname.split(" ")[1]);
+    setEmail(data.email);
+    setUsername(data.username);
     setPassword("");
   };
   return (
     <form onSubmit={handleSave}>
       <div className="form-group" style={{ marginTop: "20px" }}>
-        <input
-          type="text"
-          placeholder="First Name"
-          required
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="last Name"
-          required
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-        />
+        <input type="text" placeholder="First Name" value={firstName} />
+        <input type="text" placeholder="last Name" value={lastName} />
       </div>
       <div className="form-group">
-        <input
-          type="email"
-          placeholder="Email Address"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <input type="email" placeholder="Email Address" value={email} />
       </div>
       <div className="form-group">
         <input

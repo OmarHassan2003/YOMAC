@@ -22,7 +22,7 @@ const initialstate = {
 };
 
 export const getCourse = createAsyncThunk(
-  "AuthorizationSlice/getCourse",
+  "CourseSlice/getCourse",
   async (id, { getState, rejectWithValue }) => {
     // api call
     try {
@@ -30,7 +30,7 @@ export const getCourse = createAsyncThunk(
         headers: {
           "Content-Type": "application/json",
           token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMDc5NjAyLCJpYXQiOjE3MzMwNzgxMDIsImp0aSI6Ijc2ZTkxYTFlNTk3NjQ2ZjZhZGI0MDY2ZjU3ZWFkNTkxIiwiaWQiOjEsInJvbGUiOiJzdHVkZW50In0.Kvjd01SD7Pol8Y4V--noEVZ_Gee1lxVmv2hHDd3OcwE",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMTUxOTY5LCJpYXQiOjE3MzMxNTA0NjksImp0aSI6IjdhZWJlN2RjODAwYjQxOThhNWY1Yzc3MmRkMGVhMDNjIiwiaWQiOjEsInJvbGUiOiJzdHVkZW50In0.IEGzQ5BX20ZgFXjNfy7S1BK_3VGV96KVfiZvepBDqd4",
         },
       });
       // console.log(response);
@@ -43,7 +43,7 @@ export const getCourse = createAsyncThunk(
 );
 
 const CourseSlice = createSlice({
-  name: "Authorization",
+  name: "Course",
   initialState: initialstate,
   reducers: {
     setCurrVid(state, action) {

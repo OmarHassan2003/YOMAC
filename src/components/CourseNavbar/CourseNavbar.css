@@ -1,0 +1,98 @@
+.description {
+    margin-bottom: 20px;
+  }
+  
+  .description h2,
+  .description h3 {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .description ul {
+    list-style: disc;
+    margin-left: 20px;
+  }
+  
+  .course-navbar {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #ddd;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+  }
+  
+  .tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .tab:hover {
+    color: #333;
+  }
+  
+  .tab.active {
+    color: #333;
+    font-weight: bold;
+    border-bottom: 3px solid #00c9a7;
+  }
+  
+  .tab-content {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .qna {
+    padding: 10px 0;
+    margin-top: 10px;
+  }
+  
+  .message {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .qa-section {
+    width: 50%;
+    margin: 0 auto;
+  }
+  
+  .qa-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .question {
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .timestamp {
+    font-size: 0.9em;
+    color: gray;
+  }
+  
+  .answers {
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+  
+  .answer {
+    margin-bottom: 5px;
+  }
+  

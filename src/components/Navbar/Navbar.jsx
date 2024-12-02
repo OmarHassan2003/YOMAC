@@ -15,6 +15,7 @@ export default function Navbar() {
       <img src={ronaldo} />
       <div>
         <Link to="/">Home</Link>
+        <Link to="/dashboard">Dashboard</Link>
         <Link to="/course">Courses</Link>
         <Link to="/profile">Profile</Link>
         <Link to="/login">Login</Link>

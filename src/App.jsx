@@ -1,8 +1,9 @@
 import "./App.css";
 import StudentRegister from "./pages/StudentRegister/StudentRegister.jsx";
 import InstructorRegister from "./pages/InstructorRegister/InstructorRegister.jsx";
-import Course from "./components/Course";
-import Profile from "./pages/Profile";
+import Course from "./components/Course/Course";
+import Profile from "./pages/Profile/Profile.jsx";
+import DashBoard from "./pages/DashBoard/DashBoard.jsx";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import HomePage from "./pages/Homepage/Homepage.jsx";
 import Login from "./pages/Login/Login.jsx";
@@ -29,6 +30,7 @@ function App() {
         <Route path="instructorregister" element={<InstructorRegister />} />
         <Route path="/course" element={<Course />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/dashboard" element={<DashBoard />} />
       </Routes>
     </div>
   );
