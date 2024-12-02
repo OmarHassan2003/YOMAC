@@ -1,0 +1,39 @@
+.form-group {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.form-group input,
+.form-group select {
+  flex: 1;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+button.save {
+  background-color: #28a745;
+  color: white;
+}
+
+button.cancel {
+  background-color: transparent;
+  border: 2px solid #28a745;
+  color: #28a745;
+}

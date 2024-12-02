@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import PersonalDetails from "./PersonalDetails";
-import PaymentSettings from "./PaymentSettings";
+import { useState } from "react";
+import PersonalDetails from "../ProfileDetails/PersonalDetails";
+import PaymentSettings from "../PaymentSettings/PaymentSettings";
+import "./ProfileSettings.css";
 
-const ProfileSettings = () => {
+const ProfileSettings = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const tabs = ["Personal Details", "Payment"];
   const changeActive = (index) => {
@@ -10,7 +11,7 @@ const ProfileSettings = () => {
   };
   return (
     <div className="profile-section">
-      <div class="profile-settings">
+      <div className="profile-settings">
         <h2>Profile Setting</h2>
         <div className="tabs">
           {tabs.map((tab, index) => {
@@ -26,7 +27,11 @@ const ProfileSettings = () => {
             );
           })}
         </div>
-        {activeIndex === 0 ? <PersonalDetails /> : <PaymentSettings />}
+        {activeIndex === 0 ? (
+          <PersonalDetails data={data} />
+        ) : (
+          <PaymentSettings data={data} />
+        )}
       </div>
     </div>
   );

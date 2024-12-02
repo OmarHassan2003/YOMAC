@@ -22,7 +22,7 @@ const initialstate = {
 };
 
 export const getCourse = createAsyncThunk(
-  "AuthorizationSlice/getCourse",
+  "CourseSlice/getCourse",
   async (id, { getState, rejectWithValue }) => {
     // api call
     try {
@@ -43,7 +43,7 @@ export const getCourse = createAsyncThunk(
 );
 
 const CourseSlice = createSlice({
-  name: "Authorization",
+  name: "Course",
   initialState: initialstate,
   reducers: {
     setCurrVid(state, action) {
