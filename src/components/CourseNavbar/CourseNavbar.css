@@ -62,3 +62,37 @@
     color: #555;
   }
   
+  .qa-section {
+    width: 50%;
+    margin: 0 auto;
+  }
+  
+  .qa-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .question {
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .timestamp {
+    font-size: 0.9em;
+    color: gray;
+  }
+  
+  .answers {
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+  
+  .answer {
+    margin-bottom: 5px;
+  }
+  

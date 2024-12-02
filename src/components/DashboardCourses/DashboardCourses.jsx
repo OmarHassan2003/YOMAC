@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./DashboardCourses.css";
 const DashboardCourses = ({ data }) => {
   return (
@@ -29,7 +30,9 @@ const DashboardCourses = ({ data }) => {
             <div className="course-rating">
               <span>⭐ 4.3</span>
             </div>
-            <button className="view-course-btn">View Course</button>
+            <Link to="/course">
+              <button className="view-course-btn">View Course</button>
+            </Link>
           </div>
         ))}
       </div>
