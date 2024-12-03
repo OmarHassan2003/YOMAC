@@ -17,7 +17,7 @@ export default function HomePage() {
             are now so much easier
           </h1>
           <h2>
-            YOAMC is an interesting platform that will provide more interactive
+            YOMAC is an interesting platform that will provide more interactive
             ways to learn for students and to teach for educators.
           </h2>
           <Link to="/register">

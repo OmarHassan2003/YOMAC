@@ -1,10 +1,16 @@
 .course-page {
     width: 100%;
-    max-width: 1550px;
+    max-width: 1350px;
     margin: 20px auto;
+    border-radius: 8px;
     background: #fff;
     padding: 20px;
     display: flex;
     justify-content: center;
     gap: 20px;
+  }
+  @media (max-width: 1050px) {
+    .course-page{
+      flex-direction: column;
+    }
   }
