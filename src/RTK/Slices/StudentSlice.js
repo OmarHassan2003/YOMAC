@@ -2,27 +2,19 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import YomacApi from "../../utils/AxiosInstance";
 
 const initialstate = {
-  studentid: 0,
-  studentname: "",
-  email: "",
-  learning_time: "",
-  balance: 0,
-  username: "",
-  profilepic: "",
-  createdat: "",
-  courses_progress: [],
+  object: {},
 };
 
 export const getStudent = createAsyncThunk(
   "StudentSlice/getStudent",
-  async (id, { getState, rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
     // api call
     try {
-      const response = await YomacApi.get(`get_student_data/${id}`, {
+      const response = await YomacApi.get(`get_user_data`, {
         headers: {
           "Content-Type": "application/json",
           token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMTUxOTY5LCJpYXQiOjE3MzMxNTA0NjksImp0aSI6IjdhZWJlN2RjODAwYjQxOThhNWY1Yzc3MmRkMGVhMDNjIiwiaWQiOjEsInJvbGUiOiJzdHVkZW50In0.IEGzQ5BX20ZgFXjNfy7S1BK_3VGV96KVfiZvepBDqd4",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMTkxMzI0LCJpYXQiOjE3MzMxODk4MjQsImp0aSI6IjIwMGJmY2QxOWRmODQzMDJiMTJlNTQ1OGY0N2VhZDU2IiwiaWQiOjEsInJvbGUiOiJpbnN0cnVjdG9yIn0.2MI_YZVlu_6-DChncueVslQBktzUHOdfKq6ubD3VRpU",
         },
       });
       // console.log(response);
@@ -46,16 +38,8 @@ const StudentSlice = createSlice({
       .addCase(getStudent.fulfilled, (state, action) => {
         // state.name = action.payload;
         console.log(action.payload.data);
-        const data = action.payload.data.student_data;
-        state.studentid = data.studentid;
-        state.studentname = data.studentname;
-        state.email = data.email;
-        state.username = data.username;
-        state.profilepic = data.profilepic;
-        state.createdat = data.createdat;
-        state.balance = data.balance;
-        state.learning_time = data.learning_time;
-        state.courses_progress = data.courses_progress;
+        const data = action.payload.data;
+        state.object = data;
         console.log(state);
       })
       .addCase(getStudent.rejected, (state, action) => {

@@ -1,5 +1,8 @@
 import "./LearningTime.css";
-const LearningTime = ({ hours, mins }) => {
+const LearningTime = ({ data }) => {
+  const totalTime = parseFloat(data.learning_time).toFixed(0);
+  const hours = totalTime / 3600;
+  const mins = (hours % 1) * 60;
   return (
     <div className="learning-time-box">
       <h3 className="learning-time-title">Learning Time</h3>
