@@ -2,15 +2,78 @@ import { createAsyncThunk, createSlice, isFulfilled } from "@reduxjs/toolkit";
 import YomacApi from "../../utils/AxiosInstance";
 
 const initialstate = {
-  name: "",
+  token: null,
+  role: "",
 };
 
 export const StudentLoginAPI = createAsyncThunk(
   "AuthorizationSlice/StudentLogin",
+  async (userData, { getState, rejectWithValue }) => {
+    console.log(userData);
+    // api call
+    try {
+      const response = await YomacApi.post("student_sign_in", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        username: userData.username,
+        password: userData.password,
+      });
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const StudentRegisterAPI = createAsyncThunk(
+  "AuthorizationSlice/StudentRegister",
   async (_, { getState, rejectWithValue }) => {
     // api call
     try {
+      const response = await YomacApi.post("student_sign_up", {
+        username: "mb",
+        password: "123456",
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const InstructorLoginAPI = createAsyncThunk(
+  "AuthorizationSlice/InstructorLogin",
+  async (userData, { getState, rejectWithValue }) => {
+    console.log(userData);
+    // api call
+    try {
       const response = await YomacApi.post("instrutor_sign_in", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        username: userData.username,
+        password: userData.password,
+      });
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const InstructorRegisterAPI = createAsyncThunk(
+  "AuthorizationSlice/InstructorRegister",
+  async (_, { getState, rejectWithValue }) => {
+    // api call
+    try {
+      const response = await YomacApi.post("instrutor_sign_up", {
         username: "mb",
         password: "123456",
       });
@@ -37,10 +100,30 @@ const AuthorizationSlice = createSlice({
         // for loading
       })
       .addCase(StudentLoginAPI.fulfilled, (state, action) => {
-        // state.name = action.payload;
+        // console.log(action.payload.data);
+        const data = action.payload.data;
+        state.token = data.token;
+        state.role = data.user_data.role;
+        // console.log(state.token);
+        // console.log(state.role);
       })
       .addCase(StudentLoginAPI.rejected, (state, action) => {
         // state.name = action.payload;
+      })
+      .addCase(InstructorLoginAPI.pending, (state, action) => {
+        // for loading
+      })
+      .addCase(InstructorLoginAPI.fulfilled, (state, action) => {
+        // console.log(action.payload.data);
+        const data = action.payload.data;
+        state.token = data.token;
+        state.role = data.user_data.role;
+        // console.log(state.token);
+        // console.log(state.role);
+      })
+      .addCase(InstructorLoginAPI.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log(action);
       }),
 });
 

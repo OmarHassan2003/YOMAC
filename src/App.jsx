@@ -9,16 +9,22 @@ import HomePage from "./pages/Homepage/Homepage.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Register from "./pages/Register/Register.jsx";
 import Whiteboard from "./pages/Whiteboard/Whiteboard.jsx";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import StudentLogin from "./pages/StudentLogin/StudentLogin.jsx";
 import InstructorLogin from "./pages/InstructorLogin/InstructorLogin.jsx";
 import CreateCourse from "./pages/CreateCourse/CreateCourse.jsx";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { StudentLoginAPI } from "./RTK/Slices/AuthorizationSlice";
+import { useEffect } from "react";
 
 function App() {
   const dispatch = useDispatch();
   dispatch(StudentLoginAPI());
+  const { token } = useSelector((state) => state.Authorization);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (token === null) navigate("/login");
+  }, [token]);
   return (
     <div>
       <Navbar />
