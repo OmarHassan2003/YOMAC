@@ -6,11 +6,12 @@ import { getStudent } from "../../RTK/Slices/StudentSlice";
 import "./Profile.css";
 
 const Profile = () => {
-  const data = useSelector((state) => state.student);
+  let data = useSelector((state) => state.student);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getStudent(1));
+    dispatch(getStudent());
   }, []);
+  data = data.object;
   console.log(data);
   return (
     <div className="profile-card">

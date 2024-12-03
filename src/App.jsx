@@ -8,9 +8,11 @@ import Navbar from "./components/Navbar/Navbar.jsx";
 import HomePage from "./pages/Homepage/Homepage.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Register from "./pages/Register/Register.jsx";
+import Whiteboard from "./pages/Whiteboard/Whiteboard.jsx";
 import { Routes, Route } from "react-router-dom";
 import StudentLogin from "./pages/StudentLogin/StudentLogin.jsx";
 import InstructorLogin from "./pages/InstructorLogin/InstructorLogin.jsx";
+import CreateCourse from "./pages/CreateCourse/CreateCourse.jsx";
 import { useDispatch } from "react-redux";
 import { StudentLoginAPI } from "./RTK/Slices/AuthorizationSlice";
 
@@ -31,6 +33,8 @@ function App() {
         <Route path="/course" element={<Course />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/dashboard" element={<DashBoard />} />
+        <Route path="/whiteboard" element={<Whiteboard />} />
+        <Route path="/createCourse" element={<CreateCourse />} />
       </Routes>
     </div>
   );

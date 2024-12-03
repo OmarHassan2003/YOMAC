@@ -9,10 +9,6 @@
   transition: transform 0.2s ease-in-out;
 }
 
-.learning-time-box:hover {
-  transform: scale(1.02);
-}
-
 .learning-time-title {
   font-size: 20px;
   color: #333;

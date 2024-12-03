@@ -16,6 +16,7 @@ export default function Navbar() {
       <div>
         <Link to="/">Home</Link>
         <Link to="/dashboard">Dashboard</Link>
+        <Link to="/whiteboard">Whiteboard</Link>
         <Link to="/course">Courses</Link>
         <Link to="/profile">Profile</Link>
         <Link to="/login">Login</Link>
