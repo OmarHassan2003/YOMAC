@@ -30,7 +30,28 @@ export const getCourse = createAsyncThunk(
         headers: {
           "Content-Type": "application/json",
           token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMjIyOTY0LCJpYXQiOjE3MzMyMjE0NjQsImp0aSI6IjllNDMwZDhkMDAxNDQ0NDFiMWM0OTVlOGQ0MjYxYTgxIiwiaWQiOjEsInJvbGUiOiJzdHVkZW50In0.0REJ8is3CMJcoh3_7b0HxZevzGy437t4cEEO7GnNNIo",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMjU1NDMyLCJpYXQiOjE3MzMyNTM5MzIsImp0aSI6IjM4OWIyYWFlN2FkYTQ2OWM4NzdmMTJmN2QwN2JmYjQxIiwiaWQiOjEsInJvbGUiOiJzdHVkZW50In0.aCpJetoOf5eS8iNzloGuK8dBFktKTShCF-34GE37tNE",
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const createCourse = createAsyncThunk(
+  "CourseSlice/createCourse",
+  async (course, { getState, rejectWithValue }) => {
+    // api call
+    try {
+      const response = await YomacApi.get(`create_course`, {
+        headers: {
+          "Content-Type": "application/json",
+          token:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMjU1NDMyLCJpYXQiOjE3MzMyNTM5MzIsImp0aSI6IjM4OWIyYWFlN2FkYTQ2OWM4NzdmMTJmN2QwN2JmYjQxIiwiaWQiOjEsInJvbGUiOiJzdHVkZW50In0.aCpJetoOf5eS8iNzloGuK8dBFktKTShCF-34GE37tNE",
         },
       });
       // console.log(response);
@@ -81,6 +102,16 @@ const CourseSlice = createSlice({
         state.currSection = data.sections[0];
       })
       .addCase(getCourse.rejected, (state, action) => {
+        // state.name = action.payload;
+      })
+
+      .addCase(createCourse.pending, (state, action) => {
+        // state.name = action.payload;
+      })
+      .addCase(createCourse.fulfilled, (state, action) => {
+        // state.name = action.payload;
+      })
+      .addCase(createCourse.rejected, (state, action) => {
         // state.name = action.payload;
       }),
 });
