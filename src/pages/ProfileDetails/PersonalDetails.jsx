@@ -2,10 +2,12 @@ import { useState } from "react";
 import "./PersonalDetails.css";
 
 const PersonalDetails = ({ data }) => {
-  const [firstName, setFirstName] = useState(data.studentname.split(" ")[0]);
-  const [lastName, setLastName] = useState(data.studentname.split(" ").at(-1));
-  const [email, setEmail] = useState(data.email);
-  const [username, setUsername] = useState(data.username);
+  const [firstName, setFirstName] = useState(data?.studentname?.split(" ")[0]);
+  const [lastName, setLastName] = useState(
+    data?.studentname?.split(" ").at(-1)
+  );
+  const [email, setEmail] = useState(data?.email);
+  const [username, setUsername] = useState(data?.username);
   const [password, setPassword] = useState("");
 
   const handleSave = (e) => {
@@ -23,10 +25,10 @@ const PersonalDetails = ({ data }) => {
     console.log(user);
   };
   const handleCancel = () => {
-    setFirstName(data.studentname.split(" ")[0]);
-    setLastName(data.studentname.split(" ").at(-1));
-    setEmail(data.email);
-    setUsername(data.username);
+    setFirstName(data?.studentname?.split(" ")[0]);
+    setLastName(data?.studentname?.split(" ").at(-1));
+    setEmail(data?.email);
+    setUsername(data?.username);
     setPassword("");
   };
   return (
