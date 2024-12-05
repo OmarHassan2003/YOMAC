@@ -16,9 +16,6 @@ export default function HomePage() {
     const aboutSection = document.querySelector(".about");
     aboutSection.scrollIntoView({ behavior: "smooth" });
   };
-  useEffect(() => {
-    dispatch(getCourse(2));
-  }, [])
   return (
     <div className="homepage">
       <div className="first-page">
