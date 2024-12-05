@@ -6,8 +6,19 @@ import usersImage from "../../assets/users1.png";
 import forStudents from "../../assets/forstudents.png";
 import forInstructors from "../../assets/forinstructors.png";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getCourse } from "../../RTK/Slices/CourseSlice";
 
 export default function HomePage() {
+  const dispatch = useDispatch();
+  const handleJoinButton = () => {
+    const aboutSection = document.querySelector(".about");
+    aboutSection.scrollIntoView({ behavior: "smooth" });
+  };
+  useEffect(() => {
+    dispatch(getCourse(2));
+  }, [])
   return (
     <div className="homepage">
       <div className="first-page">
@@ -20,9 +31,10 @@ export default function HomePage() {
             YOMAC is an interesting platform that will provide more interactive
             ways to learn for students and to teach for educators.
           </h2>
-          <Link to="/register">
-            <button className="join-yomac-button">Join for free</button>
-          </Link>
+
+          <button className="join-yomac-button" onClick={handleJoinButton}>
+            Join for free
+          </button>
         </div>
         <div className="image-container">
           <img src={girlImage} alt="Girl holding books" />

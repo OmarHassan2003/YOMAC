@@ -25,33 +25,13 @@ export const getCourse = createAsyncThunk(
   "CourseSlice/getCourse",
   async (id, { getState, rejectWithValue }) => {
     // api call
+    const { token } = getState().Authorization;    
     try {
       const response = await YomacApi.get(`get_single_course/${id}`, {
         headers: {
           "Content-Type": "application/json",
           token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMjU1NDMyLCJpYXQiOjE3MzMyNTM5MzIsImp0aSI6IjM4OWIyYWFlN2FkYTQ2OWM4NzdmMTJmN2QwN2JmYjQxIiwiaWQiOjEsInJvbGUiOiJzdHVkZW50In0.aCpJetoOf5eS8iNzloGuK8dBFktKTShCF-34GE37tNE",
-        },
-      });
-      // console.log(response);
-      return response;
-    } catch (error) {
-      console.log(error);
-      return rejectWithValue(error);
-    }
-  }
-);
-
-export const createCourse = createAsyncThunk(
-  "CourseSlice/createCourse",
-  async (course, { getState, rejectWithValue }) => {
-    // api call
-    try {
-      const response = await YomacApi.get(`create_course`, {
-        headers: {
-          "Content-Type": "application/json",
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMjU1NDMyLCJpYXQiOjE3MzMyNTM5MzIsImp0aSI6IjM4OWIyYWFlN2FkYTQ2OWM4NzdmMTJmN2QwN2JmYjQxIiwiaWQiOjEsInJvbGUiOiJzdHVkZW50In0.aCpJetoOf5eS8iNzloGuK8dBFktKTShCF-34GE37tNE",
+            token,
         },
       });
       // console.log(response);
@@ -102,16 +82,6 @@ const CourseSlice = createSlice({
         state.currSection = data.sections[0];
       })
       .addCase(getCourse.rejected, (state, action) => {
-        // state.name = action.payload;
-      })
-
-      .addCase(createCourse.pending, (state, action) => {
-        // state.name = action.payload;
-      })
-      .addCase(createCourse.fulfilled, (state, action) => {
-        // state.name = action.payload;
-      })
-      .addCase(createCourse.rejected, (state, action) => {
         // state.name = action.payload;
       }),
 });
