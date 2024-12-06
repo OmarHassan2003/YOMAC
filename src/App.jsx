@@ -18,8 +18,8 @@ import { StudentLoginAPI } from "./RTK/Slices/AuthorizationSlice";
 import { useEffect } from "react";
 
 function App() {
-  const dispatch = useDispatch();
-  dispatch(StudentLoginAPI());
+  // const dispatch = useDispatch();
+  // dispatch(StudentLoginAPI());
   const { token } = useSelector((state) => state.Authorization);
   const navigate = useNavigate();
   useEffect(() => {
