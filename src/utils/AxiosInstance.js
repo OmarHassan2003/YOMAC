@@ -4,9 +4,9 @@ const YomacApi = axios.create({
     baseURL: "http://yomac.azurewebsites.net/api/auth/",
 })
 
-function GetNumber() {
-    return 5;
-}
+// function GetNumber() {
+//     return 5;
+// }
 
 // YomacApi.interceptors.response.use(
 //     (response) => {
