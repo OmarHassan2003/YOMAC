@@ -16,7 +16,7 @@ const PorfileCard = ({ data }) => {
   };
   let coursesCompleted = 0;
   let courseInProgress = 0;
-  data.courses_progress.map((curr) =>
+  data?.courses_progress?.map((curr) =>
     curr.progress === 100 ? coursesCompleted++ : courseInProgress++
   );
   return (
@@ -47,7 +47,7 @@ const PorfileCard = ({ data }) => {
       </div>
       <h3>Support</h3>
       <ul className="support-list">
-        {obj.supports.map((curr, index) => (
+        {obj?.supports?.map((curr, index) => (
           <li key={index}>{curr}</li>
         ))}
       </ul>

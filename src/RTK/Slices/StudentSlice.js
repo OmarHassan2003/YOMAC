@@ -14,7 +14,7 @@ export const getStudent = createAsyncThunk(
         headers: {
           "Content-Type": "application/json",
           token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMjIxOTcxLCJpYXQiOjE3MzMyMjA0NzEsImp0aSI6ImY5ZDUxNGM1NDYwNTRiNDhiODU3ZGIwMGIwNWE3M2E5IiwiaWQiOjEsInJvbGUiOiJpbnN0cnVjdG9yIn0.6lM9nIJ0RAiW4mvVDFKT3kYWHkM1Z9h_wkBL16tZZtQ",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMzExMzcyLCJpYXQiOjE3MzMzMDk4NzIsImp0aSI6IjMzMjE0ZjI1ODg1ZjRlODg4MTdhYTVjYjJkZWEwOTIxIiwiaWQiOjEsInJvbGUiOiJpbnN0cnVjdG9yIn0.gkCiUQHEoxmWQnt9cS0Xc0YvNp0KdDudIK4z3zXkOGM",
         },
       });
       // console.log(response);

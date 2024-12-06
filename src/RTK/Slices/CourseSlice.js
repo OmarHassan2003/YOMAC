@@ -25,12 +25,13 @@ export const getCourse = createAsyncThunk(
   "CourseSlice/getCourse",
   async (id, { getState, rejectWithValue }) => {
     // api call
+    const { token } = getState().Authorization;    
     try {
       const response = await YomacApi.get(`get_single_course/${id}`, {
         headers: {
           "Content-Type": "application/json",
           token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMjIyOTY0LCJpYXQiOjE3MzMyMjE0NjQsImp0aSI6IjllNDMwZDhkMDAxNDQ0NDFiMWM0OTVlOGQ0MjYxYTgxIiwiaWQiOjEsInJvbGUiOiJzdHVkZW50In0.0REJ8is3CMJcoh3_7b0HxZevzGy437t4cEEO7GnNNIo",
+            token,
         },
       });
       // console.log(response);
