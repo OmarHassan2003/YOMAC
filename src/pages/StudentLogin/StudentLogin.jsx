@@ -3,14 +3,15 @@ import { useState } from "react";
 import show from "../../assets/show.png";
 import hide from "../../assets/hide.png";
 import "./StudentLogin.css";
-import { StudentLoginAPI } from "../../RTK/Slices/AuthorizationSlice";
 import { useDispatch } from "react-redux";
+import { StudentLoginAPI } from "../../RTK/Slices/AuthorizationSlice";
 
 export default function StudentLogin() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
+
+  const [username, setUsername] = useState("");
+  const [password, setpassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -19,6 +20,8 @@ export default function StudentLogin() {
       username,
       password,
     };
+
+    dispatch(StudentLoginAPI(user));
 
     console.log(user);
 

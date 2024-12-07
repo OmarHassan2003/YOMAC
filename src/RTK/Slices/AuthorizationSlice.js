@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice, isFulfilled } from "@reduxjs/toolkit";
 import YomacApi from "../../utils/AxiosInstance";
+import axios from "axios";
 
 const initialstate = {
-  token: null,
+  user_id: null,
+  token: localStorage.getItem("token"),
   role: "",
 };
 
@@ -13,13 +15,33 @@ export const StudentLoginAPI = createAsyncThunk(
     // api call
     try {
       const response = await YomacApi.post("student_sign_in", {
-        headers: {
-          "Content-Type": "application/json",
-        },
         username: userData.username,
         password: userData.password,
       });
-      console.log(response);
+      console.log(response.data);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const GenerateNewToken = createAsyncThunk(
+  "AuthorizationSlice/generateNewToken",
+  async (_, { getState, rejectWithValue }) => {
+    // api call
+    try {
+      const response = await axios.post(
+        "http://localhost:3500/api/auth/generate_new_token",
+        "",
+        {
+          headers: {
+            refresh: localStorage.getItem("refresh"),
+          },
+        },
+        { withCredentials: true }
+      );
       return response;
     } catch (error) {
       console.log(error);
@@ -103,12 +125,15 @@ const AuthorizationSlice = createSlice({
         // console.log(action.payload.data);
         const data = action.payload.data;
         state.token = data.token;
+        localStorage.setItem("token", data.token);
+        state.user_id = data.user_data.id;
         state.role = data.user_data.role;
         // console.log(state.token);
         // console.log(state.role);
       })
       .addCase(StudentLoginAPI.rejected, (state, action) => {
         // state.name = action.payload;
+        console.log(action.payload);
       })
       .addCase(InstructorLoginAPI.pending, (state, action) => {
         // for loading
@@ -117,11 +142,32 @@ const AuthorizationSlice = createSlice({
         // console.log(action.payload.data);
         const data = action.payload.data;
         state.token = data.token;
+        localStorage.setItem("token", data.token);
+        state.user_id = data.user_data.id;
         state.role = data.user_data.role;
         // console.log(state.token);
         // console.log(state.role);
       })
       .addCase(InstructorLoginAPI.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log(action);
+      })
+
+      .addCase(GenerateNewToken.pending, (state, action) => {
+        // for loading
+      })
+      .addCase(GenerateNewToken.fulfilled, (state, action) => {
+        // console.log(action.payload.data);
+        const data = action.payload.data;
+        console.log(data);
+        state.token = data.token;
+        localStorage.setItem("token", data.token);
+        state.user_id = data.user_data.id;
+        state.role = data.role;
+        // console.log(state.token);
+        // console.log(state.role);
+      })
+      .addCase(GenerateNewToken.rejected, (state, action) => {
         // state.name = action.payload;
         console.log(action);
       }),
