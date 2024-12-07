@@ -32,11 +32,16 @@ export const GenerateNewToken = createAsyncThunk(
   async (_, { getState, rejectWithValue }) => {
     // api call
     try {
-      const response = await axios.post("http://localhost:3500/api/auth/generate_new_token", '', {
-        headers: {
-          refresh: localStorage.getItem("refresh")
+      const response = await axios.post(
+        "http://localhost:3500/api/auth/generate_new_token",
+        "",
+        {
+          headers: {
+            refresh: localStorage.getItem("refresh"),
+          },
         },
-      }, { withCredentials:true });
+        { withCredentials: true }
+      );
       return response;
     } catch (error) {
       console.log(error);
@@ -87,12 +92,12 @@ export const InstructorLoginAPI = createAsyncThunk(
 
 export const InstructorRegisterAPI = createAsyncThunk(
   "AuthorizationSlice/InstructorRegister",
-  async (_, { getState, rejectWithValue }) => {
+  async (userData, { getState, rejectWithValue }) => {
     // api call
     try {
       const response = await YomacApi.post("instrutor_sign_up", {
-        username: "mb",
-        password: "123456",
+        username: userData.username,
+        password: userData.password,
       });
       // console.log(response);
       return response;

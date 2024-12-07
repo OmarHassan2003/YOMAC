@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./InstructorLogin.css";
+import { useDispatch } from "react-redux";
+import { InstructorLoginAPI } from "../../RTK/Slices/AuthorizationSlice";
 
 export default function InstructorLogin() {
   const [username, setUsername] = useState("");
   const [password, setpassword] = useState("");
+  const dispatch = useDispatch();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -13,6 +16,7 @@ export default function InstructorLogin() {
       username,
       password,
     };
+    dispatch(InstructorLoginAPI(user));
     console.log(user);
   };
 

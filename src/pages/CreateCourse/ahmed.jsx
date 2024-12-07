@@ -1,30 +1,23 @@
 import React, { useRef, useState } from "react";
-import "./CreateCourse.css"; // Import the CSS file
+import "./Form.css";
 
-const CreateCourse = () => {
+const CourseForm = () => {
+  const formRef = useRef(null);
   const [sections, setSections] = useState([]);
-  const [formData, setFormData] = useState({
-    title: "",
-    duration: "",
-    description: "",
-    categoryID: "",
-    seenStatus: "Seen",
-    price: "",
-    requirements: "",
-    courseImage: null,
-    certificate: null,
-  });
 
+  // Add a new section
   const addSection = () => {
     setSections([
       ...sections,
       {
         title: "",
         quizzes: [],
-        videos: [{ title: "", link: "" }],
+        videos: [],
       },
     ]);
   };
+
+  // Add a new quiz to a specific section
   const addQuiz = (sectionIndex) => {
     const updatedSections = [...sections];
     updatedSections[sectionIndex].quizzes.push({
@@ -32,160 +25,109 @@ const CreateCourse = () => {
       duration: "",
       totalMarks: "",
       passingMarks: "",
-      questions: [
-        { text: "", choices: ["", "", "", ""], correctAnswerIndex: 0 },
-        { text: "", choices: ["", "", "", ""], correctAnswerIndex: 0 },
-      ],
+      questions: [],
     });
     setSections(updatedSections);
   };
 
+  // Add a question to a quiz
+  const addQuestion = (sectionIndex, quizIndex) => {
+    const updatedSections = [...sections];
+    updatedSections[sectionIndex].quizzes[quizIndex].questions.push({
+      text: "",
+      choices: ["", "", "", ""],
+      correctAnswerIndex: 0,
+    });
+    setSections(updatedSections);
+  };
+
+  // Add a video to a specific section
   const addVideo = (sectionIndex) => {
     const updatedSections = [...sections];
     updatedSections[sectionIndex].videos.push({ title: "", link: "" });
     setSections(updatedSections);
   };
 
-  const handleInputChange = (e, field, sectionIndex, videoIndex) => {
-    if (field === "courseImage" || field === "certificate") {
-      setFormData({ ...formData, [field]: e.target.files[0] });
-    } else if (field === "sectionTitle") {
-      const updatedSections = [...sections];
-      updatedSections[sectionIndex].title = e.target.value;
-      setSections(updatedSections);
-    } else if (field === "videoTitle" || field === "videoLink") {
-      const updatedSections = [...sections];
-      updatedSections[sectionIndex].videos[videoIndex][field] = e.target.value;
-      setSections(updatedSections);
-    } else {
-      setFormData({ ...formData, [field]: e.target.value });
-    }
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const course = {
-      ...formData,
+      title: e.target.title.value,
+      duration: e.target.duration.value,
+      description: e.target.description.value,
+      categoryID: e.target.categoryID.value,
+      seenStatus: e.target.seenStatus.value,
+      price: e.target.price.value,
+      requirements: e.target.requirements.value,
+      courseImage: e.target.courseImage.files[0],
+      certificate: e.target.certificate.files[0],
       sections,
     };
-    console.log(course); // Log the course object (replace with API call or further processing)
+    console.log(course);
   };
 
-  const CourseForm = useRef(null);
-
-  function BahgatHabdleSubmit(e) {
-    e.preventDefault();
-    const formData = new FormData(CourseForm.current);
-
-    const course = {
-      title: formData.get("course_title"),
-      description: formData.get("course_description"),
-      seenStatus: formData.get("course_status"),
-      price: formData.get("course_price"),
-      requirements: formData.get("course_requirements"),
-      courseImage: formData.get("course_image"),
-      courseCertificate: formData.get("course_certificate"),
-      sections: [],
-    };
-
-    const sectionTitles = formData.getAll("section_title");
-
-    const sections_number = sectionTitles.length();
-
-    const section_model = {};
-
-    for (let i = 0; i < sections_number; i++) {
-      const quizTitles = formData.getAll(`section_${i}_quizTitle`);
-      const quizDurations = formData.getAll(`section_${i}_quizDuration`);
-      const quizTotalMarks = formData.get(`section_${i}_quizTotalMarks`);
-      const quizPassingMarks = formData.get(`section_${i}_quizPassingMarks`);
-      const quizQuestions = [{}, {}];
-      for (let j = 0; j < 2; ++j) {
-        quizQuestions[j].text = formData.get(`section_${i}_question_${j}`);
-        quizQuestions[j].choices = [];
-        for (let z = 0; z < 4; ++z) {
-          quizQuestions[j].choices.push(
-            formData.get(`section_${i}_question_${j}_choice_${z}`)
-          );
-        }
-      }
-      const quiz = {
-        title: quizTitles[i],
-        duration: quizDurations[i],
-        totlaMarks: quizTotalMarks,
-        passingMarks: quizPassingMarks,
-      };
-      course.sections.push({
-        title: sectionTitles[i],
-      });
-    }
-  }
-
   return (
-    <form
-      className="course-form"
-      ref={CourseForm}
-      onSubmit={BahgatHabdleSubmit}
-    >
+    <form className="course-form" ref={formRef} onSubmit={handleSubmit}>
       <h2>Create a Course</h2>
 
       <label>Title</label>
-      <input type="text" name="course_title" placeholder="Course Title" />
+      <input type="text" name="title" placeholder="Course Title" />
+
+      <label>Duration</label>
+      <input type="text" name="duration" placeholder="Duration" />
 
       <label>Description</label>
-      <textarea
-        name="course_description"
-        placeholder="Course Description"
-      ></textarea>
+      <textarea name="description" placeholder="Course Description"></textarea>
+
+      <label>Category ID</label>
+      <input type="text" name="categoryID" placeholder="Category ID" />
 
       <label>Seen Status</label>
-      <select name="course_status">
+      <select name="seenStatus">
         <option value="Seen">Seen</option>
         <option value="Unseen">Unseen</option>
       </select>
 
       <label>Price</label>
-      <input
-        name="course_price"
-        type="text"
-        placeholder="Price"
-        onChange={(e) => {
-          handleSubmit;
-        }}
-      />
+      <input type="text" name="price" placeholder="Price" />
 
       <label>Requirements</label>
       <textarea
-        name="course_requirements"
+        name="requirements"
         placeholder="Course Requirements"
       ></textarea>
 
       <label>Course Image</label>
-      <input name="course_image" type="file" accept="image/*" />
+      <input type="file" name="courseImage" accept="image/*" />
 
       <label>Certificate</label>
       <input
-        name="course_certificate"
         type="file"
-        accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+        name="certificate"
+        accept=".pdf,.doc,.docx,.png,.jpg"
       />
 
       {sections.map((section, sectionIndex) => (
         <div key={sectionIndex} className="section">
           <h3>Section {sectionIndex + 1}</h3>
+
+          <label>Section Title</label>
           <input
-            name={`section_title`}
             type="text"
             placeholder="Section Title"
-            onChange={(e) =>
-              handleInputChange(e, sectionIndex, null, "sectionTitle")
-            }
+            value={section.title}
+            onChange={(e) => {
+              const updatedSections = [...sections];
+              updatedSections[sectionIndex].title = e.target.value;
+              setSections(updatedSections);
+            }}
           />
-          {section?.quizzes?.map((quiz, quizIndex) => (
+
+          {/* Quizzes */}
+          <h4>Quizzes</h4>
+          {section.quizzes.map((quiz, quizIndex) => (
             <div key={quizIndex} className="quiz">
-              <h4>Quiz {quizIndex + 1}</h4>
               <input
-                name={`section_${sectionIndex}_quizTitle`}
+                name={`section_${sectionIndex}_quizTitle_${quizIndex}`}
                 type="text"
                 placeholder="Quiz Title"
                 value={quiz.title}
@@ -194,12 +136,12 @@ const CreateCourse = () => {
                     e,
                     sectionIndex,
                     null,
-                    `section_${sectionIndex}_quizTitle`
+                    `section_${sectionIndex}_quizTitle_${quizIndex}`
                   );
                 }}
               />
               <input
-                name={`section_${sectionIndex}_Quiz Duration`}
+                name={`section_${sectionIndex}_Quiz Duration_${quizIndex}`}
                 type="text"
                 placeholder="Quiz Duration"
                 value={quiz.duration}
@@ -208,12 +150,12 @@ const CreateCourse = () => {
                     e,
                     sectionIndex,
                     null,
-                    `section_${sectionIndex}_Quiz Duration`
+                    `section_${sectionIndex}_Quiz Duration_${quizIndex}`
                   );
                 }}
               />
               <input
-                name={`section_${sectionIndex}_Quiz totalMarks`}
+                name={`section_${sectionIndex}_Quiz totalMarks_${quizIndex}`}
                 type="text"
                 placeholder="Total Marks"
                 value={quiz.totalMarks}
@@ -222,12 +164,12 @@ const CreateCourse = () => {
                     e,
                     sectionIndex,
                     null,
-                    `section_${sectionIndex}_Quiz totalMarks`
+                    `section_${sectionIndex}_Quiz totalMarks_${quizIndex}`
                   );
                 }}
               />
               <input
-                name={`section_${sectionIndex}_Quiz passingMarks`}
+                name={`section_${sectionIndex}_Quiz passingMarks_${quizIndex}`}
                 type="text"
                 placeholder="Passing Marks"
                 value={quiz.passingMarks}
@@ -236,7 +178,7 @@ const CreateCourse = () => {
                     e,
                     sectionIndex,
                     null,
-                    `section_${sectionIndex}_Quiz passingMarks`
+                    `section_${sectionIndex}_Quiz passingMarks_${quizIndex}`
                   );
                 }}
               />
@@ -298,24 +240,33 @@ const CreateCourse = () => {
             Add Quiz
           </button>
 
+          {/* Videos */}
           <h4>Videos</h4>
           {section.videos.map((video, videoIndex) => (
-            <div key={videoIndex} className="video-input">
+            <div key={videoIndex}>
+              <label>Video Title</label>
               <input
-                name={`section_${sectionIndex}_video_${videoIndex}_videoTitle`}
                 type="text"
                 placeholder="Video Title"
-                onChange={(e) =>
-                  handleInputChange(e, sectionIndex, videoIndex, "videoTitle")
-                }
+                value={video.title}
+                onChange={(e) => {
+                  const updatedSections = [...sections];
+                  updatedSections[sectionIndex].videos[videoIndex].title =
+                    e.target.value;
+                  setSections(updatedSections);
+                }}
               />
+              <label>Video Link</label>
               <input
-                name={`section_${sectionIndex}_video_${videoIndex}_videoLink`}
                 type="text"
                 placeholder="Video Link"
-                onChange={(e) =>
-                  handleInputChange(e, sectionIndex, videoIndex, "videoLink")
-                }
+                value={video.link}
+                onChange={(e) => {
+                  const updatedSections = [...sections];
+                  updatedSections[sectionIndex].videos[videoIndex].link =
+                    e.target.value;
+                  setSections(updatedSections);
+                }}
               />
             </div>
           ))}
@@ -324,12 +275,13 @@ const CreateCourse = () => {
           </button>
         </div>
       ))}
+
       <button type="button" onClick={addSection}>
         Add Section
       </button>
-      <button type="submit">Save Profile</button>
+      <button type="submit">Submit Course</button>
     </form>
   );
 };
 
-export default CreateCourse;
+export default CourseForm;
