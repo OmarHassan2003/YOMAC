@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import show from "../../assets/show.png";
+import hide from "../../assets/hide.png";
 import "./InstructorRegister.css";
 
 export default function InstructorRegister() {
   const [email, setEmail] = useState("");
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [Bio, setBio] = useState("");
@@ -103,15 +106,31 @@ export default function InstructorRegister() {
           style={{ marginBottom: "30px" }}
         />
         <h3 style={{ marginBottom: "15px" }}>Password</h3>
-        <input
-          className="input-textbox"
-          type="text"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Enter your password"
-          style={{ marginBottom: "10px" }}
-        />
+        <div style={{ position: "relative" }}>
+          <input
+            className="input-textbox"
+            type={showPassword ? "text" : "password"}
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter your password"
+            style={{ marginBottom: "10px" }}
+          />
+          <button
+            onClick={() => setShowPassword(!showPassword)}
+            type="button"
+            style={{
+              position: "absolute",
+              right: "10px",
+              top: "46%",
+              transform: "translateY(-50%)",
+              border: "none",
+              background: "none",
+            }}
+          >
+            {showPassword ? <img src={hide} /> : <img src={show} />}
+          </button>
+        </div>
         <h3 style={{ marginBottom: "15px" }}>Bio</h3>
         <input
           className="input-textbox"

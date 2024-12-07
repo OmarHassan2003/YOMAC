@@ -1,10 +1,16 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import show from "../../assets/show.png";
+import hide from "../../assets/hide.png";
 import "./InstructorLogin.css";
+import { useDispatch } from "react-redux";
+import { InstructorLoginAPI } from "../../RTK/Slices/AuthorizationSlice";
 
 export default function InstructorLogin() {
   const [username, setUsername] = useState("");
-  const [password, setpassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -13,7 +19,10 @@ export default function InstructorLogin() {
       username,
       password,
     };
+
     console.log(user);
+
+    dispatch(InstructorLoginAPI(user));
   };
 
   return (
@@ -38,14 +47,31 @@ export default function InstructorLogin() {
           style={{ marginBottom: "30px" }}
         />
         <h3 style={{ marginBottom: "15px" }}>Password</h3>
-        <input
-          className="input-textbox"
-          type="text"
-          placeholder="Enter your password"
-          value={password}
-          onChange={(e) => setpassword(e.target.value)}
-          style={{ marginBottom: "10px" }}
-        />
+        <div style={{ position: "relative" }}>
+          <input
+            className="input-textbox"
+            type={showPassword ? "text" : "password"}
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter your password"
+            style={{ marginBottom: "10px" }}
+          />
+          <button
+            onClick={() => setShowPassword(!showPassword)}
+            type="button"
+            style={{
+              position: "absolute",
+              right: "10px",
+              top: "46%",
+              transform: "translateY(-50%)",
+              border: "none",
+              background: "none",
+            }}
+          >
+            {showPassword ? <img src={hide} /> : <img src={show} />}
+          </button>
+        </div>
 
         <div className="remember-input" style={{ marginBottom: "20px" }}>
           <input type="checkbox" id="remember-label" />
