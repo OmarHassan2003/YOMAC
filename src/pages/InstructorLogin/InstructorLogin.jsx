@@ -19,6 +19,7 @@ export default function InstructorLogin() {
       username,
       password,
     };
+
     console.log(user);
     dispatch(InstructorLoginAPI(user));
   };
