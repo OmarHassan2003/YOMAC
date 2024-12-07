@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./StudentLogin.css";
+import { useDispatch } from "react-redux";
+import { StudentLoginAPI } from "../../RTK/Slices/AuthorizationSlice";
 
 export default function StudentLogin() {
+  const dispatch = useDispatch();
+
   const [username, setUsername] = useState("");
   const [password, setpassword] = useState("");
 
@@ -13,6 +17,8 @@ export default function StudentLogin() {
       username,
       password,
     };
+
+    dispatch(StudentLoginAPI(user));
 
     console.log(user);
   };
