@@ -33,6 +33,57 @@ export const getCourse = createAsyncThunk(
         headers: {
           "Content-Type": "application/json",
           token: token,
+
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const getVideo = createAsyncThunk(
+  "CourseSlice/getVideo",
+  async (id, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.get(`get_video/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+      });
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const CreateCourseAPI = createAsyncThunk(
+  "AuthorizationSlice/CreateCourseAPI",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const obj = {
+        headers: {
+          "Content-Type": "application/json",
+          token:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxMzg2NzA5LCJpYXQiOjE3MzM2MTA3MDksImp0aSI6Ijc4N2ZlZGRkMTVlMDQxOTZiZThjN2ZlNTk1N2I5Mzg1IiwiaWQiOjEsInJvbGUiOiJpbnN0cnVjdG9yIn0.oPoCWcua0aJx6nBxLrMUDZR1yUtDFXkImpjjtzBE4VY",
+        },
+      };
+      const response = await YomacApi.post("create_course", data, {
+        headers: {
+          token: token,
+          "Content-Type": "application/json",
+
         },
       });
       // console.log(response);
@@ -120,6 +171,22 @@ const CourseSlice = createSlice({
       })
       .addCase(getVideo.rejected, (state, action) => {
         // state.name = action.payload;
+
+      })
+      .addCase(CreateCourseAPI.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(CreateCourseAPI.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        // console.log(action.payload.data);
+        console.log("al denia 7lwa");
+        state.loadingVid = false;
+      })
+      .addCase(CreateCourseAPI.rejected, (state, action) => {
+        state.loadingVid = false;
+        // state.name = action.payload;
+
       }),
 });
 

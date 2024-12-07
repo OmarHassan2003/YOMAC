@@ -69,12 +69,12 @@ export const InstructorLoginAPI = createAsyncThunk(
 
 export const InstructorRegisterAPI = createAsyncThunk(
   "AuthorizationSlice/InstructorRegister",
-  async (_, { getState, rejectWithValue }) => {
+  async (userData, { getState, rejectWithValue }) => {
     // api call
     try {
       const response = await YomacApi.post("instrutor_sign_up", {
-        username: "mb",
-        password: "123456",
+        username: userData.username,
+        password: userData.password,
       });
       // console.log(response);
       return response;

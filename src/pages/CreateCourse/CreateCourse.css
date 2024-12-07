@@ -63,3 +63,6 @@
 .course-form .video-input input {
   flex: 1;
 }
+.questions {
+  margin-bottom: 10px;
+}
