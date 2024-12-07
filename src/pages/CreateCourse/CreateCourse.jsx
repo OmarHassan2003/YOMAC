@@ -1,19 +1,12 @@
 import React, { useRef, useState } from "react";
 import "./CreateCourse.css"; // Import the CSS file
+import encodeFileToBase64 from "../../utils/EncodeMedia";
+import { CreateCourseAPI } from "../../RTK/Slices/CourseSlice";
+import { useDispatch } from "react-redux";
 
 const CreateCourse = () => {
   const [sections, setSections] = useState([]);
-  const [formData, setFormData] = useState({
-    title: "",
-    duration: "",
-    description: "",
-    categoryID: "",
-    seenStatus: "Seen",
-    price: "",
-    requirements: "",
-    courseImage: null,
-    certificate: null,
-  });
+  const dispatch = useDispatch();
 
   const addSection = () => {
     setSections([
@@ -46,79 +39,83 @@ const CreateCourse = () => {
     setSections(updatedSections);
   };
 
-  const handleInputChange = (e, field, sectionIndex, videoIndex) => {
-    if (field === "courseImage" || field === "certificate") {
-      setFormData({ ...formData, [field]: e.target.files[0] });
-    } else if (field === "sectionTitle") {
-      const updatedSections = [...sections];
-      updatedSections[sectionIndex].title = e.target.value;
-      setSections(updatedSections);
-    } else if (field === "videoTitle" || field === "videoLink") {
-      const updatedSections = [...sections];
-      updatedSections[sectionIndex].videos[videoIndex][field] = e.target.value;
-      setSections(updatedSections);
-    } else {
-      setFormData({ ...formData, [field]: e.target.value });
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const course = {
-      ...formData,
-      sections,
-    };
-    console.log(course); // Log the course object (replace with API call or further processing)
-  };
-
   const CourseForm = useRef(null);
 
-  function BahgatHabdleSubmit(e) {
+  async function BahgatHabdleSubmit(e) {
     e.preventDefault();
     const formData = new FormData(CourseForm.current);
-
+    const image = formData.get("course_image");
+    const courseImage = await encodeFileToBase64(image);
+    const certificate = formData.get("course_certificate");
+    const courseCertificate = await encodeFileToBase64(certificate);
     const course = {
       title: formData.get("course_title"),
       description: formData.get("course_description"),
-      seenStatus: formData.get("course_status"),
-      price: formData.get("course_price"),
-      requirements: formData.get("course_requirements"),
-      courseImage: formData.get("course_image"),
-      courseCertificate: formData.get("course_certificate"),
+      seen_status: formData.get("course_status"),
+      duration: "2323 hours",
+      price: +formData.get("course_price"),
+      categoryID: 1,
+      requirements: formData.get("course_requirements").split(","),
+      course_image: courseImage,
+      certificate: courseCertificate,
       sections: [],
     };
 
     const sectionTitles = formData.getAll("section_title");
 
-    const sections_number = sectionTitles.length();
-
-    const section_model = {};
+    const sections_number = sectionTitles.length;
 
     for (let i = 0; i < sections_number; i++) {
       const quizTitles = formData.getAll(`section_${i}_quizTitle`);
-      const quizDurations = formData.getAll(`section_${i}_quizDuration`);
-      const quizTotalMarks = formData.get(`section_${i}_quizTotalMarks`);
-      const quizPassingMarks = formData.get(`section_${i}_quizPassingMarks`);
-      const quizQuestions = [{}, {}];
-      for (let j = 0; j < 2; ++j) {
-        quizQuestions[j].text = formData.get(`section_${i}_question_${j}`);
-        quizQuestions[j].choices = [];
-        for (let z = 0; z < 4; ++z) {
-          quizQuestions[j].choices.push(
-            formData.get(`section_${i}_question_${j}_choice_${z}`)
+      const quizDurations = formData.getAll(`section_${i}_Quiz Duration`);
+      const quizTotalMarks = formData.getAll(`section_${i}_Quiz totalMarks`);
+      const quizPassingMarks = formData.getAll(
+        `section_${i}_Quiz passingMarks`
+      );
+      const quizzes = [];
+      for (let y = 0; y < quizTitles.length; ++y) {
+        const quizQuestions = [{}, {}];
+        for (let j = 0; j < 2; ++j) {
+          quizQuestions[j].text = formData.get(
+            `section_${i}_quiz_${y}_question_${j}`
+          );
+          quizQuestions[j].choices = [];
+          for (let z = 0; z < 4; ++z) {
+            quizQuestions[j].choices.push(
+              formData.get(`section_${i}_quiz_${y}_question_${j}_choice_${z}`)
+            );
+          }
+          quizQuestions[j].correct_answer_index = +formData.get(
+            `section_${i}_quiz_${y}_correct_answer_${j}`
           );
         }
+        console.log(quizDurations[y], quizTotalMarks[y], quizPassingMarks[y]);
+        quizzes.push({
+          title: quizTitles[y],
+          quizDuration: +quizDurations[y],
+          totlaMarks: +quizTotalMarks[y],
+          passingMarks: +quizPassingMarks[y],
+          questions: quizQuestions,
+        });
       }
-      const quiz = {
-        title: quizTitles[i],
-        duration: quizDurations[i],
-        totlaMarks: quizTotalMarks,
-        passingMarks: quizPassingMarks,
-      };
+      const videoTitles = formData.getAll(`section_${i}_videoTitle`);
+      const videoLinks = formData.getAll(`section_${i}_videoLink`);
+      const videos = [];
+      for (let k = 0; k < videoTitles.length; ++k) {
+        const vidLink = await encodeFileToBase64(videoLinks[k]);
+        videos.push({
+          title: videoTitles[k],
+          video: vidLink,
+        });
+      }
       course.sections.push({
         title: sectionTitles[i],
+        quiz: quizzes[0],
+        videos: videos,
       });
     }
+    dispatch(CreateCourseAPI(course));
+    console.log(course);
   }
 
   return (
@@ -140,19 +137,12 @@ const CreateCourse = () => {
 
       <label>Seen Status</label>
       <select name="course_status">
-        <option value="Seen">Seen</option>
-        <option value="Unseen">Unseen</option>
+        <option value="public">Public </option>
+        <option value="private">Private</option>
       </select>
 
       <label>Price</label>
-      <input
-        name="course_price"
-        type="text"
-        placeholder="Price"
-        onChange={(e) => {
-          handleSubmit;
-        }}
-      />
+      <input name="course_price" type="text" placeholder="Price" />
 
       <label>Requirements</label>
       <textarea
@@ -177,9 +167,6 @@ const CreateCourse = () => {
             name={`section_title`}
             type="text"
             placeholder="Section Title"
-            onChange={(e) =>
-              handleInputChange(e, sectionIndex, null, "sectionTitle")
-            }
           />
           {section?.quizzes?.map((quiz, quizIndex) => (
             <div key={quizIndex} className="quiz">
@@ -188,57 +175,21 @@ const CreateCourse = () => {
                 name={`section_${sectionIndex}_quizTitle`}
                 type="text"
                 placeholder="Quiz Title"
-                value={quiz.title}
-                onChange={(e) => {
-                  handleInputChange(
-                    e,
-                    sectionIndex,
-                    null,
-                    `section_${sectionIndex}_quizTitle`
-                  );
-                }}
               />
               <input
                 name={`section_${sectionIndex}_Quiz Duration`}
                 type="text"
                 placeholder="Quiz Duration"
-                value={quiz.duration}
-                onChange={(e) => {
-                  handleInputChange(
-                    e,
-                    sectionIndex,
-                    null,
-                    `section_${sectionIndex}_Quiz Duration`
-                  );
-                }}
               />
               <input
                 name={`section_${sectionIndex}_Quiz totalMarks`}
                 type="text"
                 placeholder="Total Marks"
-                value={quiz.totalMarks}
-                onChange={(e) => {
-                  handleInputChange(
-                    e,
-                    sectionIndex,
-                    null,
-                    `section_${sectionIndex}_Quiz totalMarks`
-                  );
-                }}
               />
               <input
                 name={`section_${sectionIndex}_Quiz passingMarks`}
                 type="text"
                 placeholder="Passing Marks"
-                value={quiz.passingMarks}
-                onChange={(e) => {
-                  handleInputChange(
-                    e,
-                    sectionIndex,
-                    null,
-                    `section_${sectionIndex}_Quiz passingMarks`
-                  );
-                }}
               />
 
               {/* Questions */}
@@ -249,15 +200,6 @@ const CreateCourse = () => {
                     name={`section_${sectionIndex}_quiz_${quizIndex}_question_${qIndex}`}
                     type="text"
                     placeholder={`Question `}
-                    onChange={(e) =>
-                      handleInputChange(
-                        e,
-                        index,
-                        null,
-                        qIndex,
-                        `section_${sectionIndex}_quiz_${quizIndex}_question_${qIndex}`
-                      )
-                    }
                   />
                   {[0, 1, 2, 3].map((cIndex) => (
                     <input
@@ -265,30 +207,12 @@ const CreateCourse = () => {
                       key={cIndex}
                       type="text"
                       placeholder={`Choice ${cIndex + 1}`}
-                      onChange={(e) =>
-                        handleInputChange(
-                          e,
-                          index,
-                          null,
-                          qIndex,
-                          `section_${sectionIndex}_quiz_${quizIndex}_question_${qIndex}_choice_${cIndex}`
-                        )
-                      }
                     />
                   ))}
                   <input
                     name={`section_${sectionIndex}_quiz_${quizIndex}__correct_answer_${qIndex}`}
                     type="text"
                     placeholder={`Correct Answer Index `}
-                    onChange={(e) =>
-                      handleInputChange(
-                        e,
-                        index,
-                        null,
-                        qIndex,
-                        `section_${sectionIndex}_quiz_${quizIndex}__correct_answer_${qIndex}`
-                      )
-                    }
                   />
                 </div>
               ))}
@@ -302,20 +226,14 @@ const CreateCourse = () => {
           {section.videos.map((video, videoIndex) => (
             <div key={videoIndex} className="video-input">
               <input
-                name={`section_${sectionIndex}_video_${videoIndex}_videoTitle`}
+                name={`section_${sectionIndex}_videoTitle`}
                 type="text"
                 placeholder="Video Title"
-                onChange={(e) =>
-                  handleInputChange(e, sectionIndex, videoIndex, "videoTitle")
-                }
               />
               <input
-                name={`section_${sectionIndex}_video_${videoIndex}_videoLink`}
-                type="text"
-                placeholder="Video Link"
-                onChange={(e) =>
-                  handleInputChange(e, sectionIndex, videoIndex, "videoLink")
-                }
+                name={`section_${sectionIndex}_videoLink`}
+                type="file"
+                accept="mp4"
               />
             </div>
           ))}

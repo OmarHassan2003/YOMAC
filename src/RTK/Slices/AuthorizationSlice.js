@@ -27,29 +27,6 @@ export const StudentLoginAPI = createAsyncThunk(
   }
 );
 
-export const GenerateNewToken = createAsyncThunk(
-  "AuthorizationSlice/generateNewToken",
-  async (_, { getState, rejectWithValue }) => {
-    // api call
-    try {
-      const response = await axios.post(
-        "http://localhost:3500/api/auth/generate_new_token",
-        "",
-        {
-          headers: {
-            refresh: localStorage.getItem("refresh"),
-          },
-        },
-        { withCredentials: true }
-      );
-      return response;
-    } catch (error) {
-      console.log(error);
-      return rejectWithValue(error);
-    }
-  }
-);
-
 export const StudentRegisterAPI = createAsyncThunk(
   "AuthorizationSlice/StudentRegister",
   async (_, { getState, rejectWithValue }) => {
@@ -149,25 +126,6 @@ const AuthorizationSlice = createSlice({
         // console.log(state.role);
       })
       .addCase(InstructorLoginAPI.rejected, (state, action) => {
-        // state.name = action.payload;
-        console.log(action);
-      })
-
-      .addCase(GenerateNewToken.pending, (state, action) => {
-        // for loading
-      })
-      .addCase(GenerateNewToken.fulfilled, (state, action) => {
-        // console.log(action.payload.data);
-        const data = action.payload.data;
-        console.log(data);
-        state.token = data.token;
-        localStorage.setItem("token", data.token);
-        state.user_id = data.user_data.id;
-        state.role = data.role;
-        // console.log(state.token);
-        // console.log(state.role);
-      })
-      .addCase(GenerateNewToken.rejected, (state, action) => {
         // state.name = action.payload;
         console.log(action);
       }),

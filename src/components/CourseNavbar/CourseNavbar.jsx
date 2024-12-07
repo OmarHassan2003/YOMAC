@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../CourseNavbar/CourseNavbar.css";
+import { getVidQA, getQAAnswers, setfetchedQA } from "../../RTK/Slices/QASlice";
+import { useDispatch, useSelector } from "react-redux";
 const CourseNavbar = ({ course }) => {
   const [activeTab, setActiveTab] = useState("overview");
   const [activeQuestion, setActiveQuestion] = useState("");
@@ -7,9 +9,23 @@ const CourseNavbar = ({ course }) => {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
+  let qa = useSelector((state) => state.qa);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    console.log(course.currVid);
+    if (course?.currVid !== null) {
+      console.log(course?.currVid);
+      dispatch(getVidQA(course.currVid.videoid));
+      console.log(qa.qa_questions);
+    }
+  }, [course.currVid]);
 
-  const toggleAnswers = (messageID) => {
-    setActiveQuestion(messageID);
+  const toggleAnswers = (qaID) => {
+    console.log(qaID);
+    dispatch(setfetchedQA(null));
+    dispatch(getQAAnswers(qaID));
+    console.log(qa.fetchedQA);
+    setActiveQuestion(qaID);
   };
 
   const messages = [
@@ -51,12 +67,14 @@ const CourseNavbar = ({ course }) => {
         >
           Overview
         </div>
-        <div
-          className={`tab ${activeTab === "q&a" ? "active" : ""}`}
-          onClick={() => handleTabClick("q&a")}
-        >
-          Q&A
-        </div>
+        {course.currVid !== null && (
+          <div
+            className={`tab ${activeTab === "q&a" ? "active" : ""}`}
+            onClick={() => handleTabClick("q&a")}
+          >
+            Q&A
+          </div>
+        )}
         <div
           className={`tab ${activeTab === "reviews" ? "active" : ""}`}
           onClick={() => handleTabClick("reviews")}
@@ -70,32 +88,76 @@ const CourseNavbar = ({ course }) => {
         >
           <h2>Course Description</h2>
           <p>{course.description}</p>
-          <p>
-            <strong>Course Duration</strong> <span>{course.duration}</span>
-          </p>
+          <h2>Course Duration</h2>
+          <p>{course.duration}</p>
         </div>
-        <div className={`qna ${activeTab !== "q&a" ? "hidden" : ""}`}>
-          {messages.map((message) => (
-            <div className="qa-item">
-              <div
-                key={message.id}
-                className="question"
-                onClick={() => toggleAnswers(message.id)}
-              >
-                {message.question}
-                <span className="timestamp">{message.sentAt}</span>
+        <div
+          key={course.currVid?.videoid}
+          className={`qna ${activeTab !== "q&a" ? "hidden" : ""}`}
+        >
+          {qa?.qa_questions.length === 0 && <div>No Questions asked yet</div>}
+          {qa?.qa_questions.length !== 0 &&
+            qa.qa_questions.map((message) => (
+              <div className="qa-item">
+                <div
+                  key={message.qaid}
+                  className="question"
+                  onClick={() => toggleAnswers(message.qaid)}
+                >
+                  <div className="user-info">
+                    <img
+                      src={message.senderstudent.profilepic}
+                      alt="User Profile"
+                      className="profile-pic"
+                    />
+                    <p className="user-name">
+                      {message.senderstudent.studentname}
+                    </p>
+                  </div>
+                  <div className="message-text">{message.messagetext}</div>
+                </div>
+                <div
+                  className={`answers ${
+                    activeQuestion !== message.qaid ? "hidden" : ""
+                  }`}
+                >
+                  {qa?.fetchedQA?.answers.length === 0 && (
+                    <div>No Answers yet</div>
+                  )}
+                  {qa.fetchedQA !== null &&
+                    qa?.fetchedQA?.answers.map((answer) => (
+                      <div key={answer.messageid} className="answer">
+                        <div className="user-info">
+                          <img
+                            src={answer.senderstudent.profilepic}
+                            alt="User Profile"
+                            className="profile-pic"
+                          />
+                          <p className="user-name">
+                            {answer.senderstudent.studentname}
+                          </p>
+                        </div>
+                        <div className="message-text">{answer.messagetext}</div>
+                      </div>
+                    ))}
+                </div>
               </div>
-              <div
-                className={`answers ${
-                  activeQuestion !== message.id ? "hidden" : ""
-                }`}
-              >
-                {message.answers.map((answer) => (
-                  <div className="answer">{answer}</div>
-                ))}
-              </div>
-            </div>
-          ))}
+            ))}
+          <div className="qa-input-container">
+            <textarea
+              className="qa-textbox"
+              placeholder="Type your question here..."
+              // value={questionText}
+              // onChange={(e) => setQuestionText(e.target.value)}
+            ></textarea>
+            <button
+              className="qa-submit-button"
+              // onClick={handlePostQuestion}
+              // disabled={!questionText.trim()}
+            >
+              Post Question
+            </button>
+          </div>
         </div>
       </div>
     </div>

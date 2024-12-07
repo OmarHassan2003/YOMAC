@@ -29,3 +29,33 @@
     font-size: 14px;
     color: #666;
   }
+
+  .courseprofile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px; 
+    border-radius: 12px;
+    padding: 20px;
+    width: 100%; 
+    text-align: left;
+    min-height: 400px;
+  }
+  
+  
+  .courseimg {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; 
+    object-fit: cover; 
+    border: 2px solid #ddd; 
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.2;
+  }
+  
