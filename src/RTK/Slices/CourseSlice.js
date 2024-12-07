@@ -33,7 +33,6 @@ export const getCourse = createAsyncThunk(
         headers: {
           "Content-Type": "application/json",
           token: token,
-
         },
       });
       // console.log(response);
@@ -83,31 +82,9 @@ export const CreateCourseAPI = createAsyncThunk(
         headers: {
           token: token,
           "Content-Type": "application/json",
-
         },
       });
       // console.log(response);
-      return response;
-    } catch (error) {
-      console.log(error);
-      return rejectWithValue(error);
-    }
-  }
-);
-
-export const getVideo = createAsyncThunk(
-  "CourseSlice/getVideo",
-  async (id, { getState, rejectWithValue }) => {
-    // api call
-    const { token } = getState().Authorization;
-    try {
-      const response = await YomacApi.get(`get_video/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-          token: token,
-        },
-      });
-      console.log(response);
       return response;
     } catch (error) {
       console.log(error);
@@ -171,7 +148,6 @@ const CourseSlice = createSlice({
       })
       .addCase(getVideo.rejected, (state, action) => {
         // state.name = action.payload;
-
       })
       .addCase(CreateCourseAPI.pending, (state, action) => {
         // for loading
@@ -186,7 +162,6 @@ const CourseSlice = createSlice({
       .addCase(CreateCourseAPI.rejected, (state, action) => {
         state.loadingVid = false;
         // state.name = action.payload;
-
       }),
 });
 
