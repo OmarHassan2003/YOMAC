@@ -9,12 +9,12 @@ export const getStudent = createAsyncThunk(
   "StudentSlice/getStudent",
   async (_, { getState, rejectWithValue }) => {
     // api call
+    const { token } = getState().Authorization;
     try {
       const response = await YomacApi.get(`get_user_data`, {
         headers: {
           "Content-Type": "application/json",
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMzExMzcyLCJpYXQiOjE3MzMzMDk4NzIsImp0aSI6IjMzMjE0ZjI1ODg1ZjRlODg4MTdhYTVjYjJkZWEwOTIxIiwiaWQiOjEsInJvbGUiOiJpbnN0cnVjdG9yIn0.gkCiUQHEoxmWQnt9cS0Xc0YvNp0KdDudIK4z3zXkOGM",
+          token: token,
         },
       });
       // console.log(response);

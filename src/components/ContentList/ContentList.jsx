@@ -1,6 +1,10 @@
 import React, { useState } from "react";
-import { setCurrSection, setCurrVid } from "../../RTK/Slices/CourseSlice";
-import { useDispatch } from "react-redux";
+import {
+  getVideo,
+  setCurrSection,
+  setCurrVid,
+} from "../../RTK/Slices/CourseSlice";
+import { useDispatch, useSelector } from "react-redux";
 import "../ContentList/ContentList.css";
 const ContentList = ({ course }) => {
   const [activeModule, setActiveModule] = useState(null);
@@ -9,10 +13,9 @@ const ContentList = ({ course }) => {
   const toggleModule = (id) => {
     setActiveModule(activeModule === id ? null : id);
   };
+  const { fetchedVideo } = useSelector((state) => state.Course);
   const dispatch = useDispatch();
-  const updateCurrentVideo = (video) => {
-    dispatch(setCurrVid(video));
-  };
+  const updateCurrentVideo = (video) => dispatch(setCurrVid(video));
 
   const updateCurrentSection = (section) => {
     dispatch(setCurrSection(section));
@@ -20,10 +23,10 @@ const ContentList = ({ course }) => {
   const changeVid = (vidId, secId) => {
     const sec = course.sections.find((el) => el.coursesectionid === secId);
     updateCurrentSection(sec);
-    const vid = sec.videos.find((el) => el.videoid === vidId);
-    updateCurrentVideo(vid);
-    console.log(vid, sec);
-    console.log(course.currVid, course.currSection);
+    dispatch(getVideo(vidId));
+    updateCurrentVideo(fetchedVideo);
+    // console.log(video, sec);
+    // console.log(course.currVid, course.currSection);
   };
   return (
     <div className="content-list">
@@ -60,5 +63,4 @@ const ContentList = ({ course }) => {
     </div>
   );
 };
-
 export default ContentList;

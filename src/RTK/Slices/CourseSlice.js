@@ -19,22 +19,44 @@ const initialstate = {
   sections: [],
   currVid: null,
   currSection: null,
+  fetchedVideo: {},
+  loadingVid: false,
 };
 
 export const getCourse = createAsyncThunk(
   "CourseSlice/getCourse",
   async (id, { getState, rejectWithValue }) => {
     // api call
-    const { token } = getState().Authorization;    
+    const { token } = getState().Authorization;
     try {
       const response = await YomacApi.get(`get_single_course/${id}`, {
         headers: {
           "Content-Type": "application/json",
-          token:
-            token,
+          token: token,
         },
       });
       // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const getVideo = createAsyncThunk(
+  "CourseSlice/getVideo",
+  async (id, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.get(`get_video/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+      });
+      console.log(response);
       return response;
     } catch (error) {
       console.log(error);
@@ -58,11 +80,12 @@ const CourseSlice = createSlice({
     builder
       .addCase(getCourse.pending, (state, action) => {
         // for loading
+        state.loadingVid = true;
       })
       .addCase(getCourse.fulfilled, (state, action) => {
         // state.name = action.payload;
-        console.log(action.payload.data.course[0]);
-        const data = action.payload.data.course[0];
+        // console.log(action.payload.data);
+        const data = action.payload.data;
         state.categoryid = data.categoryid;
         state.title = data.title;
         state.courseid = data.courseid;
@@ -78,10 +101,24 @@ const CourseSlice = createSlice({
         state.certificate = data.certificate;
         state.contests = data.contests;
         state.sections = data.sections;
-        state.currVid = data.sections[0].videos[0];
-        state.currSection = data.sections[0];
+        state.loadingVid = false;
+        // state.currSection = data.sections[0];
       })
       .addCase(getCourse.rejected, (state, action) => {
+        // state.name = action.payload;
+      })
+      .addCase(getVideo.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(getVideo.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        // console.log(action.payload.data);
+        state.fetchedVideo = action.payload.data;
+        state.currVid = action.payload.data;
+        state.loadingVid = false;
+      })
+      .addCase(getVideo.rejected, (state, action) => {
         // state.name = action.payload;
       }),
 });

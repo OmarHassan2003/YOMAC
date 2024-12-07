@@ -53,6 +53,14 @@
     padding: 5px 0;
     font-size: 14px;
     color: #555;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding:10px;
+  }
+  .lesson :hover{
+    cursor: pointer;
   }
   
   

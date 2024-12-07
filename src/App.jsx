@@ -16,6 +16,7 @@ import CreateCourse from "./pages/CreateCourse/CreateCourse.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { StudentLoginAPI } from "./RTK/Slices/AuthorizationSlice";
 import { useEffect } from "react";
+import LoadingScreen from "./components/LoadingScreen/LoadingScreen.jsx";
 
 function App() {
   // const dispatch = useDispatch();
@@ -26,7 +27,8 @@ function App() {
     if (token === null) navigate("/login");
   }, [token]);
   return (
-    <div>
+    <>
+      <LoadingScreen />
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -36,13 +38,13 @@ function App() {
         <Route path="/instructorlogin" element={<InstructorLogin />} />
         <Route path="studentregister" element={<StudentRegister />} />
         <Route path="instructorregister" element={<InstructorRegister />} />
-        <Route path="/course" element={<Course />} />
+        <Route path="/course/:courseid" element={<Course />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/whiteboard" element={<Whiteboard />} />
         <Route path="/createCourse" element={<CreateCourse />} />
       </Routes>
-    </div>
+    </>
   );
 }
 
