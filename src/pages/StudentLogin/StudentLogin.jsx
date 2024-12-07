@@ -10,7 +10,7 @@ export default function StudentLogin() {
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState("");
-  const [password, setpassword] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleRegister = (e) => {
