@@ -3,7 +3,7 @@ import YomacApi from "../../utils/AxiosInstance";
 import axios from "axios";
 
 const initialstate = {
-  user_id: null,
+  user_id: localStorage.getItem("user_id"),
   token: localStorage.getItem("token"),
   role: localStorage.getItem("role"),
   smthnHappening: false,
@@ -107,6 +107,7 @@ const AuthorizationSlice = createSlice({
         // console.log(action.payload.data);
         const data = action.payload.data;
         state.token = data.token;
+        localStorage.setItem("user_id", data.user_data.id);
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data?.user_data?.role);
         state.user_id = data.user_data.id;
@@ -128,6 +129,7 @@ const AuthorizationSlice = createSlice({
         // console.log(action.payload.data);
         const data = action.payload.data;
         state.token = data.token;
+        localStorage.setItem("user_id", data.user_data.id);
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data?.user_data?.role);
         state.user_id = data.user_data.id;

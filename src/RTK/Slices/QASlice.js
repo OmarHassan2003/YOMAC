@@ -49,6 +49,64 @@ export const getQAAnswers = createAsyncThunk(
   }
 );
 
+export const postQuestion = createAsyncThunk(
+  "QASlice/postQuestion",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post(`ask_in_qa`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+      });
+      //   console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const postStudentAnswer = createAsyncThunk(
+  "QASlice/postStudentAnswer",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post(`student_answers_in_qa`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+      });
+      //   console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const postThenGet = createAsyncThunk(
+  "QASlice/postThenGet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(postQuestion(data));
+    return dispatch(getVidQA(data.videoID));
+  }
+);
+
+export const postStudentAnswerThenGet = createAsyncThunk(
+  "QASlice/postStudentAnswerThenGet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(postStudentAnswer(data));
+    return dispatch(getQAAnswers(data.QAID));
+  }
+);
+
 const QASlice = createSlice({
   name: "QA",
   initialState: initialstate,
@@ -85,6 +143,54 @@ const QASlice = createSlice({
         console.log(state.fetchedQA);
       })
       .addCase(getQAAnswers.rejected, (state, action) => {
+        // state.name = action.payload;
+      })
+      .addCase(postQuestion.pending, (state, action) => {
+        // for loading
+        state.loadingQA = true;
+      })
+      .addCase(postQuestion.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("post done");
+        state.loadingQA = false;
+      })
+      .addCase(postQuestion.rejected, (state, action) => {
+        // state.name = action.payload;
+      })
+      .addCase(postThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingQA = true;
+      })
+      .addCase(postThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("post then get done");
+        state.loadingQA = false;
+      })
+      .addCase(postThenGet.rejected, (state, action) => {
+        // state.name = action.payload;
+      })
+      .addCase(postStudentAnswer.pending, (state, action) => {
+        // for loading
+        state.loadingQA = true;
+      })
+      .addCase(postStudentAnswer.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("post then get done");
+        state.loadingQA = false;
+      })
+      .addCase(postStudentAnswer.rejected, (state, action) => {
+        // state.name = action.payload;
+      })
+      .addCase(postStudentAnswerThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingQA = true;
+      })
+      .addCase(postStudentAnswerThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("post then get done");
+        state.loadingQA = false;
+      })
+      .addCase(postStudentAnswerThenGet.rejected, (state, action) => {
         // state.name = action.payload;
       }),
 });

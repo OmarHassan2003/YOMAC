@@ -1,18 +1,40 @@
 import { useEffect, useState } from "react";
 import "../CourseNavbar/CourseNavbar.css";
-import { getVidQA, getQAAnswers, setfetchedQA } from "../../RTK/Slices/QASlice";
+import {
+  getVidQA,
+  getQAAnswers,
+  setfetchedQA,
+  postThenGet,
+  postStudentAnswerThenGet,
+} from "../../RTK/Slices/QASlice";
 import { useDispatch, useSelector } from "react-redux";
 const CourseNavbar = ({ course }) => {
   const [activeTab, setActiveTab] = useState("overview");
   const [activeQuestion, setActiveQuestion] = useState("");
-
+  const [questionText, setQuestionText] = useState("");
+  const [answerText, setAnswerText] = useState("");
+  let qa = useSelector((state) => state.qa);
+  let { user_id, role } = useSelector((state) => state.Authorization);
+  const dispatch = useDispatch();
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
-  let qa = useSelector((state) => state.qa);
-  const dispatch = useDispatch();
+
+  const handlePostQuestion = () => {
+    const data = {
+      videoID: course.currVid.videoid,
+      question: questionText,
+    };
+    dispatch(postThenGet(data));
+    setQuestionText("");
+  };
+
+  const handlePostAnswer = (data) => {
+    dispatch(postStudentAnswerThenGet(data));
+    setAnswerText("");
+  };
+
   useEffect(() => {
-    console.log(course.currVid);
     if (course?.currVid !== null) {
       console.log(course?.currVid);
       dispatch(getVidQA(course.currVid.videoid));
@@ -27,36 +49,6 @@ const CourseNavbar = ({ course }) => {
     console.log(qa.fetchedQA);
     setActiveQuestion(qaID);
   };
-
-  const messages = [
-    {
-      id: 1,
-      question: "Why is Farag Gay?",
-      sentAt: "12:53pm",
-      answers: [
-        "Answer 1: Example explanation for the first question.",
-        "Answer 2: Another example answer for the same question.",
-      ],
-    },
-    {
-      id: 2,
-      question: "What is Omar Hassan?",
-      sentAt: "5:31pm",
-      answers: [
-        "Answer 1: Example explanation for the first question.",
-        "Answer 2: Another example answer for the same question.",
-      ],
-    },
-    {
-      id: 3,
-      question: "Why is Bahgat Helwany?",
-      sentAt: "8:12pm",
-      answers: [
-        "Answer 1: Example explanation for the first question.",
-        "Answer 2: Another example answer for the same question.",
-      ],
-    },
-  ];
 
   return (
     <div className="belowvid">
@@ -105,15 +97,21 @@ const CourseNavbar = ({ course }) => {
                   onClick={() => toggleAnswers(message.qaid)}
                 >
                   <div className="user-info">
-                    <img
-                      src={message.senderstudent.profilepic}
-                      alt="User Profile"
-                      className="profile-pic"
-                    />
-                    <p className="user-name">
-                      {message.senderstudent.studentname}
-                    </p>
+                    <div className="user-details">
+                      <img
+                        src={message.senderstudent.profilepic}
+                        alt="User Profile"
+                        className="profile-pic"
+                      />
+                      <p className="user-name">
+                        {message.senderstudent.studentname}
+                      </p>
+                    </div>
+                    <div className="message-date">
+                      {new Date(message.createdat).toLocaleString()}
+                    </div>
                   </div>
+
                   <div className="message-text">{message.messagetext}</div>
                 </div>
                 <div
@@ -128,32 +126,61 @@ const CourseNavbar = ({ course }) => {
                     qa?.fetchedQA?.answers.map((answer) => (
                       <div key={answer.messageid} className="answer">
                         <div className="user-info">
-                          <img
-                            src={answer.senderstudent.profilepic}
-                            alt="User Profile"
-                            className="profile-pic"
-                          />
-                          <p className="user-name">
-                            {answer.senderstudent.studentname}
-                          </p>
+                          <div className="user-details">
+                            <img
+                              src={answer.senderstudent.profilepic}
+                              alt="User Profile"
+                              className="profile-pic"
+                            />
+                            <p className="user-name">
+                              {answer.senderstudent.studentname}
+                            </p>
+                          </div>
+                          <div className="message-date">
+                            {new Date(answer.createdat).toLocaleString()}
+                          </div>
                         </div>
                         <div className="message-text">{answer.messagetext}</div>
                       </div>
                     ))}
+                  <div className="qa-input-container">
+                    <input
+                      type="text"
+                      className="qa-textbox"
+                      placeholder="Type your answer here..."
+                      value={answerText}
+                      onChange={(e) => setAnswerText(e.target.value)}
+                    ></input>
+                    <button
+                      className="qa-submit-button"
+                      onClick={() => {
+                        handlePostAnswer({
+                          videoID: course.currVid.videoid,
+                          answerToID: message.senderstudent.studentid,
+                          answer: answerText,
+                          QAID: message.qaid,
+                        });
+                      }}
+                      disabled={!answerText.trim()}
+                    >
+                      Post Answer
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
           <div className="qa-input-container">
-            <textarea
+            <input
+              type="text"
               className="qa-textbox"
               placeholder="Type your question here..."
-              // value={questionText}
-              // onChange={(e) => setQuestionText(e.target.value)}
-            ></textarea>
+              value={questionText}
+              onChange={(e) => setQuestionText(e.target.value)}
+            ></input>
             <button
               className="qa-submit-button"
-              // onClick={handlePostQuestion}
-              // disabled={!questionText.trim()}
+              onClick={handlePostQuestion}
+              disabled={!questionText.trim()}
             >
               Post Question
             </button>

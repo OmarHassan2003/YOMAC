@@ -37,12 +37,6 @@ export default function Navbar() {
               >
                 Dashboard
               </Link>
-              <Link
-                style={{ color: isHomePage ? "white" : "black" }}
-                to="/course"
-              >
-                Courses
-              </Link>
             </>
           ) : (
             <>

@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import "./DashboardCourses.css";
 const DashboardCourses = ({ data }) => {
+  console.log(data);
+  const courseLink = "/course/";
   return (
     <div className="course-container">
       <div className="course-header">
@@ -8,7 +10,7 @@ const DashboardCourses = ({ data }) => {
       </div>
       <div className="course-List">
         {data.courses_progress.map((curr, index) => (
-          <div className="course-item" key={index}>
+          <div className="course-item" key={curr.courseid}>
             <div className="course-info">
               <img src={curr.courseimage} />
               <div className="course-details">
@@ -30,7 +32,7 @@ const DashboardCourses = ({ data }) => {
             <div className="course-rating">
               <span>⭐ 4.3</span>
             </div>
-            <Link to="/course">
+            <Link to={courseLink + curr.courseid}>
               <button className="view-course-btn">View Course</button>
             </Link>
           </div>
