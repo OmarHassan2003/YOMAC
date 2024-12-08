@@ -5,7 +5,8 @@ import axios from "axios";
 const initialstate = {
   user_id: null,
   token: localStorage.getItem("token"),
-  role: "",
+  role: localStorage.getItem("role"),
+  smthnHappening: false,
 };
 
 export const StudentLoginAPI = createAsyncThunk(
@@ -29,17 +30,19 @@ export const StudentLoginAPI = createAsyncThunk(
 
 export const StudentRegisterAPI = createAsyncThunk(
   "AuthorizationSlice/StudentRegister",
-  async (_, { getState, rejectWithValue }) => {
+  async (formData, { getState, rejectWithValue }) => {
     // api call
+    console.log(formData);
     try {
-      const response = await YomacApi.post("student_sign_up", {
-        username: "mb",
-        password: "123456",
+      const response = await YomacApi.post("student_sign_up", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
-      // console.log(response);
-      return response;
+      console.log("New student added:", response.data);
+      return response.data;
     } catch (error) {
-      console.log(error);
+      console.error("Registration failed:", error);
       return rejectWithValue(error);
     }
   }
@@ -69,17 +72,18 @@ export const InstructorLoginAPI = createAsyncThunk(
 
 export const InstructorRegisterAPI = createAsyncThunk(
   "AuthorizationSlice/InstructorRegister",
-  async (_, { getState, rejectWithValue }) => {
+  async (formData, { getState, rejectWithValue }) => {
     // api call
     try {
-      const response = await YomacApi.post("instrutor_sign_up", {
-        username: "mb",
-        password: "123456",
+      const response = await YomacApi.post("instrutor_sign_up", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
-      // console.log(response);
-      return response;
+      console.log("New Instuctor added:", response.data);
+      return response.data;
     } catch (error) {
-      console.log(error);
+      console.error("Registration failed:", error);
       return rejectWithValue(error);
     }
   }
@@ -97,36 +101,86 @@ const AuthorizationSlice = createSlice({
     builder
       .addCase(StudentLoginAPI.pending, (state, action) => {
         // for loading
+        state.smthnHappening = true;
       })
       .addCase(StudentLoginAPI.fulfilled, (state, action) => {
         // console.log(action.payload.data);
         const data = action.payload.data;
         state.token = data.token;
         localStorage.setItem("token", data.token);
+        localStorage.setItem("role", data?.user_data?.role);
         state.user_id = data.user_data.id;
         state.role = data.user_data.role;
+        state.smthnHappening = false;
         // console.log(state.token);
         // console.log(state.role);
       })
       .addCase(StudentLoginAPI.rejected, (state, action) => {
         // state.name = action.payload;
         console.log(action.payload);
+        state.smthnHappening = false;
       })
       .addCase(InstructorLoginAPI.pending, (state, action) => {
         // for loading
+        state.smthnHappening = true;
       })
       .addCase(InstructorLoginAPI.fulfilled, (state, action) => {
         // console.log(action.payload.data);
         const data = action.payload.data;
         state.token = data.token;
         localStorage.setItem("token", data.token);
+        localStorage.setItem("role", data?.user_data?.role);
         state.user_id = data.user_data.id;
         state.role = data.user_data.role;
+        state.smthnHappening = false;
         // console.log(state.token);
         // console.log(state.role);
       })
       .addCase(InstructorLoginAPI.rejected, (state, action) => {
         // state.name = action.payload;
+        state.smthnHappening = false;
+        console.log(action);
+      })
+      .addCase(StudentRegisterAPI.pending, (state, action) => {
+        // for loading
+        state.smthnHappening = true;
+      })
+      .addCase(StudentRegisterAPI.fulfilled, (state, action) => {
+        console.log(action.payload);
+        // const data = action.payload.data;
+        // state.token = data.token;
+        // localStorage.setItem("token", data.token);
+        // localStorage.setItem("role", data?.user_data?.role);
+        // state.user_id = data.user_data.id;
+        // state.role = data.user_data.role;
+        state.smthnHappening = false;
+        // console.log(state.token);
+        // console.log(state.role);
+      })
+      .addCase(StudentRegisterAPI.rejected, (state, action) => {
+        // state.name = action.payload;
+        state.smthnHappening = false;
+        console.log(action);
+      })
+      .addCase(InstructorRegisterAPI.pending, (state, action) => {
+        // for loading
+        state.smthnHappening = true;
+      })
+      .addCase(InstructorRegisterAPI.fulfilled, (state, action) => {
+        console.log(action.payload);
+        // const data = action.payload.data;
+        // state.token = data.token;
+        // localStorage.setItem("token", data.token);
+        // localStorage.setItem("role", data?.user_data?.role);
+        // state.user_id = data.user_data.id;
+        // state.role = data.user_data.role;
+        state.smthnHappening = false;
+        // console.log(state.token);
+        // console.log(state.role);
+      })
+      .addCase(InstructorRegisterAPI.rejected, (state, action) => {
+        // state.name = action.payload;
+        state.smthnHappening = false;
         console.log(action);
       }),
 });

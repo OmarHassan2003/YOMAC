@@ -36,6 +36,7 @@
 .add-socialmedia-button {
   display: block;
   margin-bottom: 20px;
+  margin-top: 8px;
   padding: 7px;
   cursor: pointer;
   border-radius: 5px;
@@ -59,4 +60,28 @@
   cursor: pointer;
   background-color: rgb(73, 187, 189);
   border: none;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.input-file-field {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: rgb(73, 187, 189);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.input-file-field:hover {
+  background-color: rgb(73, 187, 160);
+}
+
+.file-name {
+  margin-left: 15px;
+  font-size: 16px;
+  color: #333;
 }

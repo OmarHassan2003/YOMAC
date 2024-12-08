@@ -3,8 +3,12 @@ import { useState } from "react";
 import show from "../../assets/show.png";
 import hide from "../../assets/hide.png";
 import "./InstructorRegister.css";
+import { useDispatch } from "react-redux";
+import { InstructorRegisterAPI } from "../../RTK/Slices/AuthorizationSlice";
 
 export default function InstructorRegister() {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -14,29 +18,62 @@ export default function InstructorRegister() {
   const [Bio, setBio] = useState("");
   const [socialMedia, setSocialMedia] = useState([]);
   const [currSocial, setCurrSocial] = useState("");
+  const [fileName, setFileName] = useState("No file chosen");
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile && selectedFile.type === "image/png") {
+      setFile(selectedFile);
+      setFileName(selectedFile.name);
+    } else {
+      setFile(null);
+      setFileName("Invalid file type. Please choose a PNG.");
+    }
+  };
 
   const handleRegister = (e) => {
     e.preventDefault();
 
-    const user = {
-      name: `${firstName} ${lastName}`,
-      email,
-      username,
-      password,
-      Bio,
-      socialMedia,
-    };
+    if (!file) {
+      alert("No file selected!");
+      return;
+    }
 
-    console.log(user);
-
-    fetch("http://localhost:3500/api/auth/instrutor_sign_up", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        body: JSON.stringify(user),
-      },
-    }).then(() => console.log("new instructor added"));
+    const formData = new FormData();
+    formData.append("name", `${firstName} ${lastName}`);
+    formData.append("email", email);
+    formData.append("username", username);
+    formData.append("password", password);
+    formData.append("Bio", Bio);
+    formData.append("SocialMedia", socialMedia);
+    formData.append("image", file);
+    console.log(formData);
+    dispatch(InstructorRegisterAPI(formData));
   };
+
+  // const handleRegister = (e) => {
+  //   e.preventDefault();
+
+  //   const user = {
+  //     name: `${firstName} ${lastName}`,
+  //     email,
+  //     username,
+  //     password,
+  //     Bio,
+  //     socialMedia,
+  //   };
+
+  //   console.log(user);
+
+  //   fetch("http://localhost:3500/api/auth/instrutor_sign_up", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       body: JSON.stringify(user),
+  //     },
+  //   }).then(() => console.log("new instructor added"));
+  // };
 
   const addSocialMedia = () => {
     if (
@@ -171,6 +208,16 @@ export default function InstructorRegister() {
             </li>
           ))}
         </ul>
+
+        <h3 style={{ marginBottom: "15px", marginTop: "20px" }}>
+          Profile Picture
+        </h3>
+        <label className="input-file-field">
+          <input type="file" accept="image/png" onChange={handleFileChange} />
+          Choose File
+        </label>
+        <span className="file-name">{fileName}</span>
+
         <div
           style={{
             display: "flex",

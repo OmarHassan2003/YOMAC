@@ -21,8 +21,6 @@ export default function StudentLogin() {
       password,
     };
 
-    dispatch(StudentLoginAPI(user));
-
     console.log(user);
 
     dispatch(StudentLoginAPI(user));
