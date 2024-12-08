@@ -10,8 +10,8 @@
   left: 0px;
 }
 
-.navbar img {
-  border-radius: 40px;
+.app-icon {
+  border-radius: 50%;
   width: 45px;
   height: 45px;
   object-fit: cover;
@@ -21,4 +21,8 @@
   margin-left: 16px;
   text-decoration: none;
   padding: 6px;
+}
+
+.quick-container {
+  display: inline-block;
 }
