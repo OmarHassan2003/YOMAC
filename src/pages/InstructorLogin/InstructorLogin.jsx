@@ -21,7 +21,6 @@ export default function InstructorLogin() {
     };
 
     console.log(user);
-
     dispatch(InstructorLoginAPI(user));
   };
 
