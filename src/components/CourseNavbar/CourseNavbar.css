@@ -54,13 +54,14 @@
     margin-top: 10px;
   }
 
-  .user-info {
+  /* .user-info {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 8px;
   }
 
+  */
   .profile-pic {
     width: 40px;
     height: 40px;
@@ -68,12 +69,35 @@
     object-fit: cover;
     border: 2px solid #ccc;
   }
-
   .user-name {
     font-size: 17px !important;
     margin: 0 !important;
     color: #333;
+  } 
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ensures elements are on opposite sides */
+    padding: 10px;
+    background-color: #f9f9f9; /* Optional: Adjust background color */
+    border-radius: 8px; /* Optional: Makes the container look smoother */
   }
+  
+  .user-details {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* margin-bottom: 8px; */
+  }
+  
+  
+  .message-date {
+    font-size: 12px;
+    color: #888;
+    margin-top: 0;
+  }
+  
 
   .message-text {
     margin-left: 50px;
@@ -141,12 +165,11 @@
   
   .qa-textbox {
     width: 100%;
-    min-height: 80px;
     padding: 10px;
     font-size: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid #28a745;
     border-radius: 4px;
-    resize: vertical; /* Allow resizing vertically */
+    /* resize: vertical; Allow resizing vertically */
     outline: none;
     font-family: "Arial", sans-serif;
     color: #333;

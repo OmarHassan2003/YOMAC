@@ -12,8 +12,6 @@ const Course = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCourse(currCourseID));
-    // dispatch(setCurrVid(null));
-    // console.log(course);
   }, [params.courseid]);
 
   return (

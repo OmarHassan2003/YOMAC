@@ -10,7 +10,7 @@ const LoadingScreen = () => {
   if (loadingQA || loadingVid || smthnHappening) {
     return (
       <div className="cont loading-comp">
-        <div class="loader">
+        <div className="loader">
           <div>
             <ul>
               <li>
