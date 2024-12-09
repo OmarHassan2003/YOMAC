@@ -4,6 +4,7 @@ import CourseSlice from "./Slices/CourseSlice";
 import StudentSlice from "./Slices/StudentSlice";
 import WhiteboardSlice from "./Slices/WhiteboardSlice";
 import QASlice from "./Slices/QASlice";
+import QuizSlice from "./Slices/QuizSlice";
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     student: StudentSlice,
     whiteBoard: WhiteboardSlice,
     qa: QASlice,
+    quiz: QuizSlice,
   },
 });
 
