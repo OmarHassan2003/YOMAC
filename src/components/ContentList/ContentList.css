@@ -98,7 +98,7 @@
     cursor: pointer;
   } */
   
-  .add-btn, .add-section-btn {
+  .add-btn, .add-section-btn,.save-btn {
     display: inline-block;
     padding: 8px 12px;
     font-size: 14px;
@@ -110,10 +110,9 @@
     cursor: pointer;
     transition: background-color 0.3s ease, opacity 0.3s ease;
     margin: 30px 5px 0 5px;
-    transition: background-color 0.3s ease;
   }
   
-  .add-btn:hover, .add-section-btn:hover {
+  .add-btn:hover, .add-section-btn:hover,.save-btn:hover {
     background-color: #28a745;
     color: #fff;
   }
@@ -135,41 +134,9 @@
     border-radius: 4px;
   }
   
-  .save-btn {
-    display: inline-block;
-    padding: 8px 12px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #fff;
-    background-color: #28a745;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 8px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .save-btn:hover {
-    background-color: #218838;
-  }
-
   .inline-form input {
     margin: 5px 0;
     width: 100%;
     padding: 8px;
-  }
-  
-  .inline-form button {
-    margin: 5px 5px 0 0;
-    padding: 8px 12px;
-    border: none;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .inline-form button:hover {
-    background-color: #0056b3;
   }
   

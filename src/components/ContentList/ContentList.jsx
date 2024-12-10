@@ -49,8 +49,8 @@ const ContentList = ({ course }) => {
   };
 
   const displayQuiz = (quizId, secId) => {
-    // const sec = course.sections.find((el) => el.coursesectionid === secId);
-    // updateCurrentSection(sec);
+    const sec = course.sections.find((el) => el.coursesectionid === secId);
+    updateCurrentSection(sec);
     navigate(`/course/${course.courseid}/quiz/${quizId}`);
   };
 
