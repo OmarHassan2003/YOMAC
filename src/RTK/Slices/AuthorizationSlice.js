@@ -4,6 +4,7 @@ import axios from "axios";
 
 const initialstate = {
   user_id: localStorage.getItem("user_id"),
+  username: localStorage.getItem("username"),
   token: localStorage.getItem("token"),
   role: localStorage.getItem("role"),
   smthnHappening: false,
@@ -110,6 +111,7 @@ const AuthorizationSlice = createSlice({
         localStorage.setItem("user_id", data.user_data.id);
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data?.user_data?.role);
+        localStorage.setItem("username", data?.user_data?.username);
         state.user_id = data.user_data.id;
         state.role = data.user_data.role;
         state.smthnHappening = false;
@@ -132,6 +134,7 @@ const AuthorizationSlice = createSlice({
         localStorage.setItem("user_id", data.user_data.id);
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data?.user_data?.role);
+        localStorage.setItem("username", data?.user_data?.username);
         state.user_id = data.user_data.id;
         state.role = data.user_data.role;
         state.smthnHappening = false;

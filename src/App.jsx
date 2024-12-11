@@ -18,6 +18,7 @@ import { StudentLoginAPI } from "./RTK/Slices/AuthorizationSlice";
 import { useEffect } from "react";
 import LoadingScreen from "./components/LoadingScreen/LoadingScreen.jsx";
 import Quiz from "./components/Quiz/Quiz.jsx";
+import LiveQA from "./pages/LiveQA/LiveQA.jsx";
 
 function App() {
   // const dispatch = useDispatch();
@@ -33,6 +34,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/liveqa" element={<LiveQA />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/studentlogin" element={<StudentLogin />} />
