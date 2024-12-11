@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { StudentLoginAPI } from "./RTK/Slices/AuthorizationSlice";
 import { useEffect } from "react";
 import LoadingScreen from "./components/LoadingScreen/LoadingScreen.jsx";
+import Quiz from "./components/Quiz/Quiz.jsx";
 
 function App() {
   // const dispatch = useDispatch();
@@ -39,6 +40,7 @@ function App() {
         <Route path="studentregister" element={<StudentRegister />} />
         <Route path="instructorregister" element={<InstructorRegister />} />
         <Route path="/course/:courseid" element={<Course />} />
+        <Route path="/course/:courseid/quiz/:quizexamid" element={<Quiz />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/whiteboard" element={<Whiteboard />} />

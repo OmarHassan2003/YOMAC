@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import CourseNavbar from "../CourseNavbar/CourseNavbar.jsx";
 import "../LessonContent/LessonContent.css";
+import { useSelector } from "react-redux";
 const LessonContent = ({ course }) => {
   // console.log(course.currVid);
+  const user = useSelector((state) => state.Authorization);
+  const role = user.role;
   return (
     <div key={course.currVid?.videoid} className="course-body">
       {course.currVid !== null && (

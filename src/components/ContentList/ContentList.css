@@ -50,6 +50,41 @@
   .lesson {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-size: 16px;
+    color: #555;
+    font-weight: bold;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .lesson:hover {
+    cursor: pointer;
+  }
+  
+  .lesson-icon-and-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .lesson-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain; 
+  }
+  
+
+  /* .lessons {
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+    margin-top: 10px;
+  }
+  
+  .lesson {
+    display: flex;
+    justify-content: space-between;
     padding: 5px 0;
     font-size: 14px;
     color: #555;
@@ -61,6 +96,47 @@
   }
   .lesson :hover{
     cursor: pointer;
+  } */
+  
+  .add-btn, .add-section-btn,.save-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #fff;
+    color: #28a745;
+    border: 1px solid #28a745;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    margin: 30px 5px 0 5px;
   }
   
+  .add-btn:hover, .add-section-btn:hover,.save-btn:hover {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .inline-form {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+  }
+  
+  .inline-form input {
+    display: block;
+    margin: 8px 0;
+    padding: 8px;
+    width: calc(100% - 16px);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .inline-form input {
+    margin: 5px 0;
+    width: 100%;
+    padding: 8px;
+  }
   
