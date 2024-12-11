@@ -196,7 +196,7 @@ export default function InstructorRegister() {
         </button>
         <ul>
           {socialMedia.map((account, index) => (
-            <li key={index} style={{ marginBottom: "10px" }}>
+            <li key={index} className="ana-elmalek">
               {account}{" "}
               <button
                 className="remove-socialmedia"
