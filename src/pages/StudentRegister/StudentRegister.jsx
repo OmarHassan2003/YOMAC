@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./StudentRegister.css";
 import show from "../../assets/show.png";
 import hide from "../../assets/hide.png";
+import desktopPicture from "../../assets/desktop-illustration-x1.webp";
+import mobilePicture from "../../assets/mobile-illustration-x1.webp";
 import { useDispatch } from "react-redux";
 import { StudentRegisterAPI } from "../../RTK/Slices/AuthorizationSlice";
 
@@ -17,6 +19,16 @@ export default function StudentRegister() {
   const [lastName, setLastName] = useState("");
   const [fileName, setFileName] = useState("No file chosen");
   const [file, setFile] = useState(null);
+  const [imageSrc, setImageSrc] = useState(desktopPicture);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setImageSrc(window.innerWidth <= 750 ? mobilePicture : desktopPicture);
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -43,22 +55,16 @@ export default function StudentRegister() {
     formData.append("username", username);
     formData.append("password", password);
     formData.append("image", file);
+
     console.log(formData);
     dispatch(StudentRegisterAPI(formData));
   };
 
   return (
     <div className="login-container">
-      <div className="login-register-description">
-        <h1>Studying Online is now much easier</h1>
-        <h2>
-          YOMAC is an interesting platform that will teach you in a much more
-          interactive way, choose between various courses in many different
-          categories
-        </h2>
-      </div>
-      <form style={{ paddingLeft: "100px" }} onSubmit={handleRegister}>
-        <h3 style={{ marginBottom: "15px" }}>First Name</h3>
+      <img className="main-image" src={imageSrc} alt="Register Illustration" />
+      <form onSubmit={handleRegister}>
+        <h3>First Name</h3>
         <input
           className="input-textbox"
           type="text"
@@ -66,9 +72,8 @@ export default function StudentRegister() {
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
           placeholder="Enter your first name"
-          style={{ marginBottom: "30px" }}
         />
-        <h3 style={{ marginBottom: "15px" }}>Last Name</h3>
+        <h3>Last Name</h3>
         <input
           className="input-textbox"
           type="text"
@@ -76,30 +81,26 @@ export default function StudentRegister() {
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
           placeholder="Enter your last name"
-          style={{ marginBottom: "30px" }}
         />
-        <h3 style={{ marginBottom: "15px" }}>Email</h3>
+        <h3>Email</h3>
         <input
           className="input-textbox"
-          type="text"
+          type="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your Email"
-          style={{ marginBottom: "30px" }}
         />
-
-        <h3 style={{ marginBottom: "15px" }}>Username</h3>
+        <h3>Username</h3>
         <input
           className="input-textbox"
           type="text"
           required
           value={username}
           onChange={(e) => setUserName(e.target.value)}
-          placeholder="Enter your user name"
-          style={{ marginBottom: "30px" }}
+          placeholder="Enter your username"
         />
-        <h3 style={{ marginBottom: "15px" }}>Password</h3>
+        <h3>Password</h3>
         <div style={{ position: "relative" }}>
           <input
             className="input-textbox"
@@ -108,50 +109,35 @@ export default function StudentRegister() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter your password"
-            style={{ marginBottom: "10px" }}
           />
           <button
             onClick={() => setShowPassword(!showPassword)}
             type="button"
-            style={{
-              position: "absolute",
-              right: "10px",
-              top: "46%",
-              transform: "translateY(-50%)",
-              border: "none",
-              background: "none",
-            }}
+            className="toggle-password"
           >
-            {showPassword ? <img src={hide} /> : <img src={show} />}
+            {showPassword ? (
+              <img src={hide} alt="Hide" />
+            ) : (
+              <img src={show} alt="Show" />
+            )}
           </button>
         </div>
-
-        <h3 style={{ marginBottom: "15px", marginTop: "20px" }}>
-          Profile Picture
-        </h3>
-        <label className="input-file-field">
-          <input
-            type="file"
-            className="custom-file-input"
-            accept="image/png"
-            onChange={handleFileChange}
-          />
-          Choose File
-        </label>
-        <span className="file-name">{fileName}</span>
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginBottom: "30px",
-          }}
-        >
-          <button className="login-register-button" type="submit">
-            Register
-          </button>
+        <h3>Profile Picture</h3>
+        <div className="parent-container">
+          <label className="input-file-field">
+            <input
+              type="file"
+              className="custom-file-input"
+              accept="image/png"
+              onChange={handleFileChange}
+            />
+            Choose File
+          </label>
+          <span className="file-name">{fileName}</span>
         </div>
-
+        <button className="login-register-button" type="submit">
+          Register
+        </button>
         <h2>Already have an account?</h2>
         <Link to="/studentlogin">
           <button className="switch-login">

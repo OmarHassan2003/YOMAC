@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import show from "../../assets/show.png";
 import hide from "../../assets/hide.png";
 import "./StudentLogin.css";
 import { useDispatch } from "react-redux";
 import { StudentLoginAPI } from "../../RTK/Slices/AuthorizationSlice";
+import desktopPicture from "../../assets/desktop-illustration-x1.webp";
+import mobilePicture from "../../assets/mobile-illustration-x1.webp";
 
 export default function StudentLogin() {
   const dispatch = useDispatch();
@@ -12,6 +14,16 @@ export default function StudentLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [imageSrc, setImageSrc] = useState(desktopPicture);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setImageSrc(window.innerWidth <= 700 ? mobilePicture : desktopPicture);
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -25,17 +37,11 @@ export default function StudentLogin() {
 
     dispatch(StudentLoginAPI(user));
   };
+
   return (
     <div className="login-container">
-      <div className="login-register-description">
-        <h1>Studying Online is now much easier</h1>
-        <h2>
-          YOMAC is an interesting platform that will teach you in a much more
-          interactive way, choose between various courses in many different
-          categories
-        </h2>
-      </div>
-      <form style={{ paddingLeft: "100px" }} onSubmit={handleRegister}>
+      <img className="main-image" src={imageSrc} alt="Login Illustration" />
+      <form onSubmit={handleRegister}>
         <h3 style={{ marginBottom: "15px" }}>Username</h3>
         <input
           className="input-textbox"
@@ -43,10 +49,9 @@ export default function StudentLogin() {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Enter your user name"
-          style={{ marginBottom: "30px" }}
         />
         <h3 style={{ marginBottom: "15px" }}>Password</h3>
-        <div style={{ position: "relative" }}>
+        <div className="password-container">
           <input
             className="input-textbox"
             type={showPassword ? "text" : "password"}
@@ -54,40 +59,34 @@ export default function StudentLogin() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter your password"
-            style={{ marginBottom: "10px" }}
           />
           <button
             onClick={() => setShowPassword(!showPassword)}
             type="button"
-            style={{
-              position: "absolute",
-              right: "10px",
-              top: "46%",
-              transform: "translateY(-50%)",
-              border: "none",
-              background: "none",
-            }}
+            className="toggle-password"
           >
-            {showPassword ? <img src={hide} /> : <img src={show} />}
+            {showPassword ? (
+              <img src={hide} alt="Hide" />
+            ) : (
+              <img src={show} alt="Show" />
+            )}
           </button>
         </div>
 
-        <div className="remember-input" style={{ marginBottom: "20px" }}>
+        <div className="remember-input">
           <input type="checkbox" id="remember-label" />
-          <label htmlFor="remember-label" style={{ marginLeft: "10px" }}>
+          <label style={{ marginLeft: "4px" }} htmlFor="remember-label">
             Remember me
           </label>
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginBottom: "30px",
-          }}
-        >
-          <button className="login-register-button" type="submit">
-            Login
-          </button>
+
+        <button className="login-register-button" type="submit">
+          Login
+        </button>
+
+        <div className="forgot-container">
+          <h4>or</h4>
+          <Link to="/forgotpassword">Forgot Password</Link>
         </div>
 
         <h2>Don't have an account?</h2>
