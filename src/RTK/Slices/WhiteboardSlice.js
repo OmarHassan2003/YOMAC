@@ -9,15 +9,61 @@ export const getWhiteboard = createAsyncThunk(
   "WhiteboardSlice/getWhiteboard",
   async (id, { getState, rejectWithValue }) => {
     // api call
+    const { token } = getState().Authorization;
     try {
       const response = await YomacApi.get(`get_course_whiteboard/${id}`, {
         headers: {
           "Content-Type": "application/json",
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMzMTg1MzEwLCJpYXQiOjE3MzMxODM4MTAsImp0aSI6IjdiNGNmMTM5ZDUwODRmNWM5YTc5YTVhZDY5ZThlYjQzIiwiaWQiOjEsInJvbGUiOiJpbnN0cnVjdG9yIn0.6Xe3W4z3ZS3ZuGuKixaqiS_rtt0z35zGVqJv5VzG8_0",
+          token: token,
         },
       });
       // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+export const acceptRequest = createAsyncThunk(
+  "AuthorizationSlice/acceptRequest",
+  async (userData, { getState, rejectWithValue }) => {
+    console.log(userData);
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.delete("accept_whiteboard_item", {
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+        course_id: userData.course_id,
+        item_id: userData.item_id,
+      });
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+export const rejectRequest = createAsyncThunk(
+  "AuthorizationSlice/rejectRequest",
+  async (userData, { getState, rejectWithValue }) => {
+    console.log(userData);
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.delete("reject_whiteboard_item", {
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+        course_id: userData.course_id,
+        item_id: userData.item_id,
+      });
+      console.log(response);
       return response;
     } catch (error) {
       console.log(error);
@@ -32,6 +78,17 @@ const WhiteboardSlice = createSlice({
   reducers: {},
   extraReducers: (builder) =>
     builder
+      .addCase(acceptRequest.pending, (state, action) => {
+        // for loading
+      })
+      .addCase(acceptRequest.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        const data = action.payload.data;
+        state.whiteboard = data.whiteboard;
+      })
+      .addCase(acceptRequest.rejected, (state, action) => {
+        // state.name = action.payload;
+      })
       .addCase(getWhiteboard.pending, (state, action) => {
         // for loading
       })
@@ -41,6 +98,18 @@ const WhiteboardSlice = createSlice({
         state.whiteboard = data.whiteboard;
       })
       .addCase(getWhiteboard.rejected, (state, action) => {
+        // state.name = action.payload;
+      })
+
+      .addCase(rejectRequest.pending, (state, action) => {
+        // for loading
+      })
+      .addCase(rejectRequest.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        const data = action.payload.data;
+        state.whiteboard = data.whiteboard;
+      })
+      .addCase(rejectRequest.rejected, (state, action) => {
         // state.name = action.payload;
       }),
 });

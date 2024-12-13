@@ -1,15 +1,23 @@
-import { useState } from "react";
-import "./PersonalDetails.css";
+import { useState, useEffect } from "react";
+import "./InstructorDetails.css";
 
-const PersonalDetails = ({ data }) => {
-  const [firstName, setFirstName] = useState(data?.studentname?.split(" ")[0]);
+const InstructorDetails = ({ data }) => {
+  const [firstName, setFirstName] = useState(
+    data?.instructorname?.split(" ")[0]
+  );
   const [lastName, setLastName] = useState(
-    data?.studentname?.split(" ").at(-1)
+    data?.instructorname?.split(" ").at(-1)
   );
   const [email, setEmail] = useState(data?.email);
   const [username, setUsername] = useState(data?.username);
   const [password, setPassword] = useState("");
 
+  useEffect(() => {
+    setUsername(data?.username);
+    setFirstName(data?.instructorname?.split(" ")[0]);
+    setLastName(data?.instructorname?.split(" ").at(-1));
+    setEmail(data?.email);
+  }, [data]);
   const handleSave = (e) => {
     e.preventDefault();
     const user = {
@@ -25,8 +33,8 @@ const PersonalDetails = ({ data }) => {
     console.log(user);
   };
   const handleCancel = () => {
-    setFirstName(data?.studentname?.split(" ")[0]);
-    setLastName(data?.studentname?.split(" ").at(-1));
+    setFirstName(data?.instructorname?.split(" ")[0]);
+    setLastName(data?.instructorname?.split(" ").at(-1));
     setEmail(data?.email);
     setUsername(data?.username);
     setPassword("");
@@ -68,4 +76,4 @@ const PersonalDetails = ({ data }) => {
   );
 };
 
-export default PersonalDetails;
+export default InstructorDetails;

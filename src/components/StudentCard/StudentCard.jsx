@@ -1,7 +1,7 @@
 import messi from "../../assets/3mk.jpg";
-import "./ProfileCard.css";
+import "./StudentCard.css";
 
-const PorfileCard = ({ data }) => {
+const StudentCard = ({ data }) => {
   const obj = {
     img: messi,
     name: "Farag beh",
@@ -55,4 +55,4 @@ const PorfileCard = ({ data }) => {
   );
 };
 
-export default PorfileCard;
+export default StudentCard;

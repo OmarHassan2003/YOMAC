@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PersonalDetails from "../ProfileDetails/PersonalDetails";
+import PersonalDetails from "../PersonalDetails/PersonalDetails";
 import PaymentSettings from "../PaymentSettings/PaymentSettings";
 import "./ProfileSettings.css";
 

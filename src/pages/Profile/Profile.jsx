@@ -1,5 +1,6 @@
-import PorfileCard from "../../components/ProfileCard/ProfileCard";
 import ProfileSettings from "../ProfileSettings/ProfileSettings";
+import StudentCard from "../../components/StudentCard/StudentCard";
+import InstructorCard from "../../components/InstructorCard/InstructorCard";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getStudent } from "../../RTK/Slices/StudentSlice";
@@ -16,7 +17,11 @@ const Profile = () => {
   return (
     <div className="profile-card">
       <div className="container">
-        <PorfileCard data={data} />
+        {data.studentname ? (
+          <StudentCard data={data} />
+        ) : (
+          <InstructorCard data={data} />
+        )}
         <ProfileSettings data={data} />
       </div>
     </div>

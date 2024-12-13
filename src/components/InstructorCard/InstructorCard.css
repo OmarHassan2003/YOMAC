@@ -1,0 +1,74 @@
+.sidebar {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Make it responsive */
+  max-width: 300px; /* Limit maximum width */
+  margin: 0 auto; /* Center align on the page */
+}
+
+.profile-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto; /* Center the image */
+  display: block;
+  border: 3px solid #f1f1f1; /* Add a subtle border around the image */
+}
+
+.user-name {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 15px;
+  color: #333; /* Use a darker, more readable color */
+}
+
+.status-badge {
+  display: inline-block;
+  background-color: #f88b8b;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  margin: 10px auto 20px;
+  text-align: center;
+  display: block; /* Center the badge below the name */
+}
+
+.sidebar .stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Align text vertically in the middle */
+  margin: 15px 0;
+  font-size: 16px;
+  color: #555; /* Subtle text color for stats */
+}
+
+.stat span {
+  font-weight: bold;
+  color: #000; /* Highlight the values */
+}
+
+.support-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 30px;
+}
+
+.support-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #444; /* Subtle color for support items */
+}
+
+.support-list li::before {
+  content: "•"; /* Add a bullet point before each item */
+  font-size: 20px;
+  color: #f88b8b; /* Match the badge color */
+}
