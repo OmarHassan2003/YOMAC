@@ -1,4 +1,4 @@
-.login-container {
+/* .login-container {
   display: flex;
   justify-content: space-between;
   padding: 40px 150px;
@@ -84,4 +84,174 @@ input[type="file"].custom-file-input {
   margin-left: 15px;
   font-size: 16px;
   color: #333;
+} */
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  padding: 20px;
+}
+
+.main-image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: cover;
+}
+
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+}
+
+@media (min-width: 750px) {
+  .login-container {
+    flex-direction: row;
+    align-items: center;
+    gap: 50px;
+    padding: 40px;
+  }
+
+  .input-textbox {
+    padding: 16px 20px;
+    font-size: 15px;
+  }
+
+  .login-container form h3 {
+    font-size: 19px;
+    margin-bottom: 15px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .login-container {
+    gap: 100px;
+  }
+}
+
+.input-textbox {
+  border-radius: 30px;
+  width: 100%;
+  border: 2px solid rgb(73, 187, 189);
+  margin-bottom: 20px;
+  color: grey;
+  outline: none;
+}
+
+.password-container {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 41%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+}
+
+.parent-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+input[type="file"].custom-file-input {
+  display: none;
+}
+
+.input-file-field {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: rgb(73, 187, 189);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  color: white;
+  width: auto;
+  white-space: nowrap;
+}
+
+.input-file-field:hover {
+  background-color: rgb(73, 187, 160);
+}
+
+.file-name {
+  margin-left: 15px;
+  font-size: 16px;
+  color: #333;
+  display: inline-block;
+}
+
+.login-register-button {
+  border-radius: 25px;
+  padding: 11px;
+  background-color: rgb(73, 187, 189);
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.switch-login {
+  border-radius: 20px;
+  padding: 10px 50px;
+  background-color: rgb(73, 187, 189);
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .main-image {
+    max-width: 300px;
+  }
+
+  .input-textbox {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .login-register-button,
+  .switch-login {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .login-container form h3 {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+}
+
+.add-socialmedia-button {
+  display: block;
+  width: 30%;
+  margin-bottom: 20px;
+  margin-top: 8px;
+  padding: 12px 0px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(73, 187, 189);
+  color: white;
+}
+
+.remove-socialmedia {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: "5px";
 }

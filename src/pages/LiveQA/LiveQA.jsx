@@ -1,15 +1,21 @@
 import { useEffect, useState, useRef } from "react";
 import "./LiveQA.css";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import back from "../../assets/back.png";
 
 export default function LiveQA() {
   const data = useSelector((state) => state.Authorization);
   const token = data.token;
-
+  const navigate = useNavigate();
   const [ws, setWs] = useState(null);
   const [currMessage, setCurrMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const messagesEndRef = useRef(null);
+
+  const handleBackButton = () => {
+    navigate(-1);
+  };
 
   useEffect(() => {
     // Create a WebSocket instance
@@ -85,6 +91,9 @@ export default function LiveQA() {
 
   return (
     <div className="liveqa-container">
+      <button className="back-button" onClick={handleBackButton}>
+        <img src={back} />
+      </button>
       <ul className="messages-list" ref={messagesEndRef}>
         {messages.map((mes, index) => (
           <li

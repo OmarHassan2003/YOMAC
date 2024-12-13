@@ -1,45 +1,78 @@
 .login-container {
   display: flex;
-  justify-content: space-between;
-  padding: 40px 150px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  padding: 20px;
 }
 
-.login-register-description {
-  flex: 1;
-  background-color: rgba(73, 187, 189, 0.6);
-  border-radius: 40px;
-  padding: 20px 40px 20px 40px;
+.main-image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: cover;
 }
 
-.login-register-button {
-  border-radius: 20px;
-  padding: 10px 70px;
-  cursor: pointer;
-  display: inline-block;
-  margin-top: 20px;
-  background-color: rgb(73, 187, 189);
-  border: none;
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+}
+
+@media (min-width: 750px) {
+  .login-container {
+    flex-direction: row;
+    align-items: center;
+    gap: 50px;
+    padding: 40px;
+  }
+
+  .input-textbox {
+    padding: 16px 20px;
+    font-size: 15px;
+  }
+
+  .login-container form h3 {
+    font-size: 19px;
+    margin-bottom: 15px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .login-container {
+    gap: 100px;
+  }
 }
 
 .input-textbox {
   border-radius: 30px;
-  width: 500px;
-  height: 50px;
-  border-style: solid;
-  border-color: rgb(73, 187, 189);
-  padding-left: 20px;
-  font-size: 15px;
+  width: 100%;
+  border: 2px solid rgb(73, 187, 189);
+  margin-bottom: 20px;
   color: grey;
   outline: none;
 }
 
-.switch-login {
-  border-radius: 20px;
-  padding: 10px 50px;
-  margin-top: 10px;
-  cursor: pointer;
-  background-color: rgb(73, 187, 189);
+.password-container {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 41%;
+  transform: translateY(-50%);
   border: none;
+  background: none;
+}
+
+.parent-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
 }
 
 input[type="file"].custom-file-input {
@@ -54,6 +87,10 @@ input[type="file"].custom-file-input {
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease;
+  text-align: center;
+  color: white;
+  width: auto;
+  white-space: nowrap;
 }
 
 .input-file-field:hover {
@@ -64,4 +101,46 @@ input[type="file"].custom-file-input {
   margin-left: 15px;
   font-size: 16px;
   color: #333;
+  display: inline-block;
+}
+
+.login-register-button {
+  border-radius: 25px;
+  padding: 11px;
+  background-color: rgb(73, 187, 189);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.switch-login {
+  border-radius: 20px;
+  padding: 10px 50px;
+  background-color: rgb(73, 187, 189);
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .main-image {
+    max-width: 300px;
+  }
+
+  .input-textbox {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .login-register-button,
+  .switch-login {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .login-container form h3 {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
 }

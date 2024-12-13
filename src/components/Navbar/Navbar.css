@@ -26,3 +26,57 @@
 .quick-container {
   display: inline-block;
 }
+
+.profile-menu {
+  position: absolute;
+  right: -2rem;
+  top: 3rem;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile:hover .profile-menu {
+  opacity: 1;
+  visibility: visible;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile-menu a,
+.profile-menu button {
+  margin: 0;
+  border: none;
+  padding: 0;
+  color: black;
+}
+
+.profile-menu a {
+  display: block;
+  padding: 1.5rem 1.5rem 0.75rem 1.5rem;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+
+.profile-menu button {
+  background: white;
+  border: none;
+  padding-bottom: 1.5rem;
+  padding-top: 0.75rem;
+  width: 100%;
+}
+
+.profile-menu a:hover {
+  background-color: var(--color-grey-light-1);
+}

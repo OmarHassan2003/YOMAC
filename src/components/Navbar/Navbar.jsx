@@ -4,7 +4,7 @@ import userProfileIcon from "../../assets/user.png";
 
 import "./Navbar.css";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const location = useLocation();
@@ -15,6 +15,11 @@ export default function Navbar() {
   const isHomePage = location.pathname === "/";
   const isLoggedIn = data.token !== null;
   const isStudent = data.role === "student";
+
+  const handleLogOut = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
 
   return (
     <nav
@@ -70,14 +75,17 @@ export default function Navbar() {
         </div>
       )}
 
-      {isLoggedIn ? (
-        <div>
+      {isLoggedIn && (
+        <div className="profile" style={{ position: "relative" }}>
           <Link style={{ color: isHomePage ? "white" : "black" }} to="/profile">
             <img src={userProfileIcon} />
           </Link>
+
+          <div className="profile-menu">
+            <Link to="/profile">Profile Details</Link>
+            <button onClick={handleLogOut}>Log Out</button>
+          </div>
         </div>
-      ) : (
-        ""
       )}
     </nav>
   );

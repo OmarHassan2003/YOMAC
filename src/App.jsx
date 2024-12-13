@@ -12,6 +12,7 @@ import Whiteboard from "./pages/Whiteboard/Whiteboard.jsx";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import StudentLogin from "./pages/StudentLogin/StudentLogin.jsx";
 import InstructorLogin from "./pages/InstructorLogin/InstructorLogin.jsx";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword.jsx";
 import CreateCourse from "./pages/CreateCourse/CreateCourse.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { StudentLoginAPI } from "./RTK/Slices/AuthorizationSlice";
@@ -34,6 +35,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/liveqa" element={<LiveQA />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
