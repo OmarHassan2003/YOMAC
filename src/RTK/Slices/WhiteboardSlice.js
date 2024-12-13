@@ -28,17 +28,20 @@ export const getWhiteboard = createAsyncThunk(
 export const acceptRequest = createAsyncThunk(
   "AuthorizationSlice/acceptRequest",
   async (userData, { getState, rejectWithValue }) => {
-    console.log(userData);
+    console.log(userData.course_id, userData.item_id);
     // api call
     const { token } = getState().Authorization;
+    console.log(token);
+
     try {
       const response = await YomacApi.delete("accept_whiteboard_item", {
         headers: {
-          "Content-Type": "application/json",
           token: token,
         },
-        course_id: userData.course_id,
-        item_id: userData.item_id,
+        data: {
+          course_id: userData.course_id,
+          item_id: userData.item_id,
+        },
       });
       console.log(response);
       return response;
@@ -57,11 +60,12 @@ export const rejectRequest = createAsyncThunk(
     try {
       const response = await YomacApi.delete("reject_whiteboard_item", {
         headers: {
-          "Content-Type": "application/json",
           token: token,
         },
-        course_id: userData.course_id,
-        item_id: userData.item_id,
+        data: {
+          course_id: userData.course_id,
+          item_id: userData.item_id,
+        },
       });
       console.log(response);
       return response;
