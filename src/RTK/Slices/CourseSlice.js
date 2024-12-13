@@ -71,13 +71,6 @@ export const CreateCourseAPI = createAsyncThunk(
     // api call
     const { token } = getState().Authorization;
     try {
-      const obj = {
-        headers: {
-          "Content-Type": "application/json",
-          token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQxMzg2NzA5LCJpYXQiOjE3MzM2MTA3MDksImp0aSI6Ijc4N2ZlZGRkMTVlMDQxOTZiZThjN2ZlNTk1N2I5Mzg1IiwiaWQiOjEsInJvbGUiOiJpbnN0cnVjdG9yIn0.oPoCWcua0aJx6nBxLrMUDZR1yUtDFXkImpjjtzBE4VY",
-        },
-      };
       const response = await YomacApi.post("create_course", data, {
         headers: {
           token: token,

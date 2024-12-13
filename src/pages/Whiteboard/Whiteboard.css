@@ -1,0 +1,131 @@
+.course-container {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.course-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.course-header h2 {
+  font-size: 24px;
+}
+
+.course-tabs {
+  display: flex;
+  gap: 15px;
+}
+
+.tab {
+  cursor: pointer;
+  font-size: 16px;
+  color: #6c757d;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.tab.active {
+  background-color: #e3fcef;
+  color: #28a745;
+  font-weight: bold;
+}
+
+.course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.course-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  padding: 15px 20px;
+  transition: box-shadow 0.3s ease;
+}
+
+.course-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.course-info {
+  display: flex;
+  align-items: center;
+}
+
+.course-info img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.course-details h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.course-details p {
+  margin: 0;
+  color: #777;
+  font-size: 14px;
+}
+
+.course-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-bar {
+  width: 150px;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+}
+
+.course-rating span {
+  color: #f39c12;
+  font-size: 16px;
+}
+
+.view-course-btn {
+  background-color: #fff;
+  color: #28a745;
+  border: 1px solid #28a745;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.view-course-btn:hover {
+  background-color: #28a745;
+  color: #fff;
+}
+.reject-btn {
+  background-color: #fff;
+  color: #a72828;
+  border: 1px solid #a72828;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.reject-btn:hover {
+  background-color: #a72828;
+  color: #fff;
+}
