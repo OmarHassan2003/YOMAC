@@ -6,15 +6,23 @@ import {
   setfetchedQA,
   postThenGet,
   postStudentAnswerThenGet,
+  postInstructorAnswerThenGet,
 } from "../../RTK/Slices/QASlice";
 import { useDispatch, useSelector } from "react-redux";
 const CourseNavbar = ({ course }) => {
+  const user = useSelector((state) => state.Authorization);
+  const role = user.role;
+  let isStudent = false;
+  let isInstructor = false;
+  if (role === "student") isStudent = true;
+  else isInstructor = true;
+
   const [activeTab, setActiveTab] = useState("overview");
   const [activeQuestion, setActiveQuestion] = useState("");
   const [questionText, setQuestionText] = useState("");
   const [answerText, setAnswerText] = useState("");
   let qa = useSelector((state) => state.qa);
-  let { user_id, role } = useSelector((state) => state.Authorization);
+
   const dispatch = useDispatch();
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -30,7 +38,8 @@ const CourseNavbar = ({ course }) => {
   };
 
   const handlePostAnswer = (data) => {
-    dispatch(postStudentAnswerThenGet(data));
+    if (role == "student") dispatch(postStudentAnswerThenGet(data));
+    else dispatch(postInstructorAnswerThenGet(data));
     setAnswerText("");
   };
 
@@ -123,26 +132,42 @@ const CourseNavbar = ({ course }) => {
                     <div>No Answers yet</div>
                   )}
                   {qa.fetchedQA !== null &&
-                    qa?.fetchedQA?.answers.map((answer) => (
-                      <div key={answer.messageid} className="answer">
-                        <div className="user-info">
-                          <div className="user-details">
-                            <img
-                              src={answer.senderstudent.profilepic}
-                              alt="User Profile"
-                              className="profile-pic"
-                            />
-                            <p className="user-name">
-                              {answer.senderstudent.studentname}
-                            </p>
+                    qa?.fetchedQA?.answers.map((answer) => {
+                      let senderRole;
+                      if (answer.senderstudentid === null)
+                        senderRole = "instructor";
+                      else if (answer.senderinstructorid === null)
+                        senderRole = "student";
+
+                      return (
+                        <div key={answer.messageid} className="answer">
+                          <div className="user-info">
+                            <div className="user-details">
+                              <img
+                                src={
+                                  senderRole === "instructor"
+                                    ? answer.senderinstructor.profilepic
+                                    : answer.senderstudent.profilepic
+                                }
+                                alt="User Profile"
+                                className="profile-pic"
+                              />
+                              <p className="user-name">
+                                {senderRole === "instructor"
+                                  ? answer.senderinstructor.instructorname
+                                  : answer.senderstudent.studentname}
+                              </p>
+                            </div>
+                            <div className="message-date">
+                              {new Date(answer.createdat).toLocaleString()}
+                            </div>
                           </div>
-                          <div className="message-date">
-                            {new Date(answer.createdat).toLocaleString()}
+                          <div className="message-text">
+                            {answer.messagetext}
                           </div>
                         </div>
-                        <div className="message-text">{answer.messagetext}</div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   <div className="qa-input-container">
                     <input
                       type="text"

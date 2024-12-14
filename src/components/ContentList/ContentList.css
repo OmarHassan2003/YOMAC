@@ -28,6 +28,7 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 10px;
+    background: linear-gradient(120deg, #e6f0ff, #f2faff, #e8ffe6);
   }
   
   .module-header {
@@ -76,28 +77,6 @@
   }
   
 
-  /* .lessons {
-    padding: 10px 0;
-    border-top: 1px solid #ddd;
-    margin-top: 10px;
-  }
-  
-  .lesson {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 0;
-    font-size: 14px;
-    color: #555;
-    font-weight: bold;
-    font-size: 16px;
-    border-radius: 4px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding:10px;
-  }
-  .lesson :hover{
-    cursor: pointer;
-  } */
-  
   .add-btn, .add-section-btn,.save-btn {
     display: inline-block;
     padding: 8px 12px;

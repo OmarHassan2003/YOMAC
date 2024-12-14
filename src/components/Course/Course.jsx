@@ -11,9 +11,10 @@ const Course = () => {
   const course = useSelector((state) => state.Course);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getCourse(currCourseID));
+    dispatch(getCourse(params.courseid));
   }, [params.courseid]);
 
+  console.log(course);
   return (
     <div key={course.courseid} className="course-page">
       <LessonContent course={course} />

@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./DashboardCourses.css";
 const DashboardCourses = ({ data }) => {
   console.log(data);
-  const courseLink = "/course/";
+  const navigate = useNavigate();
+  const handleClick = (course) => {
+    navigate(`/course/${course.courseid}`);
+  };
   return (
     <div className="course-container">
       <div className="course-header">
@@ -32,9 +35,14 @@ const DashboardCourses = ({ data }) => {
             <div className="course-rating">
               <span>⭐ 4.3</span>
             </div>
-            <Link to={courseLink + curr.courseid}>
-              <button className="view-course-btn">View Course</button>
-            </Link>
+            <button
+              className="view-course-btn"
+              onClick={() => {
+                handleClick(curr);
+              }}
+            >
+              View Course
+            </button>
           </div>
         ))}
       </div>

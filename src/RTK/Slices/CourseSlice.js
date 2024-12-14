@@ -20,6 +20,8 @@ const initialstate = {
   currVid: null,
   currSection: null,
   fetchedVideo: {},
+  fetchedAssignments: [],
+  assignID: null,
   loadingVid: false,
 };
 
@@ -65,6 +67,27 @@ export const getVideo = createAsyncThunk(
   }
 );
 
+export const getAssign = createAsyncThunk(
+  "CourseSlice/getAssign",
+  async (id, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.get(`get_course_assignments/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+      });
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const CreateCourseAPI = createAsyncThunk(
   "AuthorizationSlice/CreateCourseAPI",
   async (data, { getState, rejectWithValue }) => {
@@ -83,6 +106,93 @@ export const CreateCourseAPI = createAsyncThunk(
       console.log(error);
       return rejectWithValue(error);
     }
+  }
+);
+
+export const addSection = createAsyncThunk(
+  "CourseSlice/addSection",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post("add_section", data, {
+        headers: {
+          token: token,
+          "Content-Type": "application/json",
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const addSectionThenGet = createAsyncThunk(
+  "CourseSlice/addSectionThenGet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(addSection(data));
+    return dispatch(getCourse(data.courseId));
+  }
+);
+
+export const addVideo = createAsyncThunk(
+  "CourseSlice/addVideo",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post("add_video", data, {
+        headers: {
+          token: token,
+          "Content-Type": "application/json",
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const addVideoThenGet = createAsyncThunk(
+  "CourseSlice/addVideoThenGet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(addVideo(data));
+    return dispatch(getCourse(data.videos[0].courseId));
+  }
+);
+
+export const addQuiz = createAsyncThunk(
+  "CourseSlice/addQuiz",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post("instructor_add_quiz", data, {
+        headers: {
+          token: token,
+          "Content-Type": "application/json",
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const addQuizThenGet = createAsyncThunk(
+  "CourseSlice/addQuizThenGet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(addQuiz(data));
+    return dispatch(getCourse(data.courseId));
   }
 );
 
@@ -122,6 +232,7 @@ const CourseSlice = createSlice({
         state.certificate = data.certificate;
         state.contests = data.contests;
         state.sections = data.sections;
+        state.currVid = null;
         state.loadingVid = false;
         // state.currSection = data.sections[0];
       })
@@ -141,6 +252,7 @@ const CourseSlice = createSlice({
       })
       .addCase(getVideo.rejected, (state, action) => {
         // state.name = action.payload;
+        state.loadingVid = false;
       })
       .addCase(CreateCourseAPI.pending, (state, action) => {
         // for loading
@@ -155,6 +267,104 @@ const CourseSlice = createSlice({
       .addCase(CreateCourseAPI.rejected, (state, action) => {
         state.loadingVid = false;
         // state.name = action.payload;
+      })
+      .addCase(addSection.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(addSection.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        // console.log(action.payload.data);
+        console.log("al denia 7lwa");
+        state.loadingVid = false;
+      })
+      .addCase(addSection.rejected, (state, action) => {
+        state.loadingVid = false;
+        // state.name = action.payload;
+      })
+      .addCase(addSectionThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(addSectionThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        // console.log(action.payload.data);
+        console.log("al denia 7lwa");
+        state.loadingVid = false;
+      })
+      .addCase(addSectionThenGet.rejected, (state, action) => {
+        state.loadingVid = false;
+        // state.name = action.payload;
+      })
+      .addCase(addVideo.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(addVideo.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        // console.log(action.payload.data);
+        console.log("al denia 7lwa");
+        state.loadingVid = false;
+      })
+      .addCase(addVideo.rejected, (state, action) => {
+        state.loadingVid = false;
+        // state.name = action.payload;
+      })
+      .addCase(addVideoThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(addVideoThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        // console.log(action.payload.data);
+        console.log("al denia 7lwa");
+        state.loadingVid = false;
+      })
+      .addCase(addVideoThenGet.rejected, (state, action) => {
+        state.loadingVid = false;
+        // state.name = action.payload;
+      })
+      .addCase(addQuiz.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(addQuiz.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        // console.log(action.payload.data);
+        console.log("al denia 7lwa");
+        state.loadingVid = false;
+      })
+      .addCase(addQuiz.rejected, (state, action) => {
+        state.loadingVid = false;
+        // state.name = action.payload;
+      })
+      .addCase(addQuizThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(addQuizThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        // console.log(action.payload.data);
+        console.log("al denia 7lwa");
+        state.loadingVid = false;
+      })
+      .addCase(addQuizThenGet.rejected, (state, action) => {
+        state.loadingVid = false;
+        // state.name = action.payload;
+      })
+      .addCase(getAssign.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(getAssign.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log(action.payload.data);
+        state.fetchedAssignments = action.payload.data;
+        state.loadingVid = false;
+      })
+      .addCase(getAssign.rejected, (state, action) => {
+        // state.name = action.payload;
+        state.loadingVid = false;
       }),
 });
 

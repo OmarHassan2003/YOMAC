@@ -3,6 +3,7 @@ import YomacApi from "../../utils/AxiosInstance";
 
 const initialstate = {
   questions: [],
+  loadingQuiz: false,
 };
 
 export const getQuizQuestions = createAsyncThunk(
@@ -34,15 +35,18 @@ const QuizSlice = createSlice({
     builder
       .addCase(getQuizQuestions.pending, (state, action) => {
         // for loading
+        state.loadingQuiz = true;
       })
       .addCase(getQuizQuestions.fulfilled, (state, action) => {
         // state.name = action.payload;
         console.log(action.payload.data);
         state.questions = action.payload.data.Questions;
         console.log(state.questions);
+        state.loadingQuiz = false;
       })
       .addCase(getQuizQuestions.rejected, (state, action) => {
         // state.name = action.payload;
+        state.loadingQuiz = false;
       }),
 });
 
