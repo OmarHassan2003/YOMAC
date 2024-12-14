@@ -6,8 +6,9 @@ const LoadingScreen = () => {
   //add booleans here
   const { loadingVid } = useSelector((state) => state.Course);
   const { loadingQA } = useSelector((state) => state.qa);
+  const { loadingQuiz } = useSelector((state) => state.quiz);
   const { smthnHappening } = useSelector((state) => state.Authorization);
-  if (loadingQA || loadingVid || smthnHappening) {
+  if (loadingQA || loadingVid || smthnHappening || loadingQuiz) {
     return (
       <div className="cont loading-comp">
         <div className="loader">

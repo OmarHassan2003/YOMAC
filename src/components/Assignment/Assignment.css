@@ -1,0 +1,99 @@
+.assignment-page {
+    font-family: 'Arial', sans-serif;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .assignment-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .assignment-header h1 {
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .assignment-content {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .assignment-info h2 {
+    font-size: 1.5rem;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .assignment-info p {
+    margin: 10px 0;
+    color: #666;
+  }
+  
+  .assignment-info p strong {
+    color: #333;
+  }
+  
+  .download-button {
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: #fff;
+    color: #28a745;
+    border: 1px solid #28a745;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    margin: 15px 5px 0 5px;
+  }
+  
+  .download-button:hover {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .assignment-submission {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+  }
+  
+  .assignment-submission h3 {
+    font-size: 1.3rem;
+    color: #444;
+    margin-bottom: 10px;
+  }
+  
+  .file-input {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .submit-button {
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: #fff;
+    color: #28a745;
+    border: 1px solid #28a745;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    margin: 15px 5px 0 5px;
+  }
+  
+  .submit-button:hover {
+    background-color: #28a745;
+    color: #fff;
+  }
+  

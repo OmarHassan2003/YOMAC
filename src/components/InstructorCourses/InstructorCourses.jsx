@@ -1,6 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./InstructorCourses.css";
 const InstructorCourses = ({ data }) => {
+  const navigate = useNavigate();
+  const handleClick = (course) => {
+    navigate(`/course/${course.courseid}`);
+  };
   return (
     <div className="course-container">
       <div className="course-header">
@@ -19,9 +23,14 @@ const InstructorCourses = ({ data }) => {
             <div className="course-rating">
               <span>⭐ 4.3</span>
             </div>
-            <Link to="/course">
-              <button className="view-course-btn">View Course</button>
-            </Link>
+            <button
+              className="view-course-btn"
+              onClick={() => {
+                handleClick(curr);
+              }}
+            >
+              View Course
+            </button>
           </div>
         ))}
       </div>

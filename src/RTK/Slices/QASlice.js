@@ -91,6 +91,27 @@ export const postStudentAnswer = createAsyncThunk(
   }
 );
 
+export const postInstructorAnswer = createAsyncThunk(
+  "QASlice/postInstructorAnswer",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post(`instructor_answers_in_qa`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+      });
+      //   console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const postThenGet = createAsyncThunk(
   "QASlice/postThenGet",
   async (data, { dispatch, getState, rejectWithValue }) => {
@@ -103,6 +124,14 @@ export const postStudentAnswerThenGet = createAsyncThunk(
   "QASlice/postStudentAnswerThenGet",
   async (data, { dispatch, getState, rejectWithValue }) => {
     await dispatch(postStudentAnswer(data));
+    return dispatch(getQAAnswers(data.QAID));
+  }
+);
+
+export const postInstructorAnswerThenGet = createAsyncThunk(
+  "QASlice/postInstructorAnswerThenGet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(postInstructorAnswer(data));
     return dispatch(getQAAnswers(data.QAID));
   }
 );
@@ -191,6 +220,30 @@ const QASlice = createSlice({
         state.loadingQA = false;
       })
       .addCase(postStudentAnswerThenGet.rejected, (state, action) => {
+        // state.name = action.payload;
+      })
+      .addCase(postInstructorAnswer.pending, (state, action) => {
+        // for loading
+        state.loadingQA = true;
+      })
+      .addCase(postInstructorAnswer.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("post then get done");
+        state.loadingQA = false;
+      })
+      .addCase(postInstructorAnswer.rejected, (state, action) => {
+        // state.name = action.payload;
+      })
+      .addCase(postInstructorAnswerThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingQA = true;
+      })
+      .addCase(postInstructorAnswerThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("post then get done");
+        state.loadingQA = false;
+      })
+      .addCase(postInstructorAnswerThenGet.rejected, (state, action) => {
         // state.name = action.payload;
       }),
 });
