@@ -4,7 +4,7 @@ import InstructorDetails from "../../components/InstructorDetails/InstructorDeta
 const PersonalDetails = ({ data }) => {
   return (
     <div>
-      {data.studentname ? (
+      {data?.studentname ? (
         <StudentDetails data={data} />
       ) : (
         <InstructorDetails data={data} />

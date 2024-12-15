@@ -8,7 +8,18 @@ const LoadingScreen = () => {
   const { loadingQA } = useSelector((state) => state.qa);
   const { loadingQuiz } = useSelector((state) => state.quiz);
   const { smthnHappening } = useSelector((state) => state.Authorization);
-  if (loadingQA || loadingVid || smthnHappening || loadingQuiz) {
+  const { loadingTrans } = useSelector((state) => state.transaction);
+  const { loadingStu } = useSelector((state) => state.student);
+  const { loadingWhite } = useSelector((state) => state.whiteBoard);
+  if (
+    loadingQA ||
+    loadingVid ||
+    smthnHappening ||
+    loadingQuiz ||
+    loadingTrans ||
+    loadingStu ||
+    loadingWhite
+  ) {
     return (
       <div className="cont loading-comp">
         <div className="loader">

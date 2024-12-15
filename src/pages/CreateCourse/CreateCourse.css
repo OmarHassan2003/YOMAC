@@ -34,16 +34,18 @@
 }
 
 .course-form button {
-  background-color: #28a745;
-  color: white;
+  background-color: #fff;
+  margin-right: 10px;
+  color: #28a745;
+  border: 1px solid #28a745;
   padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .course-form button:hover {
-  background-color: #218838;
+  background-color: #28a745;
+  color: #fff;
 }
 
 .course-form .section {

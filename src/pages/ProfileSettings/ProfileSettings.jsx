@@ -5,7 +5,7 @@ import "./ProfileSettings.css";
 
 const ProfileSettings = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const tabs = ["Personal Details", "Payment"];
+  const tabs = ["Personal Details", "Transactions"];
   const changeActive = (index) => {
     setActiveIndex(index);
   };

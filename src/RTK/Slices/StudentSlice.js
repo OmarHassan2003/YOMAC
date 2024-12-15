@@ -3,6 +3,7 @@ import YomacApi from "../../utils/AxiosInstance";
 
 const initialstate = {
   object: {},
+  loadingStu: false,
 };
 
 export const getStudent = createAsyncThunk(
@@ -26,6 +27,35 @@ export const getStudent = createAsyncThunk(
   }
 );
 
+export const updateUser = createAsyncThunk(
+  "StudentSlice/updateUser",
+  async (userData, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.put(`update_user_data`, userData, {
+        headers: {
+          token: token,
+          "Content-Type": "application/json",
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const updateUserThenGet = createAsyncThunk(
+  "StudentSlice/updateUSerThenGet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(updateUser(data));
+    return dispatch(getStudent());
+  }
+);
+
 const StudentSlice = createSlice({
   name: "Student",
   initialState: initialstate,
@@ -34,16 +64,49 @@ const StudentSlice = createSlice({
     builder
       .addCase(getStudent.pending, (state, action) => {
         // for loading
+        state.loadingStu = true;
       })
       .addCase(getStudent.fulfilled, (state, action) => {
         // state.name = action.payload;
         console.log(action.payload.data);
         const data = action.payload.data;
+        localStorage.setItem("username", data?.username);
         state.object = data;
         console.log(state);
+        state.loadingStu = false;
       })
       .addCase(getStudent.rejected, (state, action) => {
+        state.loadingStu = false;
         // state.name = action.payload;
+      })
+      .addCase(updateUser.pending, (state, action) => {
+        state.loadingStu = true;
+        // for loading
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log(action.payload.data);
+        const data = action.payload.data;
+        state.object = data;
+        console.log(state);
+        state.loadingStu = false;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        // state.name = action.payload;
+        state.loadingStu = false;
+      })
+      .addCase(updateUserThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingStu = true;
+      })
+      .addCase(updateUserThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("al donia 7lwa");
+        state.loadingStu = false;
+      })
+      .addCase(updateUserThenGet.rejected, (state, action) => {
+        // state.name = action.payload;
+        state.loadingStu = false;
       }),
 });
 

@@ -3,6 +3,7 @@ import YomacApi from "../../utils/AxiosInstance";
 
 const initialstate = {
   whiteboard: [],
+  loadingWhite: false,
 };
 
 export const getWhiteboard = createAsyncThunk(
@@ -84,37 +85,46 @@ const WhiteboardSlice = createSlice({
     builder
       .addCase(acceptRequest.pending, (state, action) => {
         // for loading
+        state.loadingWhite = true;
       })
       .addCase(acceptRequest.fulfilled, (state, action) => {
         // state.name = action.payload;
         const data = action.payload.data;
         state.whiteboard = data.whiteboard;
+        state.loadingWhite = false;
       })
       .addCase(acceptRequest.rejected, (state, action) => {
         // state.name = action.payload;
+        state.loadingWhite = false;
       })
       .addCase(getWhiteboard.pending, (state, action) => {
         // for loading
+        state.loadingWhite = true;
       })
       .addCase(getWhiteboard.fulfilled, (state, action) => {
         // state.name = action.payload;
         const data = action.payload.data;
         state.whiteboard = data.whiteboard;
+        state.loadingWhite = false;
       })
       .addCase(getWhiteboard.rejected, (state, action) => {
         // state.name = action.payload;
+        state.loadingWhite = false;
       })
 
       .addCase(rejectRequest.pending, (state, action) => {
         // for loading
+        state.loadingWhite = true;
       })
       .addCase(rejectRequest.fulfilled, (state, action) => {
         // state.name = action.payload;
         const data = action.payload.data;
         state.whiteboard = data.whiteboard;
+        state.loadingWhite = false;
       })
       .addCase(rejectRequest.rejected, (state, action) => {
         // state.name = action.payload;
+        state.loadingWhite = false;
       }),
 });
 

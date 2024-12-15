@@ -14,6 +14,8 @@ const StudentCard = ({ data }) => {
     supports: ["football", "omar 5wl", "wafa 3rs"],
     contestsWon: 25,
   };
+  console.log(data);
+
   let coursesCompleted = 0;
   let courseInProgress = 0;
   data?.courses_progress?.map((curr) =>
@@ -35,15 +37,6 @@ const StudentCard = ({ data }) => {
           <br />
           Courses Completed
         </div>
-        {obj.contestsWon !== 0 ? (
-          <div>
-            <strong>{obj.contestsWon}</strong>
-            <br />
-            Constests Won
-          </div>
-        ) : (
-          ""
-        )}
       </div>
       <h3>Support</h3>
       <ul className="support-list">

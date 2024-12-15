@@ -1,0 +1,60 @@
+/* General container styling */
+.profile-container {
+  margin: 20px auto;
+  max-width: 800px;
+  padding: 20px;
+  background: linear-gradient(to right, #e6f7ff, #e6ffe6);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Table styling */
+.transaction-list {
+  overflow-x: auto;
+}
+
+.transaction-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.transaction-table thead {
+  background-color: #28a745;
+  color: white;
+}
+
+.transaction-table th,
+.transaction-table td {
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.transaction-row:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.transaction-row:hover {
+  background-color: #f1f1f1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .profile-header {
+    font-size: 1.5rem;
+  }
+
+  .transaction-table th,
+  .transaction-table td {
+    padding: 8px;
+  }
+}
