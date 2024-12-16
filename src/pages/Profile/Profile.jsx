@@ -17,7 +17,7 @@ const Profile = () => {
   return (
     <div className="profile-card">
       <div className="container">
-        {data.studentname ? (
+        {data?.studentname ? (
           <StudentCard data={data} />
         ) : (
           <InstructorCard data={data} />

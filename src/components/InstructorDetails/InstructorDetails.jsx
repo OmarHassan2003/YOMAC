@@ -1,7 +1,19 @@
 import { useState, useEffect } from "react";
 import "./InstructorDetails.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getStudent,
+  updateUser,
+  updateUserThenGet,
+} from "../../RTK/Slices/StudentSlice";
 
-const InstructorDetails = ({ data }) => {
+const InstructorDetails = () => {
+  const dispatch = useDispatch();
+  let data = useSelector((state) => state.student);
+  useEffect(() => {
+    dispatch(getStudent());
+  }, []);
+  data = data.object;
   const [firstName, setFirstName] = useState(
     data?.instructorname?.split(" ")[0]
   );
@@ -17,20 +29,18 @@ const InstructorDetails = ({ data }) => {
     setFirstName(data?.instructorname?.split(" ")[0]);
     setLastName(data?.instructorname?.split(" ").at(-1));
     setEmail(data?.email);
+    setPassword("");
   }, [data]);
   const handleSave = (e) => {
     e.preventDefault();
     const user = {
-      name: `${firstName} ${lastName}`,
-      email,
-      username,
-      password,
+      name: data.instructorname,
+      email: email,
+      username: username,
+      password: password,
     };
-    user.name = `${firstName} ${lastName}`;
-    user.email = email;
-    user.username = username;
-    user.password = password;
     console.log(user);
+    dispatch(updateUserThenGet(user));
   };
   const handleCancel = () => {
     setFirstName(data?.instructorname?.split(" ")[0]);
@@ -66,7 +76,7 @@ const InstructorDetails = ({ data }) => {
       </div>
       <div className="buttons">
         <button className="save" type="submit">
-          Save profile
+          Update Profile
         </button>
         <button className="cancel" onClick={handleCancel}>
           Cancel

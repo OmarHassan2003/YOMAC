@@ -12,7 +12,7 @@ const WhiteBoard = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getWhiteboard(2));
-  }, [data]);
+  }, []);
   const whiteboard = data.whiteboard;
   console.log(whiteboard);
   const acceptRequest2 = (instructorWhiteboardId, courseId) => {
