@@ -21,15 +21,24 @@ import encodeFileToBase64 from "../../utils/EncodeMedia";
 const ContentList = ({ course }) => {
   console.log(course);
   const user = useSelector((state) => state.Authorization);
+  console.log(user);
   const role = user.role;
   let isStudent = false;
   let isInstructor = false;
   let isTopInstructor = false;
-  if (role === "student") isStudent = true;
-  else {
+  let roleIndex = 0;
+  if (role === "student") {
+    isStudent = true;
+    roleIndex = 0;
+  } else {
     isInstructor = true;
-    if (course.topinstructorid === user.user_id) isTopInstructor = true;
+    roleIndex = 1;
+    if (course.topinstructorid == user.user_id) {
+      isTopInstructor = true;
+      roleIndex = 2;
+    }
   }
+
   const [activeModule, setActiveModule] = useState(null);
   const [showAddVideoSection, setShowAddVideoSection] = useState(null);
   const [showAddAssignmentSection, setShowAddAssignmentSection] =
@@ -67,7 +76,7 @@ const ContentList = ({ course }) => {
   const displayQuiz = (quizId, secId) => {
     const sec = course.sections.find((el) => el.coursesectionid === secId);
     updateCurrentSection(sec);
-    navigate(`/course/${course.courseid}/quiz/${quizId}`);
+    navigate(`/course/${course.courseid}/quiz/${quizId}/${roleIndex}`);
   };
 
   const displayAssign = (assignId, secId) => {
@@ -244,37 +253,41 @@ const ContentList = ({ course }) => {
                   </div>
                 ))}
                 {isInstructor && (
-                  <>
-                    <button
-                      className="add-btn"
-                      onClick={() =>
-                        setShowAddVideoSection(
-                          showAddVideoSection === module.coursesectionid
-                            ? null
-                            : module.coursesectionid
-                        )
-                      }
-                    >
-                      Add Video
-                    </button>
-                    {showAddVideoSection === module.coursesectionid && (
-                      <form
-                        className="inline-form"
-                        onSubmit={(e) =>
-                          handleAddVideo(e, module.coursesectionid)
-                        }
-                      >
-                        <input
-                          type="text"
-                          placeholder="Video Title"
-                          value={newVideoTitle}
-                          onChange={(e) => setNewVideoTitle(e.target.value)}
-                        />
-                        <input type="file" />
-                        <button className="save-btn" type="submit">
-                          Save Video
+                  <div className="btns">
+                    {isTopInstructor && (
+                      <>
+                        <button
+                          className="add-btn"
+                          onClick={() =>
+                            setShowAddVideoSection(
+                              showAddVideoSection === module.coursesectionid
+                                ? null
+                                : module.coursesectionid
+                            )
+                          }
+                        >
+                          Add Video
                         </button>
-                      </form>
+                        {showAddVideoSection === module.coursesectionid && (
+                          <form
+                            className="inline-form"
+                            onSubmit={(e) =>
+                              handleAddVideo(e, module.coursesectionid)
+                            }
+                          >
+                            <input
+                              type="text"
+                              placeholder="Video Title"
+                              value={newVideoTitle}
+                              onChange={(e) => setNewVideoTitle(e.target.value)}
+                            />
+                            <input type="file" />
+                            <button className="save-btn" type="submit">
+                              Save Video
+                            </button>
+                          </form>
+                        )}
+                      </>
                     )}
                     <button
                       className="add-btn"
@@ -380,14 +393,14 @@ const ContentList = ({ course }) => {
                     >
                       Add Assignment
                     </button>
-                  </>
+                  </div>
                 )}
               </div>
             )}
           </div>
         ))}
-        {isInstructor && (
-          <>
+        {isTopInstructor && (
+          <div className="btns">
             <button
               className="add-section-btn"
               onClick={() => setShowAddSectionForm(!showAddSectionForm)}
@@ -407,7 +420,7 @@ const ContentList = ({ course }) => {
                 </button>
               </form>
             )}
-          </>
+          </div>
         )}
       </div>
     </div>

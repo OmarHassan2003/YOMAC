@@ -53,7 +53,10 @@ function App() {
           path="course/:courseid/sec/:secid/assign/:assignid"
           element={<Assignment />}
         />
-        <Route path="/course/:courseid/quiz/:quizexamid" element={<Quiz />} />
+        <Route
+          path="/course/:courseid/quiz/:quizexamid/:roleindex"
+          element={<Quiz />}
+        />
         <Route path="/course/:courseid" element={<Course />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/dashboard" element={<DashBoard />} />
