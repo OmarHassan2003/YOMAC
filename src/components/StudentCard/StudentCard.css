@@ -1,53 +1,105 @@
+/* Sidebar Container */
 .sidebar {
-  background-color: #fff;
-  border-radius: 12px;
+  width: 350px;
+  margin: 20px auto;
   padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 30%;
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-family: "Arial", sans-serif;
+  text-align: center;
 }
 
+/* Profile Image */
 .profile-photo {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  margin: 0 auto;
+  margin: 0 auto 15px;
   display: block;
+  border: 3px solid #f76b6a; /* Light red border */
 }
 
+/* User Name */
 .user-name {
-  text-align: center;
-  font-size: 22px;
+  font-size: 1.5rem;
   font-weight: bold;
-  margin-top: 10px;
+  color: #333333;
+  margin-bottom: 5px;
 }
 
+/* Username Status Badge */
 .status-badge {
+  background-color: #f76b6a; /* Light red background */
+  color: #ffffff;
   display: inline-block;
-  background-color: #f88b8b;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 12px;
-  font-size: 14px;
-  margin-top: 5px;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
-.sidebar .stat {
+/* Stat Section */
+.stat {
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
+  margin: 20px 0;
+  text-align: center;
 }
 
-.support-list {
+.stat div {
+  flex: 1;
+}
+
+.stat strong {
+  font-size: 1.3rem;
+  color: #333333;
+}
+
+.stat br {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Balance Section */
+h3 {
+  font-size: 1.2rem;
+  margin-top: 20px;
+  color: #333333;
+  font-weight: bold;
+}
+
+p {
+  font-size: 1rem;
+  color: #555555;
+  margin: 10px 0 20px;
+}
+
+/* First Two Courses List */
+.course-list {
   list-style: none;
   padding: 0;
-  margin-top: 30px;
+  margin: 0;
+  text-align: left;
 }
 
-.support-list li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
-  font-size: 16px;
+.course-list li {
+  background: #f9f9f9;
+  border: 1px solid #eeeeee;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.course-list strong {
+  color: #f76b6a;
+  font-weight: bold;
+}
+
+.course-list li:hover {
+  background-color: #fef3f3;
+  transition: background-color 0.3s ease-in-out;
 }
