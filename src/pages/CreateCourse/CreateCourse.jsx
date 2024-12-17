@@ -1,12 +1,19 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./CreateCourse.css"; // Import the CSS file
 import encodeFileToBase64 from "../../utils/EncodeMedia";
 import { CreateCourseAPI } from "../../RTK/Slices/CourseSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategories } from "../../RTK/Slices/CategorySlice";
 
 const CreateCourse = () => {
   const [sections, setSections] = useState([]);
   const dispatch = useDispatch();
+  let data = useSelector((state) => state.category);
+  useEffect(() => {
+    dispatch(getCategories());
+  }, [dispatch]);
+  const categories = data.categories;
+  console.log(categories);
 
   const addSection = () => {
     setSections([
@@ -18,6 +25,7 @@ const CreateCourse = () => {
       },
     ]);
   };
+
   const addQuiz = (sectionIndex) => {
     const updatedSections = [...sections];
     updatedSections[sectionIndex].quizzes.push({
@@ -41,6 +49,18 @@ const CreateCourse = () => {
 
   const CourseForm = useRef(null);
 
+  async function getVideoDuration(file) {
+    return new Promise((resolve) => {
+      const url = URL.createObjectURL(file);
+      const video = document.createElement("video");
+      video.src = url;
+      video.addEventListener("loadedmetadata", () => {
+        resolve(video.duration); // duration in seconds
+        URL.revokeObjectURL(url);
+      });
+    });
+  }
+
   async function BahgatHabdleSubmit(e) {
     e.preventDefault();
     const formData = new FormData(CourseForm.current);
@@ -48,13 +68,15 @@ const CreateCourse = () => {
     const courseImage = await encodeFileToBase64(image);
     const certificate = formData.get("course_certificate");
     const courseCertificate = await encodeFileToBase64(certificate);
+    let totalDuration = 0; // in seconds
+
     const course = {
       title: formData.get("course_title"),
       description: formData.get("course_description"),
       seen_status: formData.get("course_status"),
-      duration: "2323 hours",
+      duration: "0",
       price: +formData.get("course_price"),
-      categoryID: 1,
+      categoryID: +formData.get("course_category"),
       requirements: formData.get("course_requirements").split(","),
       course_image: courseImage,
       certificate: courseCertificate,
@@ -62,7 +84,6 @@ const CreateCourse = () => {
     };
 
     const sectionTitles = formData.getAll("section_title");
-
     const sections_number = sectionTitles.length;
 
     for (let i = 0; i < sections_number; i++) {
@@ -73,23 +94,18 @@ const CreateCourse = () => {
         `section_${i}_Quiz passingMarks`
       );
       const quizzes = [];
+
       for (let y = 0; y < quizTitles.length; ++y) {
-        const quizQuestions = [{}, {}];
-        for (let j = 0; j < 2; ++j) {
-          quizQuestions[j].text = formData.get(
-            `section_${i}_quiz_${y}_question_${j}`
-          );
-          quizQuestions[j].choices = [];
-          for (let z = 0; z < 4; ++z) {
-            quizQuestions[j].choices.push(
-              formData.get(`section_${i}_quiz_${y}_question_${j}_choice_${z}`)
-            );
-          }
-          quizQuestions[j].correct_answer_index = +formData.get(
+        const quizQuestions = Array.from({ length: 2 }, (_, j) => ({
+          text: formData.get(`section_${i}_quiz_${y}_question_${j}`),
+          choices: Array.from({ length: 4 }, (_, z) =>
+            formData.get(`section_${i}_quiz_${y}_question_${j}_choice_${z}`)
+          ),
+          correct_answer_index: +formData.get(
             `section_${i}_quiz_${y}_correct_answer_${j}`
-          );
-        }
-        console.log(quizDurations[y], quizTotalMarks[y], quizPassingMarks[y]);
+          ),
+        }));
+
         quizzes.push({
           title: quizTitles[y],
           quizDuration: +quizDurations[y],
@@ -98,24 +114,34 @@ const CreateCourse = () => {
           questions: quizQuestions,
         });
       }
+
       const videoTitles = formData.getAll(`section_${i}_videoTitle`);
       const videoLinks = formData.getAll(`section_${i}_videoLink`);
       const videos = [];
+
       for (let k = 0; k < videoTitles.length; ++k) {
-        const vidLink = await encodeFileToBase64(videoLinks[k]);
+        const vidLink = videoLinks[k];
+        const videoDuration = await getVideoDuration(vidLink);
+        totalDuration += videoDuration;
+
+        const vidBase64 = await encodeFileToBase64(vidLink);
         videos.push({
           title: videoTitles[k],
-          video: vidLink,
+          video: vidBase64,
         });
       }
+
       course.sections.push({
         title: sectionTitles[i],
         quiz: quizzes[0],
         videos: videos,
       });
     }
-    dispatch(CreateCourseAPI(course));
+
+    course.duration = totalDuration;
     console.log(course);
+
+    dispatch(CreateCourseAPI(course));
   }
 
   return (
@@ -134,6 +160,15 @@ const CreateCourse = () => {
         name="course_description"
         placeholder="Course Description"
       ></textarea>
+
+      <label>Category</label>
+      <select name="course_category">
+        {categories.map((category, index) => (
+          <option key={index} value={category.categoryid}>
+            {category.categorytext}
+          </option>
+        ))}
+      </select>
 
       <label>Seen Status</label>
       <select name="course_status">
@@ -245,7 +280,7 @@ const CreateCourse = () => {
       <button type="button" onClick={addSection}>
         Add Section
       </button>
-      <button type="submit">Save Profile</button>
+      <button type="submit">Create Course</button>
     </form>
   );
 };
