@@ -11,7 +11,6 @@ const StudentCard = ({ data }) => {
     statusBadge: "gamed",
     courseInProgress: 10,
     coursesCompleted: 22,
-    supports: ["football", "omar 5wl", "wafa 3rs"],
     contestsWon: 25,
   };
   console.log(data);
@@ -21,6 +20,10 @@ const StudentCard = ({ data }) => {
   data?.courses_progress?.map((curr) =>
     curr.progress === 100 ? coursesCompleted++ : courseInProgress++
   );
+
+  // Extract first two courses
+  const firstTwoCourses = data?.courses_progress?.slice(0, 2) || [];
+
   return (
     <div className="sidebar">
       <img src={data.profilepic} className="profile-photo" />
@@ -38,10 +41,14 @@ const StudentCard = ({ data }) => {
           Courses Completed
         </div>
       </div>
-      <h3>Support</h3>
-      <ul className="support-list">
-        {obj?.supports?.map((curr, index) => (
-          <li key={index}>{curr}</li>
+      <h3>Balance</h3>
+      <p>{data?.balance || 0}</p>
+      <h3>First Two Courses</h3>
+      <ul className="course-list">
+        {firstTwoCourses.map((course, index) => (
+          <li key={index}>
+            <strong>{course.title}</strong>: {course.description}
+          </li>
         ))}
       </ul>
     </div>

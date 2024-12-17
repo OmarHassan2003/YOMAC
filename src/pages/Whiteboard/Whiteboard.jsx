@@ -2,8 +2,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   acceptRequest,
+  acceptRequestThenGet,
   getWhiteboard,
   rejectRequest,
+  rejectRequestThenGet,
 } from "../../RTK/Slices/WhiteboardSlice";
 import "./WhiteBoard.css";
 import { useParams } from "react-router-dom";
@@ -24,7 +26,7 @@ const WhiteBoard = () => {
       course_id: courseId,
       item_id: instructorWhiteboardId,
     };
-    dispatch(acceptRequest(request));
+    dispatch(acceptRequestThenGet(request));
   };
   const rejectRequest2 = (instructorWhiteboardId, courseId) => {
     console.log(instructorWhiteboardId, courseId);
@@ -32,7 +34,7 @@ const WhiteBoard = () => {
       course_id: courseId,
       item_id: instructorWhiteboardId,
     };
-    dispatch(rejectRequest(request));
+    dispatch(rejectRequestThenGet(request));
   };
   return (
     <div className="course-container">
