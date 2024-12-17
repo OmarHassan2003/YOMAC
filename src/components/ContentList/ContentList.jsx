@@ -15,6 +15,7 @@ import vidIcon from "../../assets/ui-element.png";
 import quizIcon from "../../assets/speech-bubble.png";
 import assignIcon from "../../assets/assign.png";
 import secIcon from "../../assets/sections.png";
+import delIcon from "../../assets/trash.png";
 import { useNavigate } from "react-router-dom";
 import encodeFileToBase64 from "../../utils/EncodeMedia";
 
@@ -174,6 +175,8 @@ const ContentList = ({ course }) => {
     setQuizQuestions(updatedQuestions);
   };
 
+  const deleteAssign = (assignID) => {};
+
   return (
     <div className="content-list">
       <h2>Course Content</h2>
@@ -188,7 +191,16 @@ const ContentList = ({ course }) => {
                 <img src={secIcon} alt="Section Icon" className="lesson-icon" />
                 <h3>{module.title}</h3>
               </div>
-              <span>{module.duration}</span>
+              <div className="right-side">
+                <span>{module.duration}</span>
+                {isTopInstructor && (
+                  <img
+                    src={delIcon}
+                    alt="Delete Icon"
+                    className="lesson-icon"
+                  />
+                )}
+              </div>
             </div>
             {activeModule === module.coursesectionid && (
               <div className="lessons">
@@ -208,7 +220,16 @@ const ContentList = ({ course }) => {
                       />
                       <p>{video.title}</p>
                     </div>
-                    <span>{video.videoduration}</span>
+                    <div className="right-side">
+                      <span>{video.videoduration}</span>
+                      {isTopInstructor && (
+                        <img
+                          src={delIcon}
+                          alt="Delete Icon"
+                          className="lesson-icon"
+                        />
+                      )}
+                    </div>
                   </div>
                 ))}
                 {module.quizzes.map((quiz) => (
@@ -227,7 +248,16 @@ const ContentList = ({ course }) => {
                       />
                       <p>{quiz.title}</p>
                     </div>
-                    <span>{quiz.duration}</span>
+                    <div className="right-side">
+                      <span>{quiz.duration}</span>
+                      {isTopInstructor && (
+                        <img
+                          src={delIcon}
+                          alt="Delete Icon"
+                          className="lesson-icon"
+                        />
+                      )}
+                    </div>
                   </div>
                 ))}
                 {module.assignments.assignment.map((assignment) => (
@@ -249,7 +279,17 @@ const ContentList = ({ course }) => {
                       />
                       <p>{assignment.title}</p>
                     </div>
-                    <span>{assignment.duration}</span>
+                    <div className="right-side">
+                      <span>{assignment.duration}</span>
+                      {isTopInstructor && (
+                        <img
+                          src={delIcon}
+                          alt="Delete Icon"
+                          className="lesson-icon"
+                          onClick={() => deleteAssign(assignment.assignmentid)}
+                        />
+                      )}
+                    </div>
                   </div>
                 ))}
                 {isInstructor && (

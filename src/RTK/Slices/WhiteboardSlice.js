@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, isFulfilled } from "@reduxjs/toolkit";
 import YomacApi from "../../utils/AxiosInstance";
+import { data } from "react-router-dom";
 
 const initialstate = {
   whiteboard: [],
@@ -27,7 +28,7 @@ export const getWhiteboard = createAsyncThunk(
   }
 );
 export const acceptRequest = createAsyncThunk(
-  "AuthorizationSlice/acceptRequest",
+  "WhiteboardSlice/acceptRequest",
   async (userData, { getState, rejectWithValue }) => {
     console.log(userData.course_id, userData.item_id);
     // api call
@@ -53,7 +54,7 @@ export const acceptRequest = createAsyncThunk(
   }
 );
 export const rejectRequest = createAsyncThunk(
-  "AuthorizationSlice/rejectRequest",
+  "WhiteboardSlice/rejectRequest",
   async (userData, { getState, rejectWithValue }) => {
     console.log(userData);
     // api call
@@ -74,6 +75,21 @@ export const rejectRequest = createAsyncThunk(
       console.log(error);
       return rejectWithValue(error);
     }
+  }
+);
+export const acceptRequestThenGet = createAsyncThunk(
+  "WhiteboardSlice/acceptRequestThenGet",
+  async (userData, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(acceptRequest(userData));
+    return dispatch(getWhiteboard(userData.course_id));
+  }
+);
+
+export const rejectRequestThenGet = createAsyncThunk(
+  "WhiteboardSlice/rejectRequestThenGet",
+  async (userData, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(rejectRequest(userData));
+    return dispatch(getWhiteboard(userData.course_id));
   }
 );
 
@@ -125,6 +141,32 @@ const WhiteboardSlice = createSlice({
       .addCase(rejectRequest.rejected, (state, action) => {
         // state.name = action.payload;
         state.loadingWhite = false;
+      })
+      .addCase(acceptRequestThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingStu = true;
+      })
+      .addCase(acceptRequestThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("al donia 7lwa");
+        state.loadingStu = false;
+      })
+      .addCase(acceptRequestThenGet.rejected, (state, action) => {
+        // state.name = action.payload;
+        state.loadingStu = false;
+      })
+      .addCase(rejectRequestThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingStu = true;
+      })
+      .addCase(rejectRequestThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("al donia 7lwa");
+        state.loadingStu = false;
+      })
+      .addCase(rejectRequestThenGet.rejected, (state, action) => {
+        // state.name = action.payload;
+        state.loadingStu = false;
       }),
 });
 
