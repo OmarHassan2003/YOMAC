@@ -60,7 +60,7 @@ function App() {
         <Route path="/course/:courseid" element={<Course />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/dashboard" element={<DashBoard />} />
-        <Route path="/whiteboard" element={<Whiteboard />} />
+        <Route path="/whiteboard/:courseid" element={<Whiteboard />} />
         <Route path="/createCourse" element={<CreateCourse />} />
       </Routes>
     </>
