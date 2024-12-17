@@ -6,6 +6,7 @@ import WhiteboardSlice from "./Slices/WhiteboardSlice";
 import QASlice from "./Slices/QASlice";
 import QuizSlice from "./Slices/QuizSlice";
 import TransactionSlice from "./Slices/TransactionSlice";
+import CategorySlice from "./Slices/CategorySlice";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     qa: QASlice,
     quiz: QuizSlice,
     transaction: TransactionSlice,
+    category: CategorySlice,
   },
 });
 
