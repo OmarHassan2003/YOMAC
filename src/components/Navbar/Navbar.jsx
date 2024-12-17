@@ -47,12 +47,6 @@ export default function Navbar() {
             <>
               <Link
                 style={{ color: isHomePage ? "white" : "black" }}
-                to="/whiteboard"
-              >
-                Whiteboard
-              </Link>
-              <Link
-                style={{ color: isHomePage ? "white" : "black" }}
                 to="/dashboard"
               >
                 Dashboard

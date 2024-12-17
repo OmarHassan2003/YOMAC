@@ -6,12 +6,15 @@ import {
   rejectRequest,
 } from "../../RTK/Slices/WhiteboardSlice";
 import "./WhiteBoard.css";
+import { useParams } from "react-router-dom";
 
 const WhiteBoard = () => {
+  const params = useParams();
+  const currCourseID = params.courseid;
   const data = useSelector((state) => state.whiteBoard);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(currCourseID);
   useEffect(() => {
-    dispatch(getWhiteboard(2));
+    dispatch(getWhiteboard(currCourseID));
   }, []);
   const whiteboard = data.whiteboard;
   console.log(whiteboard);

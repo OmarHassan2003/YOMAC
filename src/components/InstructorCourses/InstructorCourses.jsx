@@ -5,36 +5,78 @@ const InstructorCourses = ({ data }) => {
   const handleClick = (course) => {
     navigate(`/course/${course.courseid}`);
   };
+  const handleWhiteClick = (course) => {
+    navigate(`/whiteboard/${course.courseid}`);
+  };
   return (
-    <div className="course-container">
-      <div className="course-header">
-        <h2>Top Courses</h2>
-      </div>
-      <div className="course-List">
-        {data?.top_courses?.map((curr, index) => (
-          <div className="course-item" key={index}>
-            <div className="course-info">
-              <img src={curr.courseimage} />
-              <div className="course-details">
-                <h3>{curr.title}</h3>
+    <>
+      <div className="course-container">
+        <div className="course-header">
+          <h2>Top Courses</h2>
+        </div>
+        <div className="course-List">
+          {data?.top_courses?.map((curr, index) => (
+            <div className="course-item" key={index}>
+              <div className="course-info">
+                <img src={curr.courseimage} />
+                <div className="course-details">
+                  <h3>{curr.title}</h3>
+                </div>
               </div>
+              <div>{Math.ceil(curr.duration / 3600)}</div>
+              <div className="course-rating">
+                <span>⭐ 4.3</span>
+              </div>
+              <button
+                className="view-course-btn"
+                onClick={() => {
+                  handleWhiteClick(curr);
+                }}
+              >
+                Whiteboard
+              </button>
+              <button
+                className="view-course-btn"
+                onClick={() => {
+                  handleClick(curr);
+                }}
+              >
+                View Course
+              </button>
             </div>
-            <div>{Math.ceil(curr.duration / 3600)}</div>
-            <div className="course-rating">
-              <span>⭐ 4.3</span>
-            </div>
-            <button
-              className="view-course-btn"
-              onClick={() => {
-                handleClick(curr);
-              }}
-            >
-              View Course
-            </button>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+      <div className="course-container" style={{ marginTop: "20px" }}>
+        <div className="course-header">
+          <h2>Non Top Courses</h2>
+        </div>
+        <div className="course-List">
+          {data?.non_top_courses?.map((curr, index) => (
+            <div className="course-item" key={index}>
+              <div className="course-info">
+                <img src={curr.courseimage} />
+                <div className="course-details">
+                  <h3>{curr.title}</h3>
+                </div>
+              </div>
+              <div>{Math.ceil(curr.duration / 3600)}</div>
+              <div className="course-rating">
+                <span>⭐ 4.3</span>
+              </div>
+              <button
+                className="view-course-btn"
+                onClick={() => {
+                  handleClick(curr);
+                }}
+              >
+                View Course
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   );
 };
 export default InstructorCourses;
