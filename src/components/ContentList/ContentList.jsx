@@ -19,15 +19,21 @@ import { useNavigate } from "react-router-dom";
 import encodeFileToBase64 from "../../utils/EncodeMedia";
 
 const ContentList = ({ course }) => {
+  console.log(course);
   const user = useSelector((state) => state.Authorization);
   const role = user.role;
   let isStudent = false;
   let isInstructor = false;
+  let isTopInstructor = false;
   if (role === "student") isStudent = true;
-  else isInstructor = true;
-
+  else {
+    isInstructor = true;
+    if (course.topinstructorid === user.user_id) isTopInstructor = true;
+  }
   const [activeModule, setActiveModule] = useState(null);
   const [showAddVideoSection, setShowAddVideoSection] = useState(null);
+  const [showAddAssignmentSection, setShowAddAssignmentSection] =
+    useState(null);
   const [showAddQuizSection, setShowAddQuizSection] = useState(null);
   const [showAddSectionForm, setShowAddSectionForm] = useState(false);
 
@@ -100,6 +106,11 @@ const ContentList = ({ course }) => {
     };
     dispatch(addVideoThenGet(newVid));
     setNewVideoTitle("");
+  };
+
+  const handleAddAssignment = (sectionId) => {
+    console.log("Adding Assignment to Section:", sectionId);
+    navigate(`/course/${course.courseid}/sec/${sectionId}/addAssign`);
   };
 
   const handleAddQuiz = (e, sectionId) => {
@@ -361,6 +372,14 @@ const ContentList = ({ course }) => {
                         </button>
                       </form>
                     )}
+                    <button
+                      className="add-btn"
+                      onClick={() =>
+                        handleAddAssignment(module.coursesectionid)
+                      }
+                    >
+                      Add Assignment
+                    </button>
                   </>
                 )}
               </div>

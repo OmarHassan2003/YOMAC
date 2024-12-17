@@ -13,7 +13,6 @@ const LessonContent = ({ course }) => {
           <video
             className="course-video"
             src={course.currVid?.videolink}
-            autoPlay
             controls
           ></video>
           <h1>{course.currVid?.title}</h1>

@@ -8,7 +8,7 @@ const Quiz = () => {
   const params = useParams();
   const navigate = useNavigate();
   const currQuizId = params.quizexamid;
-  const courseId = params.courseid; // Get the course ID from the URL params
+  const courseId = params.courseid;
   const { questions } = useSelector((state) => state.quiz);
   const dispatch = useDispatch();
 
@@ -28,15 +28,13 @@ const Quiz = () => {
   };
 
   const handleSubmit = () => {
-    // Check if all questions are answered
     if (Object.keys(selectedAnswers).length !== questions.length) {
       setError("Please answer all questions.");
       return;
     }
 
-    setError(""); // Clear any existing error
+    setError("");
 
-    // Calculate the score
     let correctCount = 0;
     questions.forEach((question) => {
       if (

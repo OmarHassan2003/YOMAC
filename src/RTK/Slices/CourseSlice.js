@@ -196,6 +196,27 @@ export const addQuizThenGet = createAsyncThunk(
   }
 );
 
+export const addAssignment = createAsyncThunk(
+  "CourseSlice/addAssignment",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post("add_assignment", data, {
+        headers: {
+          token: token,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const CourseSlice = createSlice({
   name: "Course",
   initialState: initialstate,
@@ -364,6 +385,20 @@ const CourseSlice = createSlice({
       })
       .addCase(getAssign.rejected, (state, action) => {
         // state.name = action.payload;
+        state.loadingVid = false;
+      })
+      .addCase(addAssignment.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(addAssignment.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("Assignment Created");
+        state.loadingVid = false;
+      })
+      .addCase(addAssignment.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log("Assignment Failed to be Created");
         state.loadingVid = false;
       }),
 });
