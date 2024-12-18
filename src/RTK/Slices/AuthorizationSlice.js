@@ -239,6 +239,27 @@ const AuthorizationSlice = createSlice({
         state.smthnHappening = false;
         console.log(action);
       })
+      .addCase(forgotPassword.pending, (state, action) => {
+        // for loading
+        state.smthnHappening = true;
+      })
+      .addCase(forgotPassword.fulfilled, (state, action) => {
+        console.log(action.payload);
+        // const data = action.payload.data;
+        // state.token = data.token;
+        // localStorage.setItem("token", data.token);
+        // localStorage.setItem("role", data?.user_data?.role);
+        // state.user_id = data.user_data.id;
+        // state.role = data.user_data.role;
+        state.smthnHappening = false;
+        // console.log(state.token);
+        // console.log(state.role);
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        // state.name = action.payload;
+        state.smthnHappening = false;
+        console.log(action);
+      })
       .addCase(setNewPasswordAPI.pending, (state, action) => {
         // for loading
         state.smthnHappening = true;

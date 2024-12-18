@@ -17,7 +17,6 @@ export default function ForgotPassword() {
   const dispatch = useDispatch();
 
   const queryString = location.search.slice(1);
-  console.log(queryString);
 
   useEffect(() => {
     const handleResize = () => {
