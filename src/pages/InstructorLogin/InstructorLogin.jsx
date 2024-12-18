@@ -79,7 +79,7 @@ export default function InstructorLogin() {
 
         <div className="forgot-container">
           <h4>or</h4>
-          <Link to="/forgotpassword">Forgot Password</Link>
+          <Link to="/resetpassword">Forgot Password</Link>
         </div>
 
         <h2>Don't have an account?</h2>

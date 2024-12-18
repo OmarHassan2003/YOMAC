@@ -9,7 +9,7 @@ import HomePage from "./pages/Homepage/Homepage.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Register from "./pages/Register/Register.jsx";
 import Whiteboard from "./pages/Whiteboard/Whiteboard.jsx";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import StudentLogin from "./pages/StudentLogin/StudentLogin.jsx";
 import InstructorLogin from "./pages/InstructorLogin/InstructorLogin.jsx";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword.jsx";
@@ -28,9 +28,11 @@ function App() {
   // const dispatch = useDispatch();
   // dispatch(StudentLoginAPI());
   const { token } = useSelector((state) => state.Authorization);
+  const location = useLocation();
+  const queryString = location.search.slice(1);
   const navigate = useNavigate();
   useEffect(() => {
-    if (token === null) navigate("/login");
+    !queryString && token === null && navigate("/login");
   }, [token]);
   return (
     <>
@@ -38,7 +40,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/resetpassword" element={<ForgotPassword />} />
         <Route path="/liveqa" element={<LiveQA />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
