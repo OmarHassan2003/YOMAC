@@ -22,6 +22,8 @@ import Quiz from "./components/Quiz/Quiz.jsx";
 import LiveQA from "./pages/LiveQA/LiveQA.jsx";
 import Assignment from "./components/Assignment/Assignment.jsx";
 import AddAssignment from "./components/AddAssignment/AddAssignment.jsx";
+import Search from "./pages/Search/Search.jsx";
+
 import EditAssignment from "./components/EditAssignment/EditAssignment.jsx";
 
 function App() {
@@ -48,6 +50,7 @@ function App() {
         <Route path="/instructorlogin" element={<InstructorLogin />} />
         <Route path="studentregister" element={<StudentRegister />} />
         <Route path="instructorregister" element={<InstructorRegister />} />
+        <Route path="search/:searchQuery" element={<Search />} />
         <Route
           path="course/:courseid/sec/:secid/editAssign/:assignid"
           element={<EditAssignment />}
