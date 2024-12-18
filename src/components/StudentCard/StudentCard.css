@@ -64,14 +64,14 @@
 }
 
 /* Balance Section */
-h3 {
+.h3 {
   font-size: 1.2rem;
   margin-top: 20px;
   color: #333333;
   font-weight: bold;
 }
 
-p {
+.balance {
   font-size: 1rem;
   color: #555555;
   margin: 10px 0 20px;

@@ -22,6 +22,7 @@ import Quiz from "./components/Quiz/Quiz.jsx";
 import LiveQA from "./pages/LiveQA/LiveQA.jsx";
 import Assignment from "./components/Assignment/Assignment.jsx";
 import AddAssignment from "./components/AddAssignment/AddAssignment.jsx";
+import EditAssignment from "./components/EditAssignment/EditAssignment.jsx";
 
 function App() {
   // const dispatch = useDispatch();
@@ -45,6 +46,10 @@ function App() {
         <Route path="/instructorlogin" element={<InstructorLogin />} />
         <Route path="studentregister" element={<StudentRegister />} />
         <Route path="instructorregister" element={<InstructorRegister />} />
+        <Route
+          path="course/:courseid/sec/:secid/editAssign/:assignid"
+          element={<EditAssignment />}
+        />
         <Route
           path="course/:courseid/sec/:secid/addAssign"
           element={<AddAssignment />}

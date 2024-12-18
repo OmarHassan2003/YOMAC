@@ -1,12 +1,25 @@
+
 .content-list {
-    width: 40%;
-    max-width: 350px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-  }
-  
+  width: 40%;
+  max-width: 350px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  overflow-y: auto;        /* Enable vertical scrolling */
+  overflow-x: hidden;      /* Disable horizontal scrolling */
+  max-height: 700px;       /* You can adjust this based on your design needs */
+}
+
+.content-list::-webkit-scrollbar {
+  width: 0px;  /* This hides the scrollbar */
+  height: 0px; /* This hides the horizontal scrollbar */
+}
+
+.content-list::-webkit-scrollbar-thumb {
+  background: transparent; /* Optional: Set a transparent thumb so that it is not visible */
+}
+
   @media (max-width: 1050px) {
     .content-list {
       width: 100%;

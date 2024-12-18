@@ -1,19 +1,39 @@
-import React, { useRef, useState } from "react";
-import "./AddAssignment.css";
+import React, { useEffect, useRef, useState } from "react";
+import "./EditAssignment.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addAssignment } from "../../RTK/Slices/CourseSlice";
-
-const AddAssignment = () => {
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addAssignment,
+  getAssign,
+  getSingleAssign,
+  updateAssignment,
+} from "../../RTK/Slices/CourseSlice";
+const EditAssignment = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  //   const AssForm = useRef(null);
+  const { fetchedSingleAssign } = useSelector((state) => state.Course);
+  const assignment = fetchedSingleAssign?.assignment;
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [maxMarks, setMaxMarks] = useState("");
-  const [passingMarks, setPassingMarks] = useState("");
+  const [maxMarks, setMaxMarks] = useState(0);
+  const [passingMarks, setPassingMarks] = useState(0);
   const [assignment_file, setAssignment_file] = useState(null);
+
+  //   console.log(fetchedSingleAssign);
+  useEffect(() => {
+    dispatch(getSingleAssign(params.assignid));
+  }, [dispatch, params.assignid]);
+
+  useEffect(() => {
+    if (fetchedSingleAssign) {
+      setTitle(fetchedSingleAssign.assignment?.title || "");
+      setDescription(fetchedSingleAssign.assignment?.description || "");
+      setMaxMarks(fetchedSingleAssign.assignment.maxmarks || "");
+      setPassingMarks(fetchedSingleAssign.assignment.passingmarks || "");
+      setAssignment_file(fetchedSingleAssign.assignment?.fileattched || null);
+    }
+  }, [fetchedSingleAssign]);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -32,9 +52,9 @@ const AddAssignment = () => {
     formData.append("maxMarks", Number(maxMarks));
     formData.append("passingMarks", Number(passingMarks));
     formData.append("assignment_file", assignment_file);
-    formData.append("sectionID", params.secid);
-    formData.append("courseID", params.courseid);
-    dispatch(addAssignment(formData));
+    formData.append("assignmentID", params.assignid);
+    dispatch(updateAssignment(formData));
+    alert("Assignment Updated");
     navigate(`/course/${params.courseid}`);
   };
 
@@ -45,8 +65,8 @@ const AddAssignment = () => {
   return (
     <div className="add-assignment-container">
       <div className="assignment-header">
-        <h2>Add Assignment</h2>
-        <p>Create a new assignment for your course</p>
+        <h2>Edit Assignment</h2>
+        <p>Edit an existing assignment in your course</p>
       </div>
       <form className="assignment-form" onSubmit={handleSubmit}>
         <div className="form-group">
@@ -89,7 +109,6 @@ const AddAssignment = () => {
               onChange={(e) => {
                 setMaxMarks(e.target.value);
               }}
-              required
             />
           </div>
 
@@ -103,7 +122,6 @@ const AddAssignment = () => {
               onChange={(e) => {
                 setPassingMarks(e.target.value);
               }}
-              required
             />
           </div>
         </div>
@@ -121,7 +139,7 @@ const AddAssignment = () => {
 
         <div className="form-submit">
           <button type="submit" className="submit-btn">
-            Add Assignment
+            Submit Changes
           </button>
         </div>
       </form>
@@ -132,4 +150,4 @@ const AddAssignment = () => {
   );
 };
 
-export default AddAssignment;
+export default EditAssignment;

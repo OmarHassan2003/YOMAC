@@ -75,7 +75,6 @@ const Quiz = () => {
     const updatedQuestions = [...editableQuestions];
     if (field === "questiontext") {
       updatedQuestions[index].questiontext = value;
-      // updatedQuestions[index].text = value;
     } else if (field === "correctanswerindex") {
       updatedQuestions[index].correctanswerindex = Number(value);
     } else {

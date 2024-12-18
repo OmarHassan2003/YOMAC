@@ -4,6 +4,10 @@ import {
   addSection,
   addSectionThenGet,
   addVideoThenGet,
+  deleteAssignThenGet,
+  deleteQuizThenGet,
+  deleteSectionThenGet,
+  deleteVideoThenGet,
   getAssign,
   getVideo,
   setCurrSection,
@@ -83,7 +87,12 @@ const ContentList = ({ course }) => {
   const displayAssign = (assignId, secId) => {
     const sec = course.sections.find((el) => el.coursesectionid === secId);
     updateCurrentSection(sec);
-    navigate(`/course/${course.courseid}/sec/${secId}/assign/${assignId}`);
+    if (isStudent)
+      navigate(`/course/${course.courseid}/sec/${secId}/assign/${assignId}`);
+    else
+      navigate(
+        `/course/${course.courseid}/sec/${secId}/editAssign/${assignId}`
+      );
   };
 
   const handleAddSection = (e) => {
@@ -156,26 +165,60 @@ const ContentList = ({ course }) => {
     setQuizQuestions([
       ...quizQuestions,
       {
-        text: "",
+        questiontext: "",
         choices: ["", "", "", ""],
-        correct_answer_index: "",
+        correctanswerindex: "",
       },
     ]);
   };
 
   const updateQuizQuestion = (index, field, value) => {
     const updatedQuestions = [...quizQuestions];
-    if (field === "text") {
-      updatedQuestions[index].text = value;
-    } else if (field === "correct_answer_index") {
-      updatedQuestions[index].correct_answer_index = Number(value);
+    if (field === "questiontext") {
+      updatedQuestions[index].questiontext = value;
+    } else if (field === "correctanswerindex") {
+      updatedQuestions[index].correctanswerindex = Number(value);
     } else {
       updatedQuestions[index].choices[field] = value;
     }
     setQuizQuestions(updatedQuestions);
   };
 
-  const deleteAssign = (assignID) => {};
+  const handleDeleteSection = (sectionId) => {
+    const data = {
+      sectionId,
+      courseId: course.courseid,
+    };
+    dispatch(deleteSectionThenGet(data)); // Dispatch action to delete the section
+    console.log(sectionId);
+  };
+
+  const handleDeleteVideo = (videoId) => {
+    const data = {
+      videoId,
+      courseId: course.courseid,
+    };
+    dispatch(deleteVideoThenGet(data)); // Dispatch action to delete the video
+    console.log(videoId);
+  };
+
+  const handleDeleteQuiz = (quizId) => {
+    const data = {
+      quizId,
+      courseId: course.courseid,
+    };
+    dispatch(deleteQuizThenGet(data)); // Dispatch action to delete the quiz
+    console.log(quizId);
+  };
+
+  const handleDeleteAssignment = (assignmentId) => {
+    const data = {
+      assignmentId,
+      courseId: course.courseid,
+    };
+    dispatch(deleteAssignThenGet(data)); // Dispatch action to delete the assignment
+    console.log(assignmentId);
+  };
 
   return (
     <div className="content-list">
@@ -198,6 +241,10 @@ const ContentList = ({ course }) => {
                     src={delIcon}
                     alt="Delete Icon"
                     className="lesson-icon"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent event bubbling
+                      handleDeleteSection(module.coursesectionid); // Delete Section
+                    }}
                   />
                 )}
               </div>
@@ -227,6 +274,10 @@ const ContentList = ({ course }) => {
                           src={delIcon}
                           alt="Delete Icon"
                           className="lesson-icon"
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent event bubbling
+                            handleDeleteVideo(video.videoid); // Delete Video
+                          }}
                         />
                       )}
                     </div>
@@ -255,6 +306,10 @@ const ContentList = ({ course }) => {
                           src={delIcon}
                           alt="Delete Icon"
                           className="lesson-icon"
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent event bubbling
+                            handleDeleteQuiz(quiz.quizexamid); // Delete Quiz
+                          }}
                         />
                       )}
                     </div>
@@ -286,7 +341,10 @@ const ContentList = ({ course }) => {
                           src={delIcon}
                           alt="Delete Icon"
                           className="lesson-icon"
-                          onClick={() => deleteAssign(assignment.assignmentid)}
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent event bubbling
+                            handleDeleteAssignment(assignment.assignmentid); // Delete Assignment
+                          }}
                         />
                       )}
                     </div>
@@ -379,11 +437,11 @@ const ContentList = ({ course }) => {
                             <input
                               type="text"
                               placeholder="Question Text"
-                              value={question.text}
+                              value={question.questiontext}
                               onChange={(e) =>
                                 updateQuizQuestion(
                                   index,
-                                  "text",
+                                  "questiontext",
                                   e.target.value
                                 )
                               }
@@ -402,11 +460,11 @@ const ContentList = ({ course }) => {
                             <input
                               type="text"
                               placeholder="Correct Answer Index"
-                              value={question.correct_answer_index}
+                              value={question.correctanswerindex}
                               onChange={(e) =>
                                 updateQuizQuestion(
                                   index,
-                                  "correct_answer_index",
+                                  "correctanswerindex",
                                   e.target.value
                                 )
                               }

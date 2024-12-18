@@ -1,0 +1,98 @@
+/* General Container Styling */
+.add-assignment-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f9faff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-family: "Arial", sans-serif;
+  }
+  
+  .assignment-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .assignment-header h2 {
+    font-size: 1.8rem;
+    margin: 0;
+    color: #333;
+  }
+  
+  .assignment-header p {
+    font-size: 0.9rem;
+    color: #777;
+  }
+  
+  /* Form Group Styling */
+  .assignment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 3px rgba(76, 175, 80, 0.5);
+  }
+  
+  .form-group-inline {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .form-group-inline .form-group {
+    flex: 1;
+  }
+  
+  /* File Input Styling */
+  .form-group input[type="file"] {
+    padding: 5px;
+    font-size: 0.9rem;
+  }
+  
+  /* Submit Button Styling */
+  .form-submit {
+    text-align: center;
+  }
+  
+  .submit-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #fff;
+    color: #28a745;
+    border: 1px solid #28a745;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
