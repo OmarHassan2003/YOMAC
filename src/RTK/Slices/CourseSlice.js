@@ -414,6 +414,7 @@ const CourseSlice = createSlice({
       })
       .addCase(getCourse.rejected, (state, action) => {
         // state.name = action.payload;
+        state.loadingVid = false;
       })
       .addCase(getVideo.pending, (state, action) => {
         // for loading

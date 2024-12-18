@@ -8,6 +8,7 @@ const initialstate = {
   token: localStorage.getItem("token"),
   role: localStorage.getItem("role"),
   smthnHappening: false,
+  forgotPasswordRole: null,
 };
 
 export const StudentLoginAPI = createAsyncThunk(
@@ -71,6 +72,56 @@ export const InstructorLoginAPI = createAsyncThunk(
   }
 );
 
+export const forgotPassword = createAsyncThunk(
+  "AuthorizationSlice/forgotPassword",
+  async (email, { getState, rejectWithValue }) => {
+    // api call
+    const { forgotPasswordRole } = getState().Authorization;
+    console.log(email, forgotPasswordRole);
+    try {
+      const response = await YomacApi.put("forgot_password", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        email: email,
+        role: forgotPasswordRole,
+      });
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const setNewPasswordAPI = createAsyncThunk(
+  "AuthorizationSlice/setNewPasswordAPI",
+  async (user_data, { getState, rejectWithValue }) => {
+    // api call
+    console.log(user_data);
+    try {
+      const response = await YomacApi.patch(
+        "reset_password",
+        {
+          new_password: user_data.newPassword,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            token: user_data.token,
+          },
+        }
+      );
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const InstructorRegisterAPI = createAsyncThunk(
   "AuthorizationSlice/InstructorRegister",
   async (formData, { getState, rejectWithValue }) => {
@@ -94,8 +145,8 @@ const AuthorizationSlice = createSlice({
   name: "Authorization",
   initialState: initialstate,
   reducers: {
-    login(state, action) {
-      state.name = action.payload;
+    setForgotPasswordRole(state, action) {
+      state.forgotPasswordRole = action.payload;
     },
   },
   extraReducers: (builder) =>
@@ -187,8 +238,50 @@ const AuthorizationSlice = createSlice({
         // state.name = action.payload;
         state.smthnHappening = false;
         console.log(action);
+      })
+      .addCase(forgotPassword.pending, (state, action) => {
+        // for loading
+        state.smthnHappening = true;
+      })
+      .addCase(forgotPassword.fulfilled, (state, action) => {
+        console.log(action.payload);
+        // const data = action.payload.data;
+        // state.token = data.token;
+        // localStorage.setItem("token", data.token);
+        // localStorage.setItem("role", data?.user_data?.role);
+        // state.user_id = data.user_data.id;
+        // state.role = data.user_data.role;
+        state.smthnHappening = false;
+        // console.log(state.token);
+        // console.log(state.role);
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        // state.name = action.payload;
+        state.smthnHappening = false;
+        console.log(action);
+      })
+      .addCase(setNewPasswordAPI.pending, (state, action) => {
+        // for loading
+        state.smthnHappening = true;
+      })
+      .addCase(setNewPasswordAPI.fulfilled, (state, action) => {
+        console.log(action.payload);
+        // const data = action.payload.data;
+        // state.token = data.token;
+        // localStorage.setItem("token", data.token);
+        // localStorage.setItem("role", data?.user_data?.role);
+        // state.user_id = data.user_data.id;
+        // state.role = data.user_data.role;
+        state.smthnHappening = false;
+        // console.log(state.token);
+        // console.log(state.role);
+      })
+      .addCase(setNewPasswordAPI.rejected, (state, action) => {
+        // state.name = action.payload;
+        state.smthnHappening = false;
+        console.log(action);
       }),
 });
 
-export const { login } = AuthorizationSlice.actions;
+export const { setForgotPasswordRole } = AuthorizationSlice.actions;
 export default AuthorizationSlice.reducer;
