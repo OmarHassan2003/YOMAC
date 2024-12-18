@@ -133,7 +133,7 @@ const CreateCourse = () => {
 
       course.sections.push({
         title: sectionTitles[i],
-        quiz: quizzes[0],
+        quiz: quizzes,
         videos: videos,
       });
     }

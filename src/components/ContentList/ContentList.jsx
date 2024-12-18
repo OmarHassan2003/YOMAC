@@ -4,6 +4,10 @@ import {
   addSection,
   addSectionThenGet,
   addVideoThenGet,
+  deleteAssignThenGet,
+  deleteQuizThenGet,
+  deleteSectionThenGet,
+  deleteVideoThenGet,
   getAssign,
   getVideo,
   setCurrSection,
@@ -15,19 +19,35 @@ import vidIcon from "../../assets/ui-element.png";
 import quizIcon from "../../assets/speech-bubble.png";
 import assignIcon from "../../assets/assign.png";
 import secIcon from "../../assets/sections.png";
+import delIcon from "../../assets/trash.png";
 import { useNavigate } from "react-router-dom";
 import encodeFileToBase64 from "../../utils/EncodeMedia";
 
 const ContentList = ({ course }) => {
+  console.log(course);
   const user = useSelector((state) => state.Authorization);
+  console.log(user);
   const role = user.role;
   let isStudent = false;
   let isInstructor = false;
-  if (role === "student") isStudent = true;
-  else isInstructor = true;
+  let isTopInstructor = false;
+  let roleIndex = 0;
+  if (role === "student") {
+    isStudent = true;
+    roleIndex = 0;
+  } else {
+    isInstructor = true;
+    roleIndex = 1;
+    if (course.topinstructorid == user.user_id) {
+      isTopInstructor = true;
+      roleIndex = 2;
+    }
+  }
 
   const [activeModule, setActiveModule] = useState(null);
   const [showAddVideoSection, setShowAddVideoSection] = useState(null);
+  const [showAddAssignmentSection, setShowAddAssignmentSection] =
+    useState(null);
   const [showAddQuizSection, setShowAddQuizSection] = useState(null);
   const [showAddSectionForm, setShowAddSectionForm] = useState(false);
 
@@ -61,13 +81,18 @@ const ContentList = ({ course }) => {
   const displayQuiz = (quizId, secId) => {
     const sec = course.sections.find((el) => el.coursesectionid === secId);
     updateCurrentSection(sec);
-    navigate(`/course/${course.courseid}/quiz/${quizId}`);
+    navigate(`/course/${course.courseid}/quiz/${quizId}/${roleIndex}`);
   };
 
   const displayAssign = (assignId, secId) => {
     const sec = course.sections.find((el) => el.coursesectionid === secId);
     updateCurrentSection(sec);
-    navigate(`/course/${course.courseid}/sec/${secId}/assign/${assignId}`);
+    if (isStudent)
+      navigate(`/course/${course.courseid}/sec/${secId}/assign/${assignId}`);
+    else
+      navigate(
+        `/course/${course.courseid}/sec/${secId}/editAssign/${assignId}`
+      );
   };
 
   const handleAddSection = (e) => {
@@ -100,6 +125,11 @@ const ContentList = ({ course }) => {
     };
     dispatch(addVideoThenGet(newVid));
     setNewVideoTitle("");
+  };
+
+  const handleAddAssignment = (sectionId) => {
+    console.log("Adding Assignment to Section:", sectionId);
+    navigate(`/course/${course.courseid}/sec/${sectionId}/addAssign`);
   };
 
   const handleAddQuiz = (e, sectionId) => {
@@ -135,23 +165,59 @@ const ContentList = ({ course }) => {
     setQuizQuestions([
       ...quizQuestions,
       {
-        text: "",
+        questiontext: "",
         choices: ["", "", "", ""],
-        correct_answer_index: "",
+        correctanswerindex: "",
       },
     ]);
   };
 
   const updateQuizQuestion = (index, field, value) => {
     const updatedQuestions = [...quizQuestions];
-    if (field === "text") {
-      updatedQuestions[index].text = value;
-    } else if (field === "correct_answer_index") {
-      updatedQuestions[index].correct_answer_index = Number(value);
+    if (field === "questiontext") {
+      updatedQuestions[index].questiontext = value;
+    } else if (field === "correctanswerindex") {
+      updatedQuestions[index].correctanswerindex = Number(value);
     } else {
       updatedQuestions[index].choices[field] = value;
     }
     setQuizQuestions(updatedQuestions);
+  };
+
+  const handleDeleteSection = (sectionId) => {
+    const data = {
+      sectionId,
+      courseId: course.courseid,
+    };
+    dispatch(deleteSectionThenGet(data)); // Dispatch action to delete the section
+    console.log(sectionId);
+  };
+
+  const handleDeleteVideo = (videoId) => {
+    const data = {
+      videoId,
+      courseId: course.courseid,
+    };
+    dispatch(deleteVideoThenGet(data)); // Dispatch action to delete the video
+    console.log(videoId);
+  };
+
+  const handleDeleteQuiz = (quizId) => {
+    const data = {
+      quizId,
+      courseId: course.courseid,
+    };
+    dispatch(deleteQuizThenGet(data)); // Dispatch action to delete the quiz
+    console.log(quizId);
+  };
+
+  const handleDeleteAssignment = (assignmentId) => {
+    const data = {
+      assignmentId,
+      courseId: course.courseid,
+    };
+    dispatch(deleteAssignThenGet(data)); // Dispatch action to delete the assignment
+    console.log(assignmentId);
   };
 
   return (
@@ -168,7 +234,20 @@ const ContentList = ({ course }) => {
                 <img src={secIcon} alt="Section Icon" className="lesson-icon" />
                 <h3>{module.title}</h3>
               </div>
-              <span>{module.duration}</span>
+              <div className="right-side">
+                <span>{module.duration}</span>
+                {isTopInstructor && (
+                  <img
+                    src={delIcon}
+                    alt="Delete Icon"
+                    className="lesson-icon"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent event bubbling
+                      handleDeleteSection(module.coursesectionid); // Delete Section
+                    }}
+                  />
+                )}
+              </div>
             </div>
             {activeModule === module.coursesectionid && (
               <div className="lessons">
@@ -188,7 +267,20 @@ const ContentList = ({ course }) => {
                       />
                       <p>{video.title}</p>
                     </div>
-                    <span>{video.videoduration}</span>
+                    <div className="right-side">
+                      <span>{video.videoduration}</span>
+                      {isTopInstructor && (
+                        <img
+                          src={delIcon}
+                          alt="Delete Icon"
+                          className="lesson-icon"
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent event bubbling
+                            handleDeleteVideo(video.videoid); // Delete Video
+                          }}
+                        />
+                      )}
+                    </div>
                   </div>
                 ))}
                 {module.quizzes.map((quiz) => (
@@ -207,7 +299,20 @@ const ContentList = ({ course }) => {
                       />
                       <p>{quiz.title}</p>
                     </div>
-                    <span>{quiz.duration}</span>
+                    <div className="right-side">
+                      <span>{quiz.duration}</span>
+                      {isTopInstructor && (
+                        <img
+                          src={delIcon}
+                          alt="Delete Icon"
+                          className="lesson-icon"
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent event bubbling
+                            handleDeleteQuiz(quiz.quizexamid); // Delete Quiz
+                          }}
+                        />
+                      )}
+                    </div>
                   </div>
                 ))}
                 {module.assignments.assignment.map((assignment) => (
@@ -229,41 +334,58 @@ const ContentList = ({ course }) => {
                       />
                       <p>{assignment.title}</p>
                     </div>
-                    <span>{assignment.duration}</span>
+                    <div className="right-side">
+                      <span>{assignment.duration}</span>
+                      {isTopInstructor && (
+                        <img
+                          src={delIcon}
+                          alt="Delete Icon"
+                          className="lesson-icon"
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent event bubbling
+                            handleDeleteAssignment(assignment.assignmentid); // Delete Assignment
+                          }}
+                        />
+                      )}
+                    </div>
                   </div>
                 ))}
                 {isInstructor && (
-                  <>
-                    <button
-                      className="add-btn"
-                      onClick={() =>
-                        setShowAddVideoSection(
-                          showAddVideoSection === module.coursesectionid
-                            ? null
-                            : module.coursesectionid
-                        )
-                      }
-                    >
-                      Add Video
-                    </button>
-                    {showAddVideoSection === module.coursesectionid && (
-                      <form
-                        className="inline-form"
-                        onSubmit={(e) =>
-                          handleAddVideo(e, module.coursesectionid)
-                        }
-                      >
-                        <input
-                          type="text"
-                          placeholder="Video Title"
-                          value={newVideoTitle}
-                          onChange={(e) => setNewVideoTitle(e.target.value)}
-                        />
-                        <input type="file" />
-                        <button className="save-btn" type="submit">
-                          Save Video
+                  <div className="btns">
+                    {isTopInstructor && (
+                      <>
+                        <button
+                          className="add-btn"
+                          onClick={() =>
+                            setShowAddVideoSection(
+                              showAddVideoSection === module.coursesectionid
+                                ? null
+                                : module.coursesectionid
+                            )
+                          }
+                        >
+                          Add Video
                         </button>
-                      </form>
+                        {showAddVideoSection === module.coursesectionid && (
+                          <form
+                            className="inline-form"
+                            onSubmit={(e) =>
+                              handleAddVideo(e, module.coursesectionid)
+                            }
+                          >
+                            <input
+                              type="text"
+                              placeholder="Video Title"
+                              value={newVideoTitle}
+                              onChange={(e) => setNewVideoTitle(e.target.value)}
+                            />
+                            <input type="file" />
+                            <button className="save-btn" type="submit">
+                              Save Video
+                            </button>
+                          </form>
+                        )}
+                      </>
                     )}
                     <button
                       className="add-btn"
@@ -315,11 +437,11 @@ const ContentList = ({ course }) => {
                             <input
                               type="text"
                               placeholder="Question Text"
-                              value={question.text}
+                              value={question.questiontext}
                               onChange={(e) =>
                                 updateQuizQuestion(
                                   index,
-                                  "text",
+                                  "questiontext",
                                   e.target.value
                                 )
                               }
@@ -338,11 +460,11 @@ const ContentList = ({ course }) => {
                             <input
                               type="text"
                               placeholder="Correct Answer Index"
-                              value={question.correct_answer_index}
+                              value={question.correctanswerindex}
                               onChange={(e) =>
                                 updateQuizQuestion(
                                   index,
-                                  "correct_answer_index",
+                                  "correctanswerindex",
                                   e.target.value
                                 )
                               }
@@ -361,14 +483,22 @@ const ContentList = ({ course }) => {
                         </button>
                       </form>
                     )}
-                  </>
+                    <button
+                      className="add-btn"
+                      onClick={() =>
+                        handleAddAssignment(module.coursesectionid)
+                      }
+                    >
+                      Add Assignment
+                    </button>
+                  </div>
                 )}
               </div>
             )}
           </div>
         ))}
-        {isInstructor && (
-          <>
+        {isTopInstructor && (
+          <div className="btns">
             <button
               className="add-section-btn"
               onClick={() => setShowAddSectionForm(!showAddSectionForm)}
@@ -388,7 +518,7 @@ const ContentList = ({ course }) => {
                 </button>
               </form>
             )}
-          </>
+          </div>
         )}
       </div>
     </div>

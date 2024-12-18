@@ -41,9 +41,9 @@ const StudentCard = ({ data }) => {
           Courses Completed
         </div>
       </div>
-      <h3>Balance</h3>
-      <p>{data?.balance || 0}</p>
-      <h3>First Two Courses</h3>
+      <h3 className="h3">Balance</h3>
+      <p className="balance">{data?.balance || 0}</p>
+      <h3 className="h3">Courses</h3>
       <ul className="course-list">
         {firstTwoCourses.map((course, index) => (
           <li key={index}>

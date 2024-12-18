@@ -1,12 +1,25 @@
+
 .content-list {
-    width: 40%;
-    max-width: 350px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-  }
-  
+  width: 40%;
+  max-width: 350px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  overflow-y: auto;        /* Enable vertical scrolling */
+  overflow-x: hidden;      /* Disable horizontal scrolling */
+  max-height: 700px;       /* You can adjust this based on your design needs */
+}
+
+.content-list::-webkit-scrollbar {
+  width: 0px;  /* This hides the scrollbar */
+  height: 0px; /* This hides the horizontal scrollbar */
+}
+
+.content-list::-webkit-scrollbar-thumb {
+  background: transparent; /* Optional: Set a transparent thumb so that it is not visible */
+}
+
   @media (max-width: 1050px) {
     .content-list {
       width: 100%;
@@ -78,7 +91,7 @@
   
 
   .add-btn, .add-section-btn,.save-btn {
-    display: inline-block;
+    display: block;
     padding: 8px 12px;
     font-size: 14px;
     font-weight: bold;
@@ -87,8 +100,9 @@
     border: 1px solid #28a745;
     border-radius: 4px;
     cursor: pointer;
+    width: 150px;
     transition: background-color 0.3s ease, opacity 0.3s ease;
-    margin: 30px 5px 0 5px;
+    margin: 20px 5px 0 5px;
   }
   
   .add-btn:hover, .add-section-btn:hover,.save-btn:hover {
@@ -119,3 +133,16 @@
     padding: 8px;
   }
   
+.btns{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-side{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 13px;
+}

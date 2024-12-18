@@ -25,7 +25,6 @@ const Assignment = () => {
     (section) => section.coursesectionid == params.secid
   );
   assign = sec?.assignment.find((ass) => ass.assignmentid == params.assignid);
-
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
   };
@@ -63,7 +62,7 @@ const Assignment = () => {
             {new Date(assign?.createdat).toLocaleString()}
           </p>
           <a
-            href="https://res.cloudinary.com/dcdlgfd2w/raw/upload/v1733227098/icadzmd2b6bhouomddcw.pdf"
+            href={assign?.fileattched}
             target="_blank"
             rel="noopener noreferrer"
             className="download-button"

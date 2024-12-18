@@ -3,7 +3,6 @@
     border-radius: 10px;
     margin-bottom: 20px;
   }
-  
   .course-body {
     width: 100%;
     display: flex;
@@ -12,6 +11,17 @@
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     padding: 20px 15px;
+    overflow-y: auto;        /* Enable vertical scrolling */
+    overflow-x: hidden;      /* Disable horizontal scrolling */
+    max-height: 700px;       /* You can adjust this based on your design needs */
+  }
+  .course-body::-webkit-scrollbar {
+    width: 0px;  /* This hides the scrollbar */
+    height: 0px; /* This hides the horizontal scrollbar */
+  }
+  
+  .course-body::-webkit-scrollbar-thumb {
+    background: transparent; /* Optional: Set a transparent thumb so that it is not visible */
   }
   .video-section {
     text-align: center;

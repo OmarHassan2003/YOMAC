@@ -23,6 +23,7 @@ const initialstate = {
   fetchedAssignments: [],
   assignID: null,
   loadingVid: false,
+  fetchedSingleAssign: null,
 };
 
 export const getCourse = createAsyncThunk(
@@ -74,6 +75,27 @@ export const getAssign = createAsyncThunk(
     const { token } = getState().Authorization;
     try {
       const response = await YomacApi.get(`get_course_assignments/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+      });
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const getSingleAssign = createAsyncThunk(
+  "CourseSlice/getSingleAssign",
+  async (id, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.get(`get_assignment/${id}`, {
         headers: {
           "Content-Type": "application/json",
           token: token,
@@ -192,6 +214,160 @@ export const addQuizThenGet = createAsyncThunk(
   "CourseSlice/addQuizThenGet",
   async (data, { dispatch, getState, rejectWithValue }) => {
     await dispatch(addQuiz(data));
+    return dispatch(getCourse(data.courseId));
+  }
+);
+
+export const addAssignment = createAsyncThunk(
+  "CourseSlice/addAssignment",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post("add_assignment", data, {
+        headers: {
+          token: token,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const updateAssignment = createAsyncThunk(
+  "CourseSlice/updateAssignment",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.put("update_assignment", data, {
+        headers: {
+          token: token,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteSection = createAsyncThunk(
+  "CourseSlice/deleteSection",
+  async (id, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.delete(`delete_section/${id}`, {
+        headers: {
+          token: token,
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteSectionThenGet = createAsyncThunk(
+  "CourseSlice/deleteSectionThenGet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(deleteSection(data.sectionId));
+    return dispatch(getCourse(data.courseId));
+  }
+);
+
+export const deleteVideo = createAsyncThunk(
+  "CourseSlice/deleteVideo",
+  async (id, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.delete(`delete_video/${id}`, {
+        headers: {
+          token: token,
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteVideoThenGet = createAsyncThunk(
+  "CourseSlice/deleteVideoThenGet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(deleteVideo(data.videoId));
+    return dispatch(getCourse(data.courseId));
+  }
+);
+
+export const deleteQuiz = createAsyncThunk(
+  "CourseSlice/deleteQuiz",
+  async (id, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.delete(`delete_quiz/${id}`, {
+        headers: {
+          token: token,
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteQuizThenGet = createAsyncThunk(
+  "CourseSlice/deleteQuizThenGet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(deleteQuiz(data.quizId));
+    return dispatch(getCourse(data.courseId));
+  }
+);
+
+export const deleteAssign = createAsyncThunk(
+  "CourseSlice/deleteAssign",
+  async (id, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.delete(`delete_assignment/${id}`, {
+        headers: {
+          token: token,
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteAssignThenGet = createAsyncThunk(
+  "CourseSlice/deleteAssignThenGet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(deleteAssign(data.assignmentId));
     return dispatch(getCourse(data.courseId));
   }
 );
@@ -364,6 +540,160 @@ const CourseSlice = createSlice({
       })
       .addCase(getAssign.rejected, (state, action) => {
         // state.name = action.payload;
+        state.loadingVid = false;
+      })
+      .addCase(getSingleAssign.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(getSingleAssign.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log(action.payload.data);
+        state.fetchedSingleAssign = action.payload.data;
+        state.loadingVid = false;
+      })
+      .addCase(getSingleAssign.rejected, (state, action) => {
+        // state.name = action.payload;
+        state.loadingVid = false;
+      })
+      .addCase(addAssignment.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(addAssignment.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("Assignment Created");
+        state.loadingVid = false;
+      })
+      .addCase(addAssignment.rejected, (state, action) => {
+        // state.name = action.payload;
+        // console.log("Assignment Failed to be Created");
+        state.loadingVid = false;
+      })
+      .addCase(deleteSection.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(deleteSection.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("section deleted");
+        state.loadingVid = false;
+      })
+      .addCase(deleteSection.rejected, (state, action) => {
+        // state.name = action.payload;
+        // console.log("Assignment Failed to be Created");
+        state.loadingVid = false;
+      })
+      .addCase(deleteSectionThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(deleteSectionThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("section deleted");
+        state.loadingVid = false;
+      })
+      .addCase(deleteSectionThenGet.rejected, (state, action) => {
+        // state.name = action.payload;
+        // console.log("Assignment Failed to be Created");
+        state.loadingVid = false;
+      })
+      .addCase(deleteVideo.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(deleteVideo.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("vid deleted");
+        state.loadingVid = false;
+      })
+      .addCase(deleteVideo.rejected, (state, action) => {
+        // state.name = action.payload;
+        // console.log("Assignment Failed to be Created");
+        state.loadingVid = false;
+      })
+      .addCase(deleteVideoThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(deleteVideoThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("vid deleted");
+        state.loadingVid = false;
+      })
+      .addCase(deleteVideoThenGet.rejected, (state, action) => {
+        // state.name = action.payload;
+        // console.log("Assignment Failed to be Created");
+        state.loadingVid = false;
+      })
+      .addCase(deleteQuiz.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(deleteQuiz.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("quiz deleted");
+        state.loadingVid = false;
+      })
+      .addCase(deleteQuiz.rejected, (state, action) => {
+        // state.name = action.payload;
+        // console.log("Assignment Failed to be Created");
+        state.loadingVid = false;
+      })
+      .addCase(deleteQuizThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(deleteQuizThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("quiz deleted");
+        state.loadingVid = false;
+      })
+      .addCase(deleteQuizThenGet.rejected, (state, action) => {
+        // state.name = action.payload;
+        // console.log("Assignment Failed to be Created");
+        state.loadingVid = false;
+      })
+      .addCase(deleteAssign.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(deleteAssign.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("assign deleted");
+        state.loadingVid = false;
+      })
+      .addCase(deleteAssign.rejected, (state, action) => {
+        // state.name = action.payload;
+        // console.log("Assignment Failed to be Created");
+        state.loadingVid = false;
+      })
+      .addCase(deleteAssignThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(deleteAssignThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("assign deleted");
+        state.loadingVid = false;
+      })
+      .addCase(deleteAssignThenGet.rejected, (state, action) => {
+        // state.name = action.payload;
+        // console.log("Assignment Failed to be Created");
+        state.loadingVid = false;
+      })
+      .addCase(updateAssignment.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(updateAssignment.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("assign update");
+        state.loadingVid = false;
+      })
+      .addCase(updateAssignment.rejected, (state, action) => {
+        // state.name = action.payload;
+        // console.log("Assignment Failed to be Created");
         state.loadingVid = false;
       }),
 });
