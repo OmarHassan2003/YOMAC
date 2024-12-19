@@ -5,6 +5,7 @@ const initialstate = {
   quiz: {},
   questions: [],
   loadingQuiz: false,
+  contest: {},
 };
 
 export const getQuizQuestions = createAsyncThunk(
@@ -78,6 +79,48 @@ export const updateQuizThenGet = createAsyncThunk(
   }
 );
 
+export const getContest = createAsyncThunk(
+  "QuizSlice/getContest",
+  async (id, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.get(`get_contest_exam/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+      });
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const submitContest = createAsyncThunk(
+  "QuizSlice/submitContest",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post(`submit_contest`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+      });
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const QuizSlice = createSlice({
   name: "Quiz",
   initialState: initialstate,
@@ -140,6 +183,36 @@ const QuizSlice = createSlice({
       .addCase(submitQuiz.rejected, (state, action) => {
         // state.name = action.payload;
         console.log("Quiz Submit failed");
+        state.loadingQuiz = false;
+      })
+      .addCase(submitContest.pending, (state, action) => {
+        // for loading
+        state.loadingQuiz = true;
+      })
+      .addCase(submitContest.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("Contest Submitted successfully");
+        state.loadingQuiz = false;
+      })
+      .addCase(submitContest.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log("Contest Submit failed");
+        state.loadingQuiz = false;
+      })
+      .addCase(getContest.pending, (state, action) => {
+        // for loading
+        state.loadingQuiz = true;
+      })
+      .addCase(getContest.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log(action.payload.data);
+        state.quiz = action.payload.data.contest;
+        state.questions = action.payload.data.Questions;
+        // console.log(state);
+        state.loadingQuiz = false;
+      })
+      .addCase(getContest.rejected, (state, action) => {
+        // state.name = action.payload;
         state.loadingQuiz = false;
       }),
 });

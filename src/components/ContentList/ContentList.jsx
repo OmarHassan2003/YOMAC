@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  addContestThenGet,
   addQuizThenGet,
   addSection,
   addSectionThenGet,
@@ -54,6 +55,7 @@ const ContentList = ({ course }) => {
   const [showAddAssignmentSection, setShowAddAssignmentSection] =
     useState(null);
   const [showAddQuizSection, setShowAddQuizSection] = useState(null);
+  const [showAddContestSection, setShowAddContestSection] = useState(false);
   const [showAddSectionForm, setShowAddSectionForm] = useState(false);
 
   const [newSectionTitle, setNewSectionTitle] = useState("");
@@ -63,6 +65,13 @@ const ContentList = ({ course }) => {
   const [newQuizTotalMarks, setNewQuizTotalMarks] = useState("");
   const [newQuizPassingMarks, setNewQuizPassingMarks] = useState("");
   const [quizQuestions, setQuizQuestions] = useState([]);
+
+  const [newContestTitle, setNewContestTitle] = useState("");
+  const [newContestDuration, setNewContestDuration] = useState("");
+  const [newContestTotalMarks, setNewContestTotalMarks] = useState("");
+  const [newContestPassingMarks, setNewContestPassingMarks] = useState("");
+  const [newContestDiscount, setNewContestDiscount] = useState("");
+  const [contestQuestions, setContestQuestions] = useState([]);
 
   const navigate = useNavigate();
   const sections = course.sections;
@@ -83,14 +92,24 @@ const ContentList = ({ course }) => {
     updateCurrentVideo(fetchedVideo);
   };
 
-  const displayQuiz = (quizId, secId) => {
+  const displayQuiz = (quiz, quizId, secId) => {
+    if (
+      isStudent &&
+      (quiz?.student.pass !== null || quiz?.student.status !== "pending")
+    )
+      return;
     const sec = course.sections.find((el) => el.coursesectionid === secId);
     updateCurrentSection(sec);
     navigate(`/course/${course.courseid}/quiz/${quizId}/${roleIndex}`);
   };
 
   const displayAssign = (assignment, assignId, secId) => {
-    if (isStudent && assignment?.student.status === "submitted") return;
+    if (
+      isStudent &&
+      (assignment?.student.passfail !== null ||
+        assignment?.student.status === "submitted")
+    )
+      return;
     const sec = course.sections.find((el) => el.coursesectionid === secId);
     updateCurrentSection(sec);
     if (isStudent)
@@ -99,6 +118,21 @@ const ContentList = ({ course }) => {
       navigate(
         `/course/${course.courseid}/sec/${secId}/editAssign/${assignId}`
       );
+  };
+
+  const displayContest = (contest, contestId) => {
+    if (
+      isStudent &&
+      (contest?.student.pass !== null || contest?.student.status !== "pending")
+    )
+      return;
+    // if (isStudent && assignment?.student.status === "submitted") return;
+    // if (isStudent)
+    navigate(`/course/${course.courseid}/contest/${contestId}/${roleIndex}`);
+    // else
+    //   navigate(
+    //     `/course/${course.courseid}/sec/${secId}/editAssign/${assignId}`
+    //   );
   };
 
   const handleAddSection = (e) => {
@@ -167,6 +201,34 @@ const ContentList = ({ course }) => {
     setQuizQuestions([]);
   };
 
+  const handleAddContest = (e) => {
+    e.preventDefault();
+    console.log(
+      "Adding Contest to Section:",
+      newContestTitle,
+      newContestDuration,
+      newContestTotalMarks,
+      newContestPassingMarks,
+      contestQuestions
+    );
+    const newContest = {
+      title: newContestTitle,
+      quizDuration: Number(newContestDuration),
+      totalMarks: Number(newContestTotalMarks),
+      passingMarks: Number(newContestPassingMarks),
+      questions: contestQuestions,
+      courseId: course.courseid,
+      discount: Number(newContestDiscount),
+    };
+    dispatch(addContestThenGet(newContest));
+    setShowAddContestSection(null);
+    setNewContestTitle("");
+    setNewContestDuration("");
+    setNewContestTotalMarks("");
+    setNewContestPassingMarks("");
+    setContestQuestions([]);
+  };
+
   const handleAddQuestionToQuiz = () => {
     setQuizQuestions([
       ...quizQuestions,
@@ -180,6 +242,29 @@ const ContentList = ({ course }) => {
 
   const updateQuizQuestion = (index, field, value) => {
     const updatedQuestions = [...quizQuestions];
+    if (field === "questiontext") {
+      updatedQuestions[index].questiontext = value;
+    } else if (field === "correctanswerindex") {
+      updatedQuestions[index].correctanswerindex = Number(value);
+    } else {
+      updatedQuestions[index].choices[field] = value;
+    }
+    setQuizQuestions(updatedQuestions);
+  };
+
+  const handleAddQuestionToContest = () => {
+    setContestQuestions([
+      ...contestQuestions,
+      {
+        questiontext: "",
+        choices: ["", "", "", ""],
+        correctanswerindex: "",
+      },
+    ]);
+  };
+
+  const updateContestQuestion = (index, field, value) => {
+    const updatedQuestions = [...contestQuestions];
     if (field === "questiontext") {
       updatedQuestions[index].questiontext = value;
     } else if (field === "correctanswerindex") {
@@ -303,7 +388,11 @@ const ContentList = ({ course }) => {
                     key={quiz.quizexamid}
                     className="lesson"
                     onClick={() => {
-                      displayQuiz(quiz.quizexamid, module.coursesectionid);
+                      displayQuiz(
+                        quiz,
+                        quiz.quizexamid,
+                        module.coursesectionid
+                      );
                     }}
                   >
                     <div className="lesson-icon-and-title">
@@ -316,6 +405,20 @@ const ContentList = ({ course }) => {
                     </div>
                     <div className="right-side">
                       <span>{quiz.duration}</span>
+                      {isStudent && quiz?.student.pass === true && (
+                        <img
+                          src={passIcon}
+                          alt="Pass Icon"
+                          className="lesson-icon"
+                        />
+                      )}
+                      {isStudent && quiz?.student.pass === false && (
+                        <img
+                          src={failIcon}
+                          alt="Fail Icon"
+                          className="lesson-icon"
+                        />
+                      )}
                       {isTopInstructor && (
                         <img
                           src={delIcon}
@@ -566,7 +669,7 @@ const ContentList = ({ course }) => {
             <div key={contest.contestexamid} className="module">
               <div
                 className="module-header"
-                onClick={() => displayContest(contest.contestexamid)}
+                onClick={() => displayContest(contest, contest.contestexamid)}
               >
                 <div className="lesson-icon-and-title">
                   <img
@@ -578,6 +681,20 @@ const ContentList = ({ course }) => {
                 </div>
                 <div className="right-side">
                   <span>{contest.duration}</span>
+                  {isStudent && contest?.student.pass === true && (
+                    <img
+                      src={passIcon}
+                      alt="Pass Icon"
+                      className="lesson-icon"
+                    />
+                  )}
+                  {isStudent && contest?.student.pass === false && (
+                    <img
+                      src={failIcon}
+                      alt="Fail Icon"
+                      className="lesson-icon"
+                    />
+                  )}
                   {isTopInstructor && (
                     <img
                       src={delIcon}
@@ -593,6 +710,104 @@ const ContentList = ({ course }) => {
               </div>
             </div>
           ))}
+        </div>
+        <div className="btns">
+          {isTopInstructor && (
+            <>
+              <button
+                className="add-btn"
+                onClick={() => setShowAddContestSection(!showAddContestSection)}
+              >
+                Add Contest
+              </button>
+              {showAddContestSection && (
+                <form
+                  className="inline-form"
+                  onSubmit={(e) => handleAddContest(e)}
+                >
+                  <input
+                    type="text"
+                    placeholder="Contest Title"
+                    value={newContestTitle}
+                    onChange={(e) => setNewContestTitle(e.target.value)}
+                  />
+                  <input
+                    type="number"
+                    placeholder="Contest Duration in mins"
+                    value={newContestDuration}
+                    onChange={(e) => setNewContestDuration(e.target.value)}
+                  />
+                  <input
+                    type="number"
+                    placeholder="Contest Total Marks"
+                    value={newContestTotalMarks}
+                    onChange={(e) => setNewContestTotalMarks(e.target.value)}
+                  />
+                  <input
+                    type="number"
+                    placeholder="Contest Passing Marks"
+                    value={newContestPassingMarks}
+                    onChange={(e) => setNewContestPassingMarks(e.target.value)}
+                  />
+                  <input
+                    type="number"
+                    placeholder="Contest Discount"
+                    value={newContestDiscount}
+                    onChange={(e) => setNewContestDiscount(e.target.value)}
+                  />
+                  {contestQuestions.map((question, index) => (
+                    <div key={index} className="inline-form">
+                      <input
+                        type="text"
+                        placeholder="Question Text"
+                        value={question.questiontext}
+                        onChange={(e) =>
+                          updateContestQuestion(
+                            index,
+                            "questiontext",
+                            e.target.value
+                          )
+                        }
+                      />
+                      {question.choices.map((choice, i) => (
+                        <input
+                          key={i}
+                          type="text"
+                          placeholder={`Choice ${i + 1}`}
+                          value={choice}
+                          onChange={(e) =>
+                            updateContestQuestion(index, i, e.target.value)
+                          }
+                        />
+                      ))}
+                      <input
+                        type="text"
+                        placeholder="Correct Answer Index"
+                        value={question.correctanswerindex}
+                        onChange={(e) =>
+                          updateContestQuestion(
+                            index,
+                            "correctanswerindex",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </div>
+                  ))}
+                  <button
+                    className="add-btn"
+                    type="button"
+                    onClick={handleAddQuestionToContest}
+                  >
+                    Add Question
+                  </button>
+                  <button className="save-btn" type="submit">
+                    Save Contest
+                  </button>
+                </form>
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>
