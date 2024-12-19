@@ -101,17 +101,32 @@
   font-size: 16px;
 }
 
-.view-course-btn {
+.view-btn {
   background-color: #fff;
   color: #28a745;
   border: 1px solid #28a745;
   padding: 8px 15px;
   border-radius: 5px;
   cursor: pointer;
+  margin-right: 10px;
   transition: background-color 0.3s, color 0.3s;
 }
 
-.view-course-btn:hover {
+.view-btn:hover {
   background-color: #28a745;
+  color: #fff;
+}
+.delete-btn {
+  background-color: #fff;
+  color: #a72828;
+  border: 1px solid #a72828;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.delete-btn:hover {
+  background-color: #a72828;
   color: #fff;
 }

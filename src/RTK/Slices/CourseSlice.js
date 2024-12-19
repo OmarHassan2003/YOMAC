@@ -218,6 +218,35 @@ export const addQuizThenGet = createAsyncThunk(
   }
 );
 
+export const addContest = createAsyncThunk(
+  "CourseSlice/addContest",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post("make_contest", data, {
+        headers: {
+          token: token,
+          "Content-Type": "application/json",
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const addContestThenGet = createAsyncThunk(
+  "CourseSlice/addContestThenGet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(addContest(data));
+    return dispatch(getCourse(data.courseId));
+  }
+);
+
 export const addAssignment = createAsyncThunk(
   "CourseSlice/addAssignment",
   async (data, { getState, rejectWithValue }) => {
@@ -596,6 +625,34 @@ const CourseSlice = createSlice({
         state.loadingVid = false;
       })
       .addCase(addQuizThenGet.rejected, (state, action) => {
+        state.loadingVid = false;
+        // state.name = action.payload;
+      })
+      .addCase(addContest.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(addContest.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        // console.log(action.payload.data);
+        console.log("al denia 7lwa");
+        state.loadingVid = false;
+      })
+      .addCase(addContest.rejected, (state, action) => {
+        state.loadingVid = false;
+        // state.name = action.payload;
+      })
+      .addCase(addContestThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(addContestThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        // console.log(action.payload.data);
+        console.log("al denia 7lwa");
+        state.loadingVid = false;
+      })
+      .addCase(addContestThenGet.rejected, (state, action) => {
         state.loadingVid = false;
         // state.name = action.payload;
       })

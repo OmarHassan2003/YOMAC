@@ -10,6 +10,7 @@ export const getStudent = createAsyncThunk(
   "StudentSlice/getStudent",
   async (_, { getState, rejectWithValue }) => {
     // api call
+    console.log("a7ma amr");
     const { token } = getState().Authorization;
     try {
       const response = await YomacApi.get(`get_user_data`, {
@@ -45,6 +46,36 @@ export const updateUser = createAsyncThunk(
       console.log(error);
       return rejectWithValue(error);
     }
+  }
+);
+
+export const deleteCourse = createAsyncThunk(
+  "StudentSlice/deleteCourse",
+  async (id, { getState, rejectWithValue }) => {
+    console.log("a7ma amr2");
+
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.delete(`delete_course/${id}`, {
+        headers: {
+          token: token,
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+export const deleteCourseThenGet = createAsyncThunk(
+  "StudentSlice/deleteCourseThenGet",
+  async (id, { dispatch, getState, rejectWithValue }) => {
+    console.log("a7ma amr1");
+    await dispatch(deleteCourse(id));
+    return dispatch(getStudent());
   }
 );
 
@@ -105,6 +136,33 @@ const StudentSlice = createSlice({
         state.loadingStu = false;
       })
       .addCase(updateUserThenGet.rejected, (state, action) => {
+        // state.name = action.payload;
+        state.loadingStu = false;
+      })
+      .addCase(deleteCourse.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(deleteCourse.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("Course deleted");
+        state.loadingVid = false;
+      })
+      .addCase(deleteCourse.rejected, (state, action) => {
+        // state.name = action.payload;
+        // console.log("Assignment Failed to be Created");
+        state.loadingVid = false;
+      })
+      .addCase(deleteCourseThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingStu = true;
+      })
+      .addCase(deleteCourseThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("al donia 7lwa");
+        state.loadingStu = false;
+      })
+      .addCase(deleteCourseThenGet.rejected, (state, action) => {
         // state.name = action.payload;
         state.loadingStu = false;
       }),

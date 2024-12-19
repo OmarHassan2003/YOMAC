@@ -26,6 +26,7 @@ import Search from "./pages/Search/Search.jsx";
 
 import EditAssignment from "./components/EditAssignment/EditAssignment.jsx";
 import { getCategories } from "./RTK/Slices/CategorySlice.js";
+import Contest from "./components/Contest/Contest.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -55,6 +56,10 @@ function App() {
         <Route path="studentregister" element={<StudentRegister />} />
         <Route path="instructorregister" element={<InstructorRegister />} />
         <Route path="search/:type/:searchQuery" element={<Search />} />
+        <Route
+          path="course/:courseid/contest/:contestid/:roleindex"
+          element={<Contest />}
+        />
         <Route
           path="course/:courseid/sec/:secid/editAssign/:assignid"
           element={<EditAssignment />}

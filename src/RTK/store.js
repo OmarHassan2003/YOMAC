@@ -8,6 +8,7 @@ import QuizSlice from "./Slices/QuizSlice";
 import TransactionSlice from "./Slices/TransactionSlice";
 import CategorySlice from "./Slices/CategorySlice";
 import SearchSlice from "./Slices/SearchSlice";
+import FeedbackSlice from "./Slices/FeedbackSlice";
 
 const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
     transaction: TransactionSlice,
     category: CategorySlice,
     Search: SearchSlice,
+    feedback: FeedbackSlice,
   },
 });
 
