@@ -117,6 +117,11 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   gap: 20px;
   background: linear-gradient(120deg, #e6f0ff, #f2faff, #e8ffe6);
+  transition: transform 0.2s ease;
+}
+
+.submission-card:hover {
+  transform: scale(1.02);
 }
 
 /* Profile Picture */
