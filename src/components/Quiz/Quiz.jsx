@@ -3,6 +3,7 @@ import "./Quiz.css";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   getQuizQuestions,
+  submitQuiz,
   updateQuiz,
   updateQuizThenGet,
 } from "../../RTK/Slices/QuizSlice";
@@ -65,6 +66,14 @@ const Quiz = () => {
       }
     });
     setScore(correctCount);
+    let grade = (correctCount / questions.length) * quiz.totalmarks;
+    dispatch(
+      submitQuiz({
+        quizId: currQuizId,
+        grade,
+        pass: grade >= quiz.passingmarks,
+      })
+    );
   };
 
   const handleBackToCourse = () => {

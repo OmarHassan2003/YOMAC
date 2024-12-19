@@ -49,6 +49,27 @@ export const updateQuiz = createAsyncThunk(
   }
 );
 
+export const submitQuiz = createAsyncThunk(
+  "QuizSlice/submitQuiz",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post(`submit_quiz`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+      });
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const updateQuizThenGet = createAsyncThunk(
   "CourseSlice/updateQuizThenGet",
   async (data, { dispatch, getState, rejectWithValue }) => {
@@ -105,6 +126,20 @@ const QuizSlice = createSlice({
       .addCase(updateQuizThenGet.rejected, (state, action) => {
         // state.name = action.payload;
         console.log("Quiz Update failed");
+        state.loadingQuiz = false;
+      })
+      .addCase(submitQuiz.pending, (state, action) => {
+        // for loading
+        state.loadingQuiz = true;
+      })
+      .addCase(submitQuiz.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("Quiz Submitted successfully");
+        state.loadingQuiz = false;
+      })
+      .addCase(submitQuiz.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log("Quiz Submit failed");
         state.loadingQuiz = false;
       }),
 });

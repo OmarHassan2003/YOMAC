@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getAssign } from "../../RTK/Slices/CourseSlice";
+import {
+  getAssign,
+  getSingleAssign,
+  submitAssignment,
+} from "../../RTK/Slices/CourseSlice";
 import { useDispatch, useSelector } from "react-redux";
 import "../Assignment/Assignment.css";
 
@@ -10,21 +14,22 @@ const Assignment = () => {
   const currAssignId = params.assignid;
   const courseId = params.courseid;
   const secId = params.secid;
-  const { fetchedAssignments } = useSelector((state) => state.Course);
+  const { fetchedAssignments, fetchedSingleAssign } = useSelector(
+    (state) => state.Course
+  );
   const dispatch = useDispatch();
 
   const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
     dispatch(getAssign(params.courseid));
+    dispatch(getSingleAssign(params.assignid));
   }, [params.assignid]);
-
-  let sec;
+  console.log(fetchedSingleAssign);
   let assign;
-  sec = fetchedAssignments.find(
-    (section) => section.coursesectionid == params.secid
-  );
-  assign = sec?.assignment.find((ass) => ass.assignmentid == params.assignid);
+  let studentData;
+  assign = fetchedSingleAssign?.assignment;
+  studentData = fetchedSingleAssign?.student_data;
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
   };
@@ -34,7 +39,12 @@ const Assignment = () => {
     if (selectedFile) {
       // Logic to handle file submission goes here
       console.log("File submitted:", selectedFile);
-      alert("File submitted successfully!");
+      const formData = new FormData();
+      formData.append("studentAssignmentID", studentData.studentassignmentid);
+      formData.append("submission_file", selectedFile);
+      dispatch(submitAssignment(formData));
+      navigate(`/course/${params.courseid}`);
+      // alert("File submitted successfully!");
     } else {
       alert("Please select a file to submit.");
     }
