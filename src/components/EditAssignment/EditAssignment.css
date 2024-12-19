@@ -96,3 +96,115 @@
     color: #fff;
   }
   
+  /* Student Submissions Container */
+.student-submissions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Submission Card - Horizontal Layout */
+.submission-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  gap: 20px;
+  background: linear-gradient(120deg, #e6f0ff, #f2faff, #e8ffe6);
+}
+
+/* Profile Picture */
+.profile-pic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Submission Info Section */
+.submission-info {
+  flex: 2;
+}
+
+.submission-info h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 0 0 5px;
+}
+
+.submission-info p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 2px 0;
+}
+
+/* Submission Link Button */
+.submission-link {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #fff;
+  color: #28a745;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.submission-link:hover {
+  background-color: #28a745;
+  color: #fff;
+  cursor: pointer;
+}
+
+.disabled-link {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Grade Section */
+.grade-section {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items:flex-end;
+  gap: 15px;
+}
+
+.grade-input {
+  width: 142px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  outline: none;
+  text-align: center;
+}
+
+.submit-grade-btn {
+  align-self: flex-end;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #fff;
+  color: #28a745;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.submit-grade-btn:hover {
+  background-color: #28a745;
+    color: #fff;
+}

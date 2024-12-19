@@ -372,6 +372,48 @@ export const deleteAssignThenGet = createAsyncThunk(
   }
 );
 
+export const submitAssignment = createAsyncThunk(
+  "CourseSlice/submitAssignment",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post("submit_assignment", data, {
+        headers: {
+          token: token,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const gradeAssign = createAsyncThunk(
+  "CourseSlice/gradeAssign",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post(`grade_assignment`, data, {
+        headers: {
+          token: token,
+          "Content-Type": "application/json",
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const CourseSlice = createSlice({
   name: "Course",
   initialState: initialstate,
@@ -695,6 +737,34 @@ const CourseSlice = createSlice({
       .addCase(updateAssignment.rejected, (state, action) => {
         // state.name = action.payload;
         // console.log("Assignment Failed to be Created");
+        state.loadingVid = false;
+      })
+      .addCase(submitAssignment.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(submitAssignment.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("assign submitted");
+        state.loadingVid = false;
+      })
+      .addCase(submitAssignment.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log("Assignment Failed to be Submitted");
+        state.loadingVid = false;
+      })
+      .addCase(gradeAssign.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(gradeAssign.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("assign graded");
+        state.loadingVid = false;
+      })
+      .addCase(gradeAssign.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log("Assignment Failed to be Graded");
         state.loadingVid = false;
       }),
 });

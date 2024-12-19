@@ -20,6 +20,9 @@ import quizIcon from "../../assets/speech-bubble.png";
 import assignIcon from "../../assets/assign.png";
 import secIcon from "../../assets/sections.png";
 import delIcon from "../../assets/trash.png";
+import pendingIcon from "../../assets/pending.png";
+import passIcon from "../../assets/accept.png";
+import failIcon from "../../assets/decline.png";
 import { useNavigate } from "react-router-dom";
 import encodeFileToBase64 from "../../utils/EncodeMedia";
 
@@ -84,7 +87,8 @@ const ContentList = ({ course }) => {
     navigate(`/course/${course.courseid}/quiz/${quizId}/${roleIndex}`);
   };
 
-  const displayAssign = (assignId, secId) => {
+  const displayAssign = (assignment, assignId, secId) => {
+    if (isStudent && assignment?.student.status === "submitted") return;
     const sec = course.sections.find((el) => el.coursesectionid === secId);
     updateCurrentSection(sec);
     if (isStudent)
@@ -321,6 +325,7 @@ const ContentList = ({ course }) => {
                     className="lesson"
                     onClick={() => {
                       displayAssign(
+                        assignment,
                         assignment.assignmentid,
                         module.coursesectionid
                       );
@@ -336,6 +341,30 @@ const ContentList = ({ course }) => {
                     </div>
                     <div className="right-side">
                       <span>{assignment.duration}</span>
+
+                      {isStudent &&
+                        assignment?.student.passfail === null &&
+                        assignment?.student.status === "submitted" && (
+                          <img
+                            src={pendingIcon}
+                            alt="Pending Icon"
+                            className="lesson-icon"
+                          />
+                        )}
+                      {isStudent && assignment?.student.passfail === true && (
+                        <img
+                          src={passIcon}
+                          alt="Pass Icon"
+                          className="lesson-icon"
+                        />
+                      )}
+                      {isStudent && assignment?.student.passfail === false && (
+                        <img
+                          src={failIcon}
+                          alt="Fail Icon"
+                          className="lesson-icon"
+                        />
+                      )}
                       {isTopInstructor && (
                         <img
                           src={delIcon}
