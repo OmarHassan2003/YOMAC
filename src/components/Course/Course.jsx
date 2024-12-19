@@ -14,7 +14,6 @@ const Course = () => {
     dispatch(getCourse(params.courseid));
   }, [params.courseid]);
 
-  console.log(course);
   return (
     <div key={course.courseid} className="course-page">
       <LessonContent course={course} />
