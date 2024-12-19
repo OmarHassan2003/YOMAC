@@ -36,7 +36,8 @@ function App() {
   const queryString = location.search.slice(1);
   const navigate = useNavigate();
   useEffect(() => {
-    !queryString && token === null && navigate("/login");
+    if (!queryString && token === null) navigate("/login");
+    else navigate("/dashboard");
   }, [token]);
   useEffect(() => {
     dispatch(getCategories());
