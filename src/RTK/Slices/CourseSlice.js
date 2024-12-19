@@ -372,6 +372,34 @@ export const deleteAssignThenGet = createAsyncThunk(
   }
 );
 
+export const deleteContest = createAsyncThunk(
+  "CourseSlice/deleteContest",
+  async (id, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.delete(`delete_contest/${id}`, {
+        headers: {
+          token: token,
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteContestThenGet = createAsyncThunk(
+  "CourseSlice/deleteContestThenGet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(deleteContest(data.contestId));
+    return dispatch(getCourse(data.courseId));
+  }
+);
+
 export const submitAssignment = createAsyncThunk(
   "CourseSlice/submitAssignment",
   async (data, { getState, rejectWithValue }) => {
@@ -721,6 +749,35 @@ const CourseSlice = createSlice({
         state.loadingVid = false;
       })
       .addCase(deleteAssignThenGet.rejected, (state, action) => {
+        // state.name = action.payload;
+        // console.log("Assignment Failed to be Created");
+        state.loadingVid = false;
+      })
+      .addCase(deleteContest.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(deleteContest.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("Contest deleted");
+        state.loadingVid = false;
+      })
+      .addCase(deleteContest.rejected, (state, action) => {
+        // state.name = action.payload;
+        // console.log("Assignment Failed to be Created");
+        console.log("Contest failed to be deleted");
+        state.loadingVid = false;
+      })
+      .addCase(deleteContestThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(deleteContestThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        // console.log("Contest deleted");
+        state.loadingVid = false;
+      })
+      .addCase(deleteContestThenGet.rejected, (state, action) => {
         // state.name = action.payload;
         // console.log("Assignment Failed to be Created");
         state.loadingVid = false;

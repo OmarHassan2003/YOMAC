@@ -5,6 +5,7 @@ import {
   addSectionThenGet,
   addVideoThenGet,
   deleteAssignThenGet,
+  deleteContestThenGet,
   deleteQuizThenGet,
   deleteSectionThenGet,
   deleteVideoThenGet,
@@ -23,6 +24,7 @@ import delIcon from "../../assets/trash.png";
 import pendingIcon from "../../assets/pending.png";
 import passIcon from "../../assets/accept.png";
 import failIcon from "../../assets/decline.png";
+import contestIcon from "../../assets/trophy.png";
 import { useNavigate } from "react-router-dom";
 import encodeFileToBase64 from "../../utils/EncodeMedia";
 
@@ -222,6 +224,15 @@ const ContentList = ({ course }) => {
     };
     dispatch(deleteAssignThenGet(data)); // Dispatch action to delete the assignment
     console.log(assignmentId);
+  };
+
+  const handleDeleteContest = (contestId) => {
+    const data = {
+      contestId,
+      courseId: course.courseid,
+    };
+    dispatch(deleteContestThenGet(data)); // Dispatch action to delete the assignment
+    console.log(contestId);
   };
 
   return (
@@ -549,6 +560,40 @@ const ContentList = ({ course }) => {
             )}
           </div>
         )}
+        <h2 className="h2">Course Contests</h2>
+        <div className="modules">
+          {course.contests.map((contest) => (
+            <div key={contest.contestexamid} className="module">
+              <div
+                className="module-header"
+                onClick={() => displayContest(contest.contestexamid)}
+              >
+                <div className="lesson-icon-and-title">
+                  <img
+                    src={contestIcon}
+                    alt="Contest Icon"
+                    className="lesson-icon"
+                  />
+                  <h3>{contest.title}</h3>
+                </div>
+                <div className="right-side">
+                  <span>{contest.duration}</span>
+                  {isTopInstructor && (
+                    <img
+                      src={delIcon}
+                      alt="Delete Icon"
+                      className="lesson-icon"
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent event bubbling
+                        handleDeleteContest(contest.contestexamid); // Delete Section
+                      }}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -19,7 +19,9 @@
 .content-list::-webkit-scrollbar-thumb {
   background: transparent; /* Optional: Set a transparent thumb so that it is not visible */
 }
-
+.h2{
+  margin-top: 25px;
+}
   @media (max-width: 1050px) {
     .content-list {
       width: 100%;
