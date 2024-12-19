@@ -1,200 +1,223 @@
 .description {
-    margin-bottom: 20px;
-  }
-  
-  .description h2,
-  .description h3 {
-    font-size: 18px;
-    color: #333;
-  }
-  
-  .description ul {
-    list-style: disc;
-    margin-left: 20px;
-  }
-  
-  .course-navbar {
-    display: flex;
-    justify-content: center;
-    border-bottom: 1px solid #ddd;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-  }
-  
-  .tab {
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    color: #666;
-  }
-  
-  .tab:hover {
-    color: #333;
-  }
-  
-  .tab.active {
-    color: #333;
-    font-weight: bold;
-    border-bottom: 3px solid #00c9a7;
-  }
-  
-  .tab-content {
-    margin-top: 20px;
-    font-size: 16px;
-    color: #555;
-  }
-  
-  .hidden {
-    display: none;
-  }
-  
-  .qna {
-    padding: 10px 0;
-    margin-top: 10px;
-  }
+  margin-bottom: 20px;
+}
 
-  .profile-pic {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #ccc;
-  }
-  .user-name {
-    font-size: 17px !important;
-    margin: 0 !important;
-    color: #333;
-  } 
+.description h2,
+.description h3 {
+  font-size: 18px;
+  color: #333;
+}
 
-  .user-info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Ensures elements are on opposite sides */
-    padding: 10px;
-    background-color: #f9f9f9; /* Optional: Adjust background color */
-    border-radius: 8px; /* Optional: Makes the container look smoother */
-  }
-  
-  .user-details {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    /* margin-bottom: 8px; */
-  }
-  
-  
-  .message-date {
-    font-size: 12px;
-    color: #888;
-    margin-top: 0;
-  }
-  
+.description ul {
+  list-style: disc;
+  margin-left: 20px;
+}
 
-  .message-text {
-    margin-left: 50px;
-    margin-bottom: 10px;
-    font-size: 20px;
-    font-weight: 500;
-    color: #555;
-  }
+.course-navbar {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #ddd;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
 
-  .qa-section {
-    width: 50%;
-    margin: 0 auto;
-  }
-  
-  .qa-item {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #f9f9f9;
-  }
-  
-  .question {
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .timestamp {
-    font-size: 0.9em;
-    color: gray;
-  }
-  
-  .answers {
-    margin-top: 10px;
-    padding-left: 20px;
-  }
-  
-  .answer {
-    margin-bottom: 5px;
-    font-weight: bold;
-    font-size: 16px;
-    border-radius: 4px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding:10px;
-    margin-left: 7px;
-  }
-  
-  .qa-input-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 100%; /* Adjust width as needed */
-    /* max-width: 600px; */
-    margin: 20px auto; /* Center the container */
-  }
-  
-  .qa-textbox {
-    width: 100%;
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #28a745;
-    border-radius: 4px;
-    /* resize: vertical; Allow resizing vertically */
-    outline: none;
-    font-family: "Arial", sans-serif;
-    color: #333;
-  }
-  
-  .qa-textbox:focus {
-    border-color: #5d3fd3; /* Highlight border on focus */
-    box-shadow: 0 0 4px rgba(93, 63, 211, 0.5);
-  }
-  
-  .qa-submit-button {
-    align-self: flex-end; /* Align button to the right */
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #fff;
-    background-color: #fff;
-    color: #28a745;
-    border: 1px solid #28a745;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, opacity 0.3s ease;
-  }
-  
-  .qa-submit-button:hover {
-    background-color: #28a745;
-    color: #fff;
-  }
-  
-  .qa-submit-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-    opacity: 0.7;
-    /* display: none; */
-  }
-  
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #666;
+}
+
+.tab:hover {
+  color: #333;
+}
+
+.tab.active {
+  color: #333;
+  font-weight: bold;
+  border-bottom: 3px solid #00c9a7;
+}
+
+.tab-content {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #555;
+}
+
+.hidden {
+  display: none;
+}
+
+.qna {
+  padding: 10px 0;
+  margin-top: 10px;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+.user-name {
+  font-size: 17px !important;
+  margin: 0 !important;
+  color: #333;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensures elements are on opposite sides */
+  padding: 10px;
+  background-color: #f9f9f9; /* Optional: Adjust background color */
+  border-radius: 8px; /* Optional: Makes the container look smoother */
+}
+
+.user-details {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* margin-bottom: 8px; */
+}
+
+.message-date {
+  font-size: 12px;
+  color: #888;
+  margin-top: 0;
+}
+
+.message-text {
+  margin-left: 50px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #555;
+}
+
+.qa-section {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.qa-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.question {
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.timestamp {
+  font-size: 0.9em;
+  color: gray;
+}
+
+.answers {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.answer {
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin-left: 7px;
+}
+
+.qa-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Adjust width as needed */
+  /* max-width: 600px; */
+  margin: 20px auto; /* Center the container */
+}
+
+.qa-textbox {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  /* resize: vertical; Allow resizing vertically */
+  outline: none;
+  font-family: "Arial", sans-serif;
+  color: #333;
+}
+
+.qa-textbox:focus {
+  border-color: #5d3fd3; /* Highlight border on focus */
+  box-shadow: 0 0 4px rgba(93, 63, 211, 0.5);
+}
+
+.qa-submit-button {
+  align-self: flex-end; /* Align button to the right */
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #fff;
+  color: #28a745;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.qa-submit-button:hover {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.qa-submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+  /* display: none; */
+}
+.add-review-btn {
+  align-self: center; /* Align button to the right */
+  margin-top: 10px;
+  margin-left: 400px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #fff;
+  color: #28a745;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+.add-review-btn:hover {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.add-review-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+  /* display: none; */
+}
