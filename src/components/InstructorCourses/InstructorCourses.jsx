@@ -34,30 +34,32 @@ const InstructorCourses = ({ data }) => {
                 <div className="course-rating">
                   <span>⭐ 4.3</span>
                 </div>
-                <button
-                  className="view-course-btn"
-                  onClick={() => {
-                    handleWhiteClick(curr);
-                  }}
-                >
-                  Whiteboard
-                </button>
-                <button
-                  className="view-course-btn"
-                  onClick={() => {
-                    handleClick(curr);
-                  }}
-                >
-                  View
-                </button>
-                <button
-                  className="delete-btn"
-                  onClick={() => {
-                    handleDelete(curr);
-                  }}
-                >
-                  Delete
-                </button>
+                <div>
+                  <button
+                    className="view-btn"
+                    onClick={() => {
+                      handleWhiteClick(curr);
+                    }}
+                  >
+                    Whiteboard
+                  </button>
+                  <button
+                    className="view-btn"
+                    onClick={() => {
+                      handleClick(curr);
+                    }}
+                  >
+                    View
+                  </button>
+                  <button
+                    className="delete-btn"
+                    onClick={() => {
+                      handleDelete(curr);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             ))}
           </div>
