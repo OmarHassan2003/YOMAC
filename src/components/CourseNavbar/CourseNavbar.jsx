@@ -9,6 +9,10 @@ import {
   postInstructorAnswerThenGet,
 } from "../../RTK/Slices/QASlice";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  addCourseFeedbackThenGet,
+  getCourseFeedback,
+} from "../../RTK/Slices/FeedbackSlice";
 const CourseNavbar = ({ course }) => {
   const user = useSelector((state) => state.Authorization);
   const role = user.role;
@@ -21,6 +25,8 @@ const CourseNavbar = ({ course }) => {
   const [activeQuestion, setActiveQuestion] = useState("");
   const [questionText, setQuestionText] = useState("");
   const [answerText, setAnswerText] = useState("");
+  const [reviewText, setReviewText] = useState("");
+  const [rating, setRating] = useState("");
   let qa = useSelector((state) => state.qa);
 
   const dispatch = useDispatch();
@@ -28,6 +34,12 @@ const CourseNavbar = ({ course }) => {
     setActiveTab(tab);
   };
 
+  let dataFeed = useSelector((state) => state.feedback);
+  useEffect(() => {
+    dispatch(getCourseFeedback(course.courseid));
+  }, []);
+
+  dataFeed = dataFeed.object;
   const handlePostQuestion = () => {
     const data = {
       videoID: course.currVid.videoid,
@@ -41,6 +53,23 @@ const CourseNavbar = ({ course }) => {
     if (role == "student") dispatch(postStudentAnswerThenGet(data));
     else dispatch(postInstructorAnswerThenGet(data));
     setAnswerText("");
+  };
+  const handlePostReview = () => {
+    const ratings = +rating;
+    if (ratings > 5 || ratings < 1) {
+      alert("Rating should be between 1 and 5");
+      setReviewText("");
+      setRating("");
+      return;
+    }
+    const data = {
+      course_id: course.courseid,
+      rating: +ratings,
+      review: reviewText,
+    };
+    dispatch(addCourseFeedbackThenGet(data));
+    setReviewText("");
+    setRating("");
   };
 
   useEffect(() => {
@@ -208,6 +237,56 @@ const CourseNavbar = ({ course }) => {
               disabled={!questionText.trim()}
             >
               Post Question
+            </button>
+          </div>
+        </div>
+        <div className={`reviews ${activeTab !== "reviews" ? "hidden" : ""}`}>
+          {dataFeed?.length === 0 ? (
+            <div>No Reviews yet</div>
+          ) : (
+            dataFeed.map((review) => {
+              return (
+                <div className="review">
+                  <div className="user-info">
+                    <div className="user-details">
+                      <img
+                        src={review.profilepic}
+                        alt="User Profile"
+                        className="profile-pic"
+                      />
+                      <p className="user-name">{review.studentname}</p>
+                    </div>
+                    <div className="message-text">{review.review}</div>
+                    <div className="message-text">{review.rating}</div>
+                    <div className="message-date">
+                      {new Date(review.createdat).toLocaleString()}
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          )}
+          <div className="qa-input-container">
+            <input
+              type="text"
+              className="qa-textbox"
+              placeholder="Type your Review here..."
+              value={reviewText}
+              onChange={(e) => setReviewText(e.target.value)}
+            ></input>
+            <input
+              type="text"
+              className="qa-textbox"
+              placeholder="Type your Rating here..."
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
+            ></input>
+            <button
+              className="qa-submit-button"
+              onClick={handlePostReview}
+              disabled={!reviewText.trim()}
+            >
+              Post Review
             </button>
           </div>
         </div>
