@@ -30,10 +30,10 @@
 .profile-menu {
   position: absolute;
   right: -2rem;
-  top: 3rem;
+  top: 3.8rem;
   background: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 0.5rem;
+  border-radius: 10px;
   overflow: hidden;
   opacity: 0;
   visibility: hidden;
@@ -93,6 +93,11 @@
   .search-button {
     height: 42px;
   }
+
+  .browse-categories {
+    padding: 4px;
+    font-size: 12px;
+  }
 }
 
 .profile:hover .profile-menu {
@@ -130,4 +135,44 @@
 
 .profile-menu a:hover {
   background-color: var(--color-grey-light-1);
+}
+
+.browse-categories {
+  background-color: transparent;
+}
+
+.categories-container {
+  position: relative;
+}
+
+.categories-dropdown {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  background-color: white;
+  width: max-content;
+  padding: 0.5rem;
+  z-index: 1000;
+  list-style: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.category-item {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.category-item:hover {
+  background: #f4f4f4;
+}
+
+.profile-menu a:hover {
+  background: #f4f4f4;
+}
+
+.profile-menu button:hover {
+  background: #f4f4f4;
 }

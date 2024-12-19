@@ -25,21 +25,25 @@ import AddAssignment from "./components/AddAssignment/AddAssignment.jsx";
 import Search from "./pages/Search/Search.jsx";
 
 import EditAssignment from "./components/EditAssignment/EditAssignment.jsx";
+import { getCategories } from "./RTK/Slices/CategorySlice.js";
 
 function App() {
-  // const dispatch = useDispatch();
-  // dispatch(StudentLoginAPI());
+  const dispatch = useDispatch();
   const { token } = useSelector((state) => state.Authorization);
+  const { categories } = useSelector((state) => state.category);
   const location = useLocation();
   const queryString = location.search.slice(1);
   const navigate = useNavigate();
   useEffect(() => {
     !queryString && token === null && navigate("/login");
   }, [token]);
+  useEffect(() => {
+    dispatch(getCategories());
+  }, []);
   return (
     <>
       <LoadingScreen />
-      <Navbar />
+      <Navbar categories={categories} />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/resetpassword" element={<ForgotPassword />} />
@@ -50,7 +54,7 @@ function App() {
         <Route path="/instructorlogin" element={<InstructorLogin />} />
         <Route path="studentregister" element={<StudentRegister />} />
         <Route path="instructorregister" element={<InstructorRegister />} />
-        <Route path="search/:searchQuery" element={<Search />} />
+        <Route path="search/:type/:searchQuery" element={<Search />} />
         <Route
           path="course/:courseid/sec/:secid/editAssign/:assignid"
           element={<EditAssignment />}
