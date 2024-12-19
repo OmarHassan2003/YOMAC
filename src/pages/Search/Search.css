@@ -9,7 +9,7 @@
 
 .course-card h3 {
   margin-bottom: 8px;
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .course-details {
@@ -27,7 +27,8 @@
   font-weight: 400;
 }
 .course-duration,
-.course-instructor {
+.course-instructor,
+.course-rating {
   font-weight: 400;
 }
 
@@ -87,4 +88,39 @@
   .course-card {
     gap: 80px;
   }
+}
+
+.no-results-container {
+  margin: 50px auto;
+  max-width: 600px;
+  color: #333;
+  padding-left: 40px;
+}
+
+.no-results-container h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.no-results-container h1 strong {
+  font-weight: bold;
+  color: #000;
+}
+
+.no-results-container p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.no-results-container ul {
+  list-style-type: disc;
+  margin: 0;
+  padding: 0;
+  margin-left: 20px;
+  text-align: left;
+}
+
+.no-results-container li {
+  font-size: 14px;
+  margin-bottom: 8px;
 }
