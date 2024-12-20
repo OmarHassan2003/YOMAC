@@ -36,7 +36,7 @@ const PaymentSettings = () => {
                   <td>
                     {transaction.student?.studentname.split(" ")[0] || "N/A"}
                   </td>
-                  <td>${transaction.amount}</td>
+                  <td>E£{transaction.price}</td>
                   <td>{new Date(transaction.executedat).toLocaleString()}</td>
                 </tr>
               ))}
