@@ -68,4 +68,34 @@
     color: #333;
     line-height: 1.2;
   }
-  
+  .title-info{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  .course-title-input{
+    width: 140px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem !important;
+    border: 1px solid #28a745;
+    border-radius: 4px;
+    outline: none;
+    text-align: center;
+  }
+  .course-title-btn{
+    padding: 8px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #fff;
+  color: #28a745;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+  }
+  .course-title-btn:hover{
+    background-color: #28a745;
+    color: #fff;
+  }
