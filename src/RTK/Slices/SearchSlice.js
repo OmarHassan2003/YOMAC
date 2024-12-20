@@ -63,6 +63,7 @@ const SearchSlice = createSlice({
       })
       .addCase(getCoursesByTitle.fulfilled, (state, action) => {
         state.courses = action.payload;
+        console.log(action.payload);
         state.loadingSearch = false;
       })
       .addCase(getCoursesByTitle.rejected, (state) => {

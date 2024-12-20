@@ -104,7 +104,7 @@ export default function Navbar({ categories }) {
             style={{
               border: isHomePage
                 ? "1px solid rgb(73, 187, 189)"
-                : "1px solid black",
+                : "1px solid #28a745",
             }}
             className="Search-bar"
             type="text"
@@ -116,7 +116,7 @@ export default function Navbar({ categories }) {
             style={{
               border: isHomePage
                 ? "1px solid rgb(73, 187, 189)"
-                : "1px solid black",
+                : "1px solid #28a745",
             }}
             onClick={(e) => handleSearch(e, "title")}
             className="search-button"
