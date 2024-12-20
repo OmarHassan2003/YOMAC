@@ -139,7 +139,7 @@ const CourseNavbar = ({ course }) => {
                       <img
                         src={message.senderstudent.profilepic}
                         alt="User Profile"
-                        className="profile-pic"
+                        className="profile-pic-message"
                       />
                       <p className="user-name">
                         {message.senderstudent.studentname}
@@ -179,7 +179,7 @@ const CourseNavbar = ({ course }) => {
                                     : answer.senderstudent.profilepic
                                 }
                                 alt="User Profile"
-                                className="profile-pic"
+                                className="profile-pic-message"
                               />
                               <p className="user-name">
                                 {senderRole === "instructor"
@@ -223,22 +223,24 @@ const CourseNavbar = ({ course }) => {
                 </div>
               </div>
             ))}
-          <div className="qa-input-container">
-            <input
-              type="text"
-              className="qa-textbox"
-              placeholder="Type your question here..."
-              value={questionText}
-              onChange={(e) => setQuestionText(e.target.value)}
-            ></input>
-            <button
-              className="qa-submit-button"
-              onClick={handlePostQuestion}
-              disabled={!questionText.trim()}
-            >
-              Post Question
-            </button>
-          </div>
+          {isStudent && (
+            <div className="qa-input-container">
+              <input
+                type="text"
+                className="qa-textbox"
+                placeholder="Type your question here..."
+                value={questionText}
+                onChange={(e) => setQuestionText(e.target.value)}
+              ></input>
+              <button
+                className="qa-submit-button"
+                onClick={handlePostQuestion}
+                disabled={!questionText.trim()}
+              >
+                Post Question
+              </button>
+            </div>
+          )}
         </div>
         <div className={`reviews ${activeTab !== "reviews" ? "hidden" : ""}`}>
           {dataFeed?.length === 0 ? (
@@ -246,7 +248,7 @@ const CourseNavbar = ({ course }) => {
           ) : (
             dataFeed.map((review) => {
               return (
-                <div className="review">
+                <div className="qa-item">
                   <div className="user-info">
                     <div className="user-details">
                       <img
@@ -266,29 +268,31 @@ const CourseNavbar = ({ course }) => {
               );
             })
           )}
-          <div className="qa-input-container">
-            <input
-              type="text"
-              className="qa-textbox"
-              placeholder="Type your Review here..."
-              value={reviewText}
-              onChange={(e) => setReviewText(e.target.value)}
-            ></input>
-            <input
-              type="text"
-              className="qa-textbox"
-              placeholder="Type your Rating here..."
-              value={rating}
-              onChange={(e) => setRating(e.target.value)}
-            ></input>
-            <button
-              className="qa-submit-button"
-              onClick={handlePostReview}
-              disabled={!reviewText.trim()}
-            >
-              Post Review
-            </button>
-          </div>
+          {isStudent && (
+            <div className="qa-input-container">
+              <input
+                type="text"
+                className="qa-textbox"
+                placeholder="Type your Review here..."
+                value={reviewText}
+                onChange={(e) => setReviewText(e.target.value)}
+              ></input>
+              <input
+                type="text"
+                className="qa-textbox"
+                placeholder="Type your Rating here..."
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+              ></input>
+              <button
+                className="qa-submit-button"
+                onClick={handlePostReview}
+                disabled={!reviewText.trim()}
+              >
+                Post Review
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
