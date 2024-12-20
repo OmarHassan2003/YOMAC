@@ -18,7 +18,7 @@ export const addInstructorFeedback = createAsyncThunk(
         },
       });
       // Only return the response.data, which is serializable
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -57,7 +57,7 @@ export const getCourseFeedback = createAsyncThunk(
         },
       });
       // Only return the response.data, which is serializable
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -131,7 +131,7 @@ const FeedbackSlice = createSlice({
         state.loadingFed = true;
       })
       .addCase(getCourseFeedback.fulfilled, (state, action) => {
-        console.log(action.payload.reviews);
+        // console.log(action.payload.reviews);
         state.object = action.payload.reviews;
         state.loadingFed = false;
       })

@@ -30,9 +30,7 @@ import { useNavigate } from "react-router-dom";
 import encodeFileToBase64 from "../../utils/EncodeMedia";
 
 const ContentList = ({ course }) => {
-  console.log(course);
   const user = useSelector((state) => state.Authorization);
-  console.log(user);
   const role = user.role;
   let isStudent = false;
   let isInstructor = false;
@@ -90,6 +88,7 @@ const ContentList = ({ course }) => {
     updateCurrentSection(sec);
     dispatch(getVideo(vidId));
     updateCurrentVideo(fetchedVideo);
+    console.log(fetchedVideo);
   };
 
   const displayQuiz = (quiz, quizId, secId) => {
@@ -147,11 +146,24 @@ const ContentList = ({ course }) => {
     setNewSectionTitle("");
   };
 
+  async function getVideoDuration(file) {
+    return new Promise((resolve) => {
+      const url = URL.createObjectURL(file);
+      const video = document.createElement("video");
+      video.src = url;
+      video.addEventListener("loadedmetadata", () => {
+        resolve(video.duration); // duration in seconds
+        URL.revokeObjectURL(url);
+      });
+    });
+  }
   const handleAddVideo = async (e, sectionId) => {
     e.preventDefault();
     console.log("Adding Video to Section:", sectionId, newVideoTitle);
     setShowAddVideoSection(null);
     console.log(e.target[1].files);
+    const videoDuration = await getVideoDuration(e.target[1].files[0]);
+    console.log(videoDuration);
     const vidEncoded = await encodeFileToBase64(e.target[1].files[0]);
     const newVid = {
       videos: [
@@ -159,6 +171,7 @@ const ContentList = ({ course }) => {
           video: vidEncoded,
           title: newVideoTitle,
           section_id: sectionId,
+          duration: Math.ceil(+videoDuration),
           courseId: course.courseid,
         },
       ],

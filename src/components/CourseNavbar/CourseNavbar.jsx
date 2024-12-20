@@ -74,7 +74,7 @@ const CourseNavbar = ({ course }) => {
 
   useEffect(() => {
     if (course?.currVid !== null) {
-      console.log(course?.currVid);
+      // console.log(course?.currVid);
       dispatch(getVidQA(course.currVid.videoid));
       console.log(qa.qa_questions);
     }

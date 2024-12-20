@@ -17,7 +17,7 @@ export const getCategories = createAsyncThunk(
         },
       });
       // Only return the response.data, which is serializable
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -37,9 +37,9 @@ const CategorySlice = createSlice({
         state.loadingCat = true;
       })
       .addCase(getCategories.fulfilled, (state, action) => {
-        console.log(action.payload); // action.payload is now
+        // console.log(action.payload); // action.payload is now
         state.categories = action.payload;
-        console.log(state.categories);
+        // console.log(state.categories);
 
         // console.log(action.payload.data);
         // const data = action.payload.transactions;
