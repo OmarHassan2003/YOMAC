@@ -1,4 +1,4 @@
-.course-item {
+.course12-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -10,20 +10,20 @@
   gap: 15px; /* Add spacing between sections */
 }
 
-.course-info {
+.course12-info {
   display: flex;
   align-items: center;
   flex: 2; /* Allow more space for course info */
 }
 
-.course-info img {
+.course12-info img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
   margin-right: 15px;
 }
 
-.course-details h3 {
+.course12-details h3 {
   margin: 0;
   font-size: 18px;
   color: #333;
@@ -33,7 +33,7 @@
   max-width: 200px; /* Restrict long names */
 }
 
-.course-progress {
+.course12-progress {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -41,7 +41,7 @@
   justify-content: flex-end; /* Align right */
 }
 
-.progress-bar {
+.progress12-bar {
   width: 100px;
   height: 8px;
   background-color: #e0e0e0;
@@ -50,17 +50,17 @@
   position: relative;
 }
 
-.course-rating {
+.course12-rating {
   flex: 0.5; /* Fixed size for rating */
   text-align: center;
 }
 
-.course-rating span {
+.course12-rating span {
   color: #f39c12;
   font-size: 16px;
 }
 
-.view-course-btn {
+.view12-course-btn {
   flex: 0.7; /* Fixed size for the button */
   background-color: #fff;
   color: #28a745;
@@ -72,7 +72,80 @@
   text-align: center;
 }
 
-.view-course-btn:hover {
+.view12-course-btn:hover {
   background-color: #28a745;
   color: #fff;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .course12-item {
+    flex-direction: column; /* Stack content vertically */
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 15px;
+  }
+
+  .course12-info {
+    flex-direction: row; /* Keep image and text horizontal */
+    flex: 1; /* Adjust size */
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .course12-info img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .course12-details h3 {
+    font-size: 16px;
+    max-width: 150px; /* Further restrict width */
+  }
+
+  .course12-progress {
+    width: 100%; /* Full width progress bar */
+    justify-content: flex-start; /* Align left */
+  }
+
+  .progress12-bar {
+    width: 80%; /* Adjust width for smaller screens */
+  }
+
+  .course12-rating {
+    flex: 0.7; /* Adjust size */
+    text-align: left; /* Align left */
+  }
+
+  .view12-course-btn {
+    flex: 1; /* Expand button */
+    width: 100%; /* Full width */
+    text-align: center; /* Center align */
+  }
+}
+
+@media (max-width: 480px) {
+  .course12-item {
+    padding: 10px; /* Reduce padding */
+    gap: 8px; /* Reduce gap */
+  }
+
+  .course12-info img {
+    width: 35px;
+    height: 35px;
+  }
+
+  .course12-details h3 {
+    font-size: 14px;
+    max-width: 120px; /* Restrict for very small screens */
+  }
+
+  .progress12-bar {
+    width: 100%; /* Full width on smaller devices */
+  }
+
+  .view12-course-btn {
+    font-size: 14px; /* Reduce font size */
+    padding: 6px 10px;
+  }
 }

@@ -58,3 +58,31 @@
     padding: 8px;
   }
 }
+
+/* Additional responsive styling for smaller screens (max-width: 480px) */
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 10px;
+    margin: 10px auto;
+  }
+
+  .profile-header {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .transaction-list {
+    overflow-x: scroll; /* Ensure proper scrolling for small screens */
+  }
+
+  .transaction-table th,
+  .transaction-table td {
+    font-size: 12px; /* Reduce font size */
+    padding: 6px; /* Smaller padding */
+  }
+
+  .transaction-table {
+    width: 100%; /* Maintain table width */
+    font-size: 0.9rem; /* Adjust text size */
+  }
+}

@@ -6,8 +6,13 @@
   color: #333;
 }
 
-.container {
+.container12 {
   display: flex;
   gap: 30px;
   padding: 40px;
+}
+@media (max-width: 768px) {
+  .container12 {
+    flex-direction: column;
+  }
 }
