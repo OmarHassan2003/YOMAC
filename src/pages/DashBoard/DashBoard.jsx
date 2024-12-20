@@ -14,7 +14,6 @@ const DashBoard = () => {
     dispatch(getStudent());
   }, []);
   data = data.object;
-  console.log(data);
   let isStudent = false;
   if (data.studentid != null) {
     isStudent = true;

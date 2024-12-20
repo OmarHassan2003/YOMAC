@@ -12,7 +12,7 @@
   font-size: 15px;
 }
 
-.course-details {
+.search-course-details {
   flex: 1;
 }
 
@@ -28,7 +28,7 @@
 }
 .course-duration,
 .course-instructor,
-.course-rating {
+.course-ratingg {
   font-weight: 400;
 }
 

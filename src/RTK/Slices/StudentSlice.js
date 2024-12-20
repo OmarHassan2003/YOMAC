@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import YomacApi from "../../utils/AxiosInstance";
+import { act } from "react";
 
 const initialstate = {
   object: {},
   loadingStu: false,
+  message: "",
 };
 
 export const getStudent = createAsyncThunk(
@@ -76,9 +78,11 @@ export const increaseBalance = createAsyncThunk(
   async (newBalance, { getState, rejectWithValue }) => {
     // api call
     const { token } = getState().Authorization;
+    const { balance } = getState().student.object;
     try {
       const response = await YomacApi.post(
-        `increase_student_balance/${newBalance}`,
+        `increase_student_balance/${newBalance + balance}`,
+        "",
         {
           headers: {
             token: token,
@@ -187,6 +191,19 @@ const StudentSlice = createSlice({
         state.loadingStu = false;
       })
       .addCase(deleteCourseThenGet.rejected, (state, action) => {
+        // state.name = action.payload;
+        state.loadingStu = false;
+      })
+      .addCase(increaseBalance.pending, (state, action) => {
+        // for loading
+        state.loadingStu = true;
+      })
+      .addCase(increaseBalance.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log(action.payload);
+        state.loadingStu = false;
+      })
+      .addCase(increaseBalance.rejected, (state, action) => {
         // state.name = action.payload;
         state.loadingStu = false;
       }),
