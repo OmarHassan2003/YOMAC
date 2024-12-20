@@ -1,65 +1,19 @@
-.course-container {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-}
-
-.course-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.course-header h2 {
-  font-size: 24px;
-}
-
-.course-tabs {
-  display: flex;
-  gap: 15px;
-}
-
-.tab {
-  cursor: pointer;
-  font-size: 16px;
-  color: #6c757d;
-  padding: 5px 10px;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-}
-
-.tab.active {
-  background-color: #e3fcef;
-  color: #28a745;
-  font-weight: bold;
-}
-
-.course-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
 .course-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   background-color: #fff;
   border: 1px solid #eaeaea;
   border-radius: 10px;
   padding: 15px 20px;
   transition: box-shadow 0.3s ease;
-}
-
-.course-item:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  gap: 15px; /* Add spacing between sections */
 }
 
 .course-info {
   display: flex;
   align-items: center;
+  flex: 2; /* Allow more space for course info */
 }
 
 .course-info img {
@@ -73,27 +27,32 @@
   margin: 0;
   font-size: 18px;
   color: #333;
-}
-
-.course-details p {
-  margin: 0;
-  color: #777;
-  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px; /* Restrict long names */
 }
 
 .course-progress {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex: 1; /* Ensure consistent width */
+  justify-content: flex-end; /* Align right */
 }
 
 .progress-bar {
-  width: 150px;
+  width: 100px;
   height: 8px;
   background-color: #e0e0e0;
   border-radius: 5px;
   overflow: hidden;
   position: relative;
+}
+
+.course-rating {
+  flex: 0.5; /* Fixed size for rating */
+  text-align: center;
 }
 
 .course-rating span {
@@ -102,6 +61,7 @@
 }
 
 .view-course-btn {
+  flex: 0.7; /* Fixed size for the button */
   background-color: #fff;
   color: #28a745;
   border: 1px solid #28a745;
@@ -109,6 +69,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
+  text-align: center;
 }
 
 .view-course-btn:hover {

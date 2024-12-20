@@ -24,8 +24,8 @@ const DashBoard = () => {
     <div className="dashboard">
       {isStudent ? (
         <div>
-          <LearningTime data={data} />
           <DashboardCourses data={data} />
+          <LearningTime data={data} />
         </div>
       ) : (
         <div>
