@@ -27,6 +27,7 @@ import Search from "./pages/Search/Search.jsx";
 import EditAssignment from "./components/EditAssignment/EditAssignment.jsx";
 import { getCategories } from "./RTK/Slices/CategorySlice.js";
 import Contest from "./components/Contest/Contest.jsx";
+import Purchase from "./pages/Purchase/Purchase.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,11 +38,17 @@ function App() {
   const navigate = useNavigate();
   useEffect(() => {
     if (!queryString && token === null) navigate("/login");
-    else navigate("/dashboard");
+    else if (
+      token !== null &&
+      (location.pathname === "/studentLogin" ||
+        location.pathname === "/instructorlogin")
+    ) {
+      navigate("/dashboard");
+    }
   }, [token]);
   useEffect(() => {
     dispatch(getCategories());
-  }, []);
+  }, [token]);
   return (
     <>
       <LoadingScreen />
@@ -57,6 +64,7 @@ function App() {
         <Route path="studentregister" element={<StudentRegister />} />
         <Route path="instructorregister" element={<InstructorRegister />} />
         <Route path="search/:type/:searchQuery" element={<Search />} />
+        <Route path="purchase" element={<Purchase />} />
         <Route
           path="course/:courseid/contest/:contestid/:roleindex"
           element={<Contest />}

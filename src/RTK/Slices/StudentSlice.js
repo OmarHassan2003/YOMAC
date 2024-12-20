@@ -70,6 +70,30 @@ export const deleteCourse = createAsyncThunk(
     }
   }
 );
+
+export const increaseBalance = createAsyncThunk(
+  "StudentSlice/increaseBalance",
+  async (newBalance, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post(
+        `increase_student_balance/${newBalance}`,
+        {
+          headers: {
+            token: token,
+          },
+        }
+      );
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const deleteCourseThenGet = createAsyncThunk(
   "StudentSlice/deleteCourseThenGet",
   async (id, { dispatch, getState, rejectWithValue }) => {

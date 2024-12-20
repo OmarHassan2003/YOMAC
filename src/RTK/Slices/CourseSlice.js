@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, isFulfilled } from "@reduxjs/toolkit";
 import YomacApi from "../../utils/AxiosInstance";
+import { act } from "react";
 
 const initialstate = {
   courseid: 0,
@@ -24,6 +25,7 @@ const initialstate = {
   assignID: null,
   loadingVid: false,
   fetchedSingleAssign: null,
+  enrollmentErrorMessage: "",
 };
 
 export const getCourse = createAsyncThunk(
@@ -143,6 +145,31 @@ export const addSection = createAsyncThunk(
           "Content-Type": "application/json",
         },
       });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const enrollToCourse = createAsyncThunk(
+  "CourseSlice/enrollToCourse",
+  async (courseID, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post(
+        "enroll_student_to_course",
+        { courseID: courseID },
+        {
+          headers: {
+            token: token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
       // console.log(response);
       return response;
     } catch (error) {
@@ -880,6 +907,21 @@ const CourseSlice = createSlice({
         // state.name = action.payload;
         console.log("Assignment Failed to be Graded");
         state.loadingVid = false;
+      })
+      .addCase(enrollToCourse.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(enrollToCourse.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log(action.payload);
+        state.loadingVid = false;
+      })
+      .addCase(enrollToCourse.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log(action.payload.response.data.error);
+        state.loadingVid = false;
+        state.enrollmentErrorMessage = action.payload.response.data.error;
       }),
 });
 

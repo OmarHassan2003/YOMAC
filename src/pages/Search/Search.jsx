@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCoursesByCategory,
@@ -10,49 +10,71 @@ import "./Search.css";
 import { getCategories } from "../../RTK/Slices/CategorySlice";
 
 export default function Search() {
+  const authData = useSelector((state) => state.Authorization);
+  const isLoggedIn = authData.token !== null;
+  const isStudent = authData.role === "student";
   const { type, searchQuery } = useParams();
-  console.log(type, searchQuery);
   const dispatch = useDispatch();
-  let data = useSelector((state) => state.category);
+  const data = useSelector((state) => state.category);
   const { courses } = useSelector((state) => state.Search);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getCategories());
-  }, []);
-
-  useEffect(() => {
     dispatch(setCourses());
-  }, []);
+  }, [dispatch]);
+
+  const handlePurchase = (course) => {
+    const discountedPrice = calculateDisplayPrice(course.price, course.offers);
+    navigate("/purchase", {
+      state: {
+        course: {
+          ...course,
+          originalPrice: course.price,
+          discountedPrice,
+        },
+      },
+    });
+  };
 
   useEffect(() => {
-    // if (type === "title") {
-    //   dispatch(getCoursesByTitle(searchQuery));
-    //   let rightCategory;
-    //   console.log(courses.length);
-    //   if (courses.length === 0) {
-    //     rightCategory = data.categories.findIndex((category) => {
-    //       console.log(category.categorytext.toLowerCase(), searchQuery);
-    //       return category.categorytext.toLowerCase() === searchQuery;
-    //     });
-    //     if (rightCategory !== -1) {
-    //       dispatch(
-    //         getCoursesByCategory(data.categories[rightCategory].categoryid)
-    //       );
-    //     }
-    //   }
-    // } else {
     if (type === "title") {
       dispatch(getCoursesByTitle(searchQuery));
+      // if (type === "title") {
+      //   dispatch(getCoursesByTitle(searchQuery));
+      //   let rightCategory;
+      //   console.log(courses.length);
+      //   if (courses.length === 0) {
+      //     rightCategory = data.categories.findIndex((category) => {
+      //       console.log(category.categorytext.toLowerCase(), searchQuery);
+      //       return category.categorytext.toLowerCase() === searchQuery;
+      //     });
+      //     if (rightCategory !== -1) {
+      //       dispatch(
+      //         getCoursesByCategory(data.categories[rightCategory].categoryid)
+      //       );
+      //     }
+      //   }
+      // } else {
     } else {
-      const categories = data.categories;
-      const rightCategory = categories.findIndex(
+      const rightCategory = data.categories.find(
         (category) => category.categorytext === searchQuery
       );
-      console.log(categories[rightCategory].categoryid);
-      dispatch(getCoursesByCategory(categories[rightCategory].categoryid));
+      if (rightCategory) {
+        dispatch(getCoursesByCategory(rightCategory.categoryid));
+      }
     }
-    console.log(courses);
   }, [searchQuery, type, dispatch, data.categories]);
+
+  const calculateDisplayPrice = (price, offers) => {
+    if (!offers || offers.length === 0) return price;
+    const totalOffers = offers.reduce(
+      (total, offer) => total + offer.discount,
+      0
+    );
+    console.log(totalOffers);
+    return totalOffers >= 100 ? 0 : ((100 - totalOffers) / 100) * price;
+  };
 
   return courses.length === 0 ? (
     <div className="no-results-container">
@@ -70,24 +92,55 @@ export default function Search() {
   ) : (
     <div className="search-container" style={{ marginTop: "40px" }}>
       <ul className="courses-list">
-        {courses.map((course, index) => (
-          <li key={index} className="course-card">
-            <img src={course.courseimage} />
-            <div className="course-details">
-              <div className="course-first-line">
-                <h2 className="course-title">{course.title}</h2>
-                <h2 className="course-price">E£{course.price}</h2>
+        {courses.map((course, index) => {
+          const originalPrice = course.price;
+          const discountedPrice = calculateDisplayPrice(
+            course.price,
+            course.offers
+          );
+          console.log(course.offers);
+
+          return (
+            <li key={index} className="course-card">
+              <img src={course.courseimage} alt={course.title} />
+              <div className="course-details">
+                <div className="course-first-line">
+                  <h2 className="course-title">{course.title}</h2>
+                  <div className="course-price">
+                    {originalPrice !== discountedPrice ? (
+                      <>
+                        <h2 className="discounted-price">
+                          {discountedPrice
+                            ? "E£" + Math.ceil(discountedPrice)
+                            : "Free"}
+                        </h2>
+                        <h2 className="original-price">E£{originalPrice}</h2>
+                      </>
+                    ) : (
+                      <h2 className="final-price">E£{originalPrice}</h2>
+                    )}
+                  </div>
+                </div>
+                <h3 className="course-description">{course.description}</h3>
+                <h3 className="course-instructor">
+                  By {course.instructor.instructorname}
+                </h3>
+                <h3 className="course-rating">⭐ {course.rating}</h3>
+                <h3 className="course-duration">
+                  {course.duration} total hours
+                </h3>
+                {isStudent && (
+                  <button
+                    className="purchase"
+                    onClick={() => handlePurchase(course)}
+                  >
+                    Purchase Course
+                  </button>
+                )}
               </div>
-              <h3 className="course-description">{course.description}</h3>
-              <h3 className="course-instructor">
-                {course.instructor.instructorname}
-              </h3>
-              <h3 className="course-rating">⭐ {course.rating}</h3>
-              <h3 className="course-duration">{course.duration} total hours</h3>
-              <button className="purchase">Purchase Course</button>
-            </div>
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
