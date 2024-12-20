@@ -57,7 +57,7 @@
 .message-sender-name {
   font-weight: bold;
   color: #333;
-  font-size: 16px;
+  font-size: 16px !important;
 }
 
 .insctructor-name {

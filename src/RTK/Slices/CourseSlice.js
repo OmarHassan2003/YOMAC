@@ -520,6 +520,36 @@ export const updateVidProgress = createAsyncThunk(
   }
 );
 
+
+export const editVid = createAsyncThunk(
+  "CourseSlice/editVid",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.put(`update_video`, data, {
+        headers: {
+          token: token,
+          "Content-Type": "application/json",
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const editVidThenGet = createAsyncThunk(
+  "CourseSlice/editVidThenGet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(editVid(data));
+    return dispatch(getCourse(data.courseID));
+  }
+);
+
 const CourseSlice = createSlice({
   name: "Course",
   initialState: initialstate,
@@ -958,6 +988,34 @@ const CourseSlice = createSlice({
       .addCase(updateVidProgress.rejected, (state, action) => {
         // state.name = action.payload;
         console.log("Video Progress failed to be updated");
+        // state.loadingVid = false;
+      })
+      .addCase(editVidThenGet.pending, (state, action) => {
+        // for loading
+        // state.loadingVid = true;
+      })
+      .addCase(editVidThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("Video Edited successfully");
+        // state.loadingVid = false;
+      })
+      .addCase(editVidThenGet.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log("Video edit failed");
+        // state.loadingVid = false;
+      })
+      .addCase(editVid.pending, (state, action) => {
+        // for loading
+        // state.loadingVid = true;
+      })
+      .addCase(editVid.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("Video Edited successfully");
+        // state.loadingVid = false;
+      })
+      .addCase(editVid.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log("Video edit failed");
         // state.loadingVid = false;
       }),
 });

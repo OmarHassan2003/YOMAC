@@ -152,7 +152,7 @@ const QASlice = createSlice({
       })
       .addCase(getVidQA.fulfilled, (state, action) => {
         // state.name = action.payload;
-        console.log(action.payload.data);
+        // console.log(action.payload.data);
         state.qa_questions = action.payload.data.qa_questions;
         state.loadingQA = false;
         // console.log(state.qa_questions);
