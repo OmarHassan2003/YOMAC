@@ -1,18 +1,22 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import CourseNavbar from "../CourseNavbar/CourseNavbar.jsx";
 import "../LessonContent/LessonContent.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getVideo, updateVidProgress } from "../../RTK/Slices/CourseSlice.js";
+import {
+  editVidThenGet,
+  getVideo,
+  updateVidProgress,
+} from "../../RTK/Slices/CourseSlice.js";
 
 const LessonContent = ({ course }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.Authorization);
   const role = user.role;
   const vid = useRef(null);
-
+  const [courseTitle, setCourseTitle] = useState("");
   function updateProgress(currentTime) {
     if (role === "instructor" || !course.currVid) return;
-    const progress = (currentTime / course.currVid.videoduration) * 100;
+    const progress = (currentTime / Number(course.currVid.videoduration)) * 100;
     const data = {
       video_id: course.currVid.videoid,
       progress,
@@ -24,10 +28,12 @@ const LessonContent = ({ course }) => {
 
   const setupVideoListeners = (video) => {
     video.onpause = () => {
+      console.log(video.currentTime);
       updateProgress(video.currentTime);
     };
 
     video.onended = () => {
+      console.log(video.currentTime);
       updateProgress(course.currVid.videoduration);
     };
 
@@ -49,13 +55,12 @@ const LessonContent = ({ course }) => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   };
-  
+
   useEffect(() => {
     if (course.currVid === null) return;
-    console.log(course.fetchedVideo);
     const video = vid.current;
     if (!video) return;
-    console.log(video);
+    setCourseTitle(course.currVid.title);
     const handleMetadataLoaded = () => {
       const progress = +course.currVid.videoprogress || 0;
       const duration = +course.currVid.videoduration || 1;
@@ -82,6 +87,15 @@ const LessonContent = ({ course }) => {
     };
   }, [course.currVid]);
 
+  const handleEditTitle = (e) => {
+    const data = {
+      videos: [{ videoID: course.currVid.videoid, title: courseTitle }],
+      courseID: course.courseid,
+    };
+    dispatch(editVidThenGet(data));
+    // course.currVid = course.fetchedVideo;
+  };
+
   return (
     <div key={course.currVid?.videoid} className="course-body">
       {course.currVid !== null ? (
@@ -92,7 +106,20 @@ const LessonContent = ({ course }) => {
             src={course.currVid?.videolink}
             controls
           ></video>
-          <h1>{course.currVid?.title}</h1>
+          {role === "student" && <h1>{course.currVid?.title}</h1>}
+          {role === "instructor" && (
+            <div className="title-info">
+              <input
+                type="text"
+                value={courseTitle}
+                onChange={(e) => setCourseTitle(e.target.value)}
+                className="course-title-input"
+              />
+              <button className="course-title-btn" onClick={handleEditTitle}>
+                Edit Title
+              </button>
+            </div>
+          )}
         </div>
       ) : (
         <div className="courseprofile">
