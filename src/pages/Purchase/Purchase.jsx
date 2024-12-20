@@ -1,31 +1,80 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Purchase.css";
 import { enrollToCourse } from "../../RTK/Slices/CourseSlice";
-import { increaseBalance } from "../../RTK/Slices/StudentSlice";
+import { getStudent, increaseBalance } from "../../RTK/Slices/StudentSlice";
 
 export default function Purchase() {
   const location = useLocation();
   const { course } = location.state || {};
   const dispatch = useDispatch();
   const data = useSelector((state) => state.Course);
+  let userDataBalance = useSelector((state) => state.student);
+
+  useEffect(() => {
+    dispatch(getStudent());
+    setAmount(placeholder);
+  }, []);
+
+  useEffect(() => {
+    setPurchaseSuccessMessage("");
+  }, []);
+
+  userDataBalance = userDataBalance.object.balance;
 
   const [showBalanceForm, setShowBalanceForm] = useState(false);
   const [amount, setAmount] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [purchaseSuccessMessage, setPurchaseSuccessMessage] = useState("");
 
   const originalPrice = course.price;
   const discountedPrice = course.discountedPrice;
+  const navigate = useNavigate();
+  const placeholder = `${
+    originalPrice !== discountedPrice
+      ? discountedPrice - userDataBalance
+      : originalPrice - userDataBalance
+  }`;
 
   const handleCheckout = () => {
-    dispatch(enrollToCourse(course.courseid));
+    dispatch(enrollToCourse(course.courseid))
+      .unwrap()
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          setPurchaseSuccessMessage(
+            `You have successfully enrolled in ${course.title}!`
+          );
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 3000);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        if (
+          error.message ===
+          "student has no enough balance to enroll on this course"
+        ) {
+          alert("You don't have enough balance to enroll in this course.");
+        } else {
+          alert("An error occurred while enrolling in the course.");
+        }
+      });
   };
 
   const handleIncreaseBalance = () => {
     if (amount && !isNaN(amount) && amount > 0) {
       dispatch(increaseBalance(Number(amount)));
-      setShowBalanceForm(false); // Hide form after increasing balance
-      setAmount(""); // Reset input field
+      setSuccessMessage(`Your balance has been increased by E£${amount}.`);
+      setShowBalanceForm(false);
+      setAmount("");
+      setTimeout(() => {
+        dispatch(getStudent());
+        setSuccessMessage("");
+      }, 5000);
+      handleCheckout();
     } else {
       alert("Please enter a valid amount.");
     }
@@ -33,28 +82,51 @@ export default function Purchase() {
 
   return (
     <div className="course-purchase">
+      {successMessage && (
+        <div className="success-message">
+          <h2>{successMessage}</h2>
+        </div>
+      )}
+      {purchaseSuccessMessage && (
+        <div className="success-message">
+          <h2>{purchaseSuccessMessage}</h2>
+        </div>
+      )}
       {data.enrollmentErrorMessage ===
       "student has no enough balance to enroll on this course" ? (
         showBalanceForm ? (
           <div className="balance-form">
-            <h1>Increase Your Balance</h1>
-            <label htmlFor="amount">Enter Amount:</label>
+            <h1 style={{ marginBottom: "20px" }}>Increase Your Balance</h1>
+            <label
+              style={{ marginRight: "10px", marginBottom: "15px" }}
+              htmlFor="amount"
+            >
+              Enter Amount:
+            </label>
             <input
               type="number"
               id="amount"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              placeholder="Enter amount"
+              placeholder={placeholder}
               min="1"
+              style={{ padding: "5px" }}
             />
             <div className="form-buttons">
-              <button onClick={handleIncreaseBalance}>Add Balance</button>
-              <button onClick={() => setShowBalanceForm(false)}>Cancel</button>
+              <button className="purchase" onClick={handleIncreaseBalance}>
+                Add Balance
+              </button>
+              <button
+                className="purchase"
+                onClick={() => setShowBalanceForm(false)}
+              >
+                Cancel
+              </button>
             </div>
           </div>
         ) : (
           <>
-            <h1>You don't have enough balance to enroll on this course</h1>
+            <h1>You don't have enough balance to enroll to this course</h1>
             <button
               className="purchase"
               onClick={() => setShowBalanceForm(true)}
@@ -66,7 +138,7 @@ export default function Purchase() {
       ) : (
         <>
           <img src={course.courseimage} alt={course.title} />
-          <div className="course-details">
+          <div className="search-course-details">
             <div className="course-first-line">
               <h2 className="course-title">{course.title}</h2>
               <div className="course-price">
@@ -88,7 +160,7 @@ export default function Purchase() {
             <h3 className="course-instructor">
               By {course.instructor.instructorname}
             </h3>
-            <h3 className="course-rating">⭐ {course.rating}</h3>
+            <h3 className="course-ratingg">⭐ {course.rating}</h3>
             <h3 className="course-duration">{course.duration} total hours</h3>
             <button className="purchase" onClick={() => handleCheckout(course)}>
               Checkout

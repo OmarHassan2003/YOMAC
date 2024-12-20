@@ -938,6 +938,7 @@ const CourseSlice = createSlice({
         // state.name = action.payload;
         console.log(action.payload);
         state.loadingVid = false;
+        state.enrollmentErrorMessage = "success";
       })
       .addCase(enrollToCourse.rejected, (state, action) => {
         // state.name = action.payload;
