@@ -15,7 +15,7 @@ const DashboardCourses = ({ data }) => {
         {data.courses_progress.map((curr, index) => (
           <div className="course-item" key={curr.courseid}>
             <div className="course-info">
-              <img src={curr.courseimage} />
+              <img src={curr.courseimage} alt={`${curr.title} image`} />
               <div className="course-details">
                 <h3>{curr.title}</h3>
               </div>
@@ -37,9 +37,7 @@ const DashboardCourses = ({ data }) => {
             </div>
             <button
               className="view-course-btn"
-              onClick={() => {
-                handleClick(curr);
-              }}
+              onClick={() => handleClick(curr)}
             >
               View Course
             </button>

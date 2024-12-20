@@ -60,6 +60,7 @@
 .course-info {
   display: flex;
   align-items: center;
+  flex: 1;
 }
 
 .course-info img {
@@ -116,6 +117,7 @@
   background-color: #28a745;
   color: #fff;
 }
+
 .delete-btn {
   background-color: #fff;
   color: #a72828;
@@ -129,4 +131,70 @@
 .delete-btn:hover {
   background-color: #a72828;
   color: #fff;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .course-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .course-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .course-info img {
+    margin: 0 0 10px 0;
+  }
+
+  .course-details h3 {
+    font-size: 16px;
+  }
+
+  .progress-bar {
+    width: 100%;
+  }
+
+  .view-btn,
+  .delete-btn {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .course-tabs {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .course-header h2 {
+    font-size: 20px;
+  }
+
+  .tab {
+    font-size: 14px;
+    padding: 5px;
+  }
+
+  .course-info img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .course-details h3 {
+    font-size: 14px;
+  }
+
+  .course-rating span {
+    font-size: 14px;
+  }
+
+  .view-btn,
+  .delete-btn {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
 }
