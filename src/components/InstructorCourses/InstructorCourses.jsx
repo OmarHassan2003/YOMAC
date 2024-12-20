@@ -17,26 +17,26 @@ const InstructorCourses = ({ data }) => {
   return (
     <>
       {data?.top_courses?.length > 0 && (
-        <div className="course-container">
-          <div className="course-header">
+        <div className="course23-container">
+          <div className="course23-header">
             <h2>Top Courses</h2>
           </div>
-          <div className="course-List">
+          <div className="course23-List">
             {data?.top_courses?.map((curr, index) => (
-              <div className="course-item" key={index}>
-                <div className="course-info">
+              <div className="course23-item" key={index}>
+                <div className="course23-info">
                   <img src={curr.courseimage} />
-                  <div className="course-details">
+                  <div className="course23-details">
                     <h3>{curr.title}</h3>
                   </div>
                 </div>
                 <div>{Math.ceil(curr.duration / 3600)}</div>
-                <div className="course-rating">
+                <div className="course23-rating">
                   <span>⭐ 4.3</span>
                 </div>
                 <div>
                   <button
-                    className="view-btn"
+                    className="view23-btn"
                     onClick={() => {
                       handleWhiteClick(curr);
                     }}
@@ -44,7 +44,7 @@ const InstructorCourses = ({ data }) => {
                     Whiteboard
                   </button>
                   <button
-                    className="view-btn"
+                    className="view23-btn"
                     onClick={() => {
                       handleClick(curr);
                     }}
@@ -52,7 +52,7 @@ const InstructorCourses = ({ data }) => {
                     View
                   </button>
                   <button
-                    className="delete-btn"
+                    className="delete23-btn"
                     onClick={() => {
                       handleDelete(curr);
                     }}
@@ -66,25 +66,25 @@ const InstructorCourses = ({ data }) => {
         </div>
       )}
       {data?.non_top_courses?.length > 0 && (
-        <div className="course-container" style={{ marginTop: "20px" }}>
-          <div className="course-header">
+        <div className="course23-container" style={{ marginTop: "20px" }}>
+          <div className="course23-header">
             <h2>Non Top Courses</h2>
           </div>
-          <div className="course-List">
+          <div className="course23-List">
             {data?.non_top_courses?.map((curr, index) => (
-              <div className="course-item" key={index}>
-                <div className="course-info">
+              <div className="course23-item" key={index}>
+                <div className="course23-info">
                   <img src={curr.courseimage} />
-                  <div className="course-details">
+                  <div className="course23-details">
                     <h3>{curr.title}</h3>
                   </div>
                 </div>
                 <div>{Math.ceil(curr.duration / 3600)}</div>
-                <div className="course-rating">
+                <div className="course23-rating">
                   <span>⭐ 4.3</span>
                 </div>
                 <button
-                  className="view-course-btn"
+                  className="view23-course-btn"
                   onClick={() => {
                     handleClick(curr);
                   }}

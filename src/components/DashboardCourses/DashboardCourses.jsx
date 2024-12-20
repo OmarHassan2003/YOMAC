@@ -7,22 +7,22 @@ const DashboardCourses = ({ data }) => {
     navigate(`/course/${course.courseid}`);
   };
   return (
-    <div className="course-container">
+    <div className="course12-container">
       <div className="course-header">
         <h2>My Courses</h2>
       </div>
-      <div className="course-List">
+      <div className="course12-List">
         {data.courses_progress.map((curr, index) => (
-          <div className="course-item" key={curr.courseid}>
-            <div className="course-info">
+          <div className="course12-item" key={curr.courseid}>
+            <div className="course12-info">
               <img src={curr.courseimage} alt={`${curr.title} image`} />
               <div className="course-details">
                 <h3>{curr.title}</h3>
               </div>
             </div>
-            <div className="course-progress">
+            <div className="course12-progress">
               <span>{curr.progress.toFixed(2)}%</span>
-              <div className="progress-bar">
+              <div className="progress12-bar">
                 <div
                   style={{
                     width: `${curr.progress.toFixed(2)}%`,
@@ -32,11 +32,11 @@ const DashboardCourses = ({ data }) => {
                 ></div>
               </div>
             </div>
-            <div className="course-rating">
+            <div className="course12-rating">
               <span>⭐ 4.3</span>
             </div>
             <button
-              className="view-course-btn"
+              className="view12-course-btn"
               onClick={() => handleClick(curr)}
             >
               View Course

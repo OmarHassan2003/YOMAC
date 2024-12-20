@@ -16,7 +16,7 @@ const Profile = () => {
   console.log(data);
   return (
     <div className="profile-card">
-      <div className="container">
+      <div className="container12">
         {data?.studentname ? (
           <StudentCard data={data} />
         ) : (

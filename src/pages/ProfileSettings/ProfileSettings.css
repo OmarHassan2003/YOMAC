@@ -5,6 +5,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   flex-grow: 1;
 }
+
 .profile-settings {
   padding: 20px;
 }
@@ -34,6 +35,60 @@
   color: #28a745;
   border-bottom-color: #28a745;
 }
+
 .tabs a.inactive {
   color: #afb3b0;
+}
+
+/* Media Queries */
+
+/* Adjust layout for medium screens (e.g., tablets) */
+@media (max-width: 768px) {
+  .profile-section {
+    padding: 15px; /* Reduce padding */
+  }
+
+  .profile-settings {
+    padding: 15px; /* Adjust padding */
+  }
+
+  .profile-settings h2 {
+    font-size: 20px; /* Reduce font size */
+  }
+
+  .tabs {
+    gap: 15px; /* Reduce gap between tabs */
+    flex-wrap: wrap; /* Allow tabs to wrap to the next line if necessary */
+  }
+
+  .tabs a {
+    font-size: 14px; /* Reduce font size for tabs */
+    padding: 8px 0; /* Adjust padding */
+  }
+}
+
+/* Adjust layout for small screens (e.g., phones) */
+@media (max-width: 480px) {
+  .profile-section {
+    padding: 10px; /* Further reduce padding */
+  }
+
+  .profile-settings {
+    padding: 10px;
+  }
+
+  .profile-settings h2 {
+    font-size: 18px; /* Smaller font for headings */
+  }
+
+  .tabs {
+    flex-direction: column; /* Stack tabs vertically */
+    gap: 10px; /* Reduce gap */
+  }
+
+  .tabs a {
+    font-size: 12px; /* Smaller font size for tabs */
+    padding: 6px 0;
+    text-align: center; /* Center-align text */
+  }
 }

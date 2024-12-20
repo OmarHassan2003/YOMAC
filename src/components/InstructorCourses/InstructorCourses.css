@@ -1,22 +1,22 @@
-.course-container {
+.course23-container {
   background-color: #fff;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
-.course-header {
+.course23-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 }
 
-.course-header h2 {
+.course23-header h2 {
   font-size: 24px;
 }
 
-.course-tabs {
+.course23-tabs {
   display: flex;
   gap: 15px;
 }
@@ -36,13 +36,13 @@
   font-weight: bold;
 }
 
-.course-list {
+.course23-list {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-.course-item {
+.course23-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,44 +51,45 @@
   border-radius: 10px;
   padding: 15px 20px;
   transition: box-shadow 0.3s ease;
+  gap: 50px;
 }
 
-.course-item:hover {
+.course23-item:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.course-info {
+.course23-info {
   display: flex;
   align-items: center;
   flex: 1;
 }
 
-.course-info img {
+.course23-info img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
   margin-right: 15px;
 }
 
-.course-details h3 {
+.course23-details h3 {
   margin: 0;
   font-size: 18px;
   color: #333;
 }
 
-.course-details p {
+.course23-details p {
   margin: 0;
   color: #777;
   font-size: 14px;
 }
 
-.course-progress {
+.course23-progress {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.progress-bar {
+.progress23-bar {
   width: 150px;
   height: 8px;
   background-color: #e0e0e0;
@@ -97,12 +98,12 @@
   position: relative;
 }
 
-.course-rating span {
+.course23-rating span {
   color: #f39c12;
   font-size: 16px;
 }
 
-.view-btn {
+.view23-btn {
   background-color: #fff;
   color: #28a745;
   border: 1px solid #28a745;
@@ -113,12 +114,12 @@
   transition: background-color 0.3s, color 0.3s;
 }
 
-.view-btn:hover {
+.view23-btn:hover {
   background-color: #28a745;
   color: #fff;
 }
 
-.delete-btn {
+.delete23-btn {
   background-color: #fff;
   color: #a72828;
   border: 1px solid #a72828;
@@ -128,72 +129,72 @@
   transition: background-color 0.3s, color 0.3s;
 }
 
-.delete-btn:hover {
+.delete23-btn:hover {
   background-color: #a72828;
   color: #fff;
 }
 
 /* Responsive Design for Smaller Screens */
 @media (max-width: 768px) {
-  .course-item {
+  .course23-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
 
-  .course-info {
+  .course23-info {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .course-info img {
+  .course23-info img {
     margin: 0 0 10px 0;
   }
 
-  .course-details h3 {
+  .course23-details h3 {
     font-size: 16px;
   }
 
-  .progress-bar {
+  .progress23-bar {
     width: 100%;
   }
 
-  .view-btn,
-  .delete-btn {
+  .view23-btn,
+  .delete23-btn {
     width: 100%;
     margin-right: 0;
   }
 
-  .course-tabs {
+  .course23-tabs {
     justify-content: center;
   }
 }
 
-@media (max-width: 480px) {
-  .course-header h2 {
+@media (max-width: 48px) {
+  .course23-header h2 {
     font-size: 20px;
   }
 
-  .tab {
+  .tab23 {
     font-size: 14px;
     padding: 5px;
   }
 
-  .course-info img {
+  .course23-info img {
     width: 40px;
     height: 40px;
   }
 
-  .course-details h3 {
+  .course23-details h3 {
     font-size: 14px;
   }
 
-  .course-rating span {
+  .course23-rating span {
     font-size: 14px;
   }
 
-  .view-btn,
-  .delete-btn {
+  .view23-btn,
+  .delete23-btn {
     font-size: 14px;
     padding: 6px 12px;
   }
