@@ -8,7 +8,6 @@ import {
 import { useEffect } from "react";
 import "./Search.css";
 import { getCategories } from "../../RTK/Slices/CategorySlice";
-
 export default function Search() {
   const authData = useSelector((state) => state.Authorization);
   const isLoggedIn = authData.token !== null;
@@ -103,7 +102,7 @@ export default function Search() {
           return (
             <li key={index} className="course-card">
               <img src={course.courseimage} alt={course.title} />
-              <div className="course-details">
+              <div className="search-course-details">
                 <div className="course-first-line">
                   <h2 className="course-title">{course.title}</h2>
                   <div className="course-price">
@@ -125,7 +124,7 @@ export default function Search() {
                 <h3 className="course-instructor">
                   By {course.instructor.instructorname}
                 </h3>
-                <h3 className="course-rating">⭐ {course.rating}</h3>
+                <h3 className="course-ratingg">⭐ {course.rating}</h3>
                 <h3 className="course-duration">
                   {course.duration} total hours
                 </h3>
