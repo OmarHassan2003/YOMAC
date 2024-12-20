@@ -128,6 +128,7 @@ const CreateCourse = () => {
         videos.push({
           title: videoTitles[k],
           video: vidBase64,
+          duration: videoDuration,
         });
       }
 
