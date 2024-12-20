@@ -26,6 +26,7 @@ const initialstate = {
   loadingVid: false,
   fetchedSingleAssign: null,
   enrollmentErrorMessage: "",
+  fetchedVid: {},
 };
 
 export const getCourse = createAsyncThunk(
@@ -498,6 +499,27 @@ export const gradeAssign = createAsyncThunk(
   }
 );
 
+export const updateVidProgress = createAsyncThunk(
+  "CourseSlice/updateVidProgress",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post(`update_video_progress`, data, {
+        headers: {
+          token: token,
+          "Content-Type": "application/json",
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const CourseSlice = createSlice({
   name: "Course",
   initialState: initialstate,
@@ -922,6 +944,20 @@ const CourseSlice = createSlice({
         console.log(action.payload.response.data.error);
         state.loadingVid = false;
         state.enrollmentErrorMessage = action.payload.response.data.error;
+      })
+      .addCase(updateVidProgress.pending, (state, action) => {
+        // for loading
+        // state.loadingVid = true;
+      })
+      .addCase(updateVidProgress.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("Video progress updated");
+        // state.loadingVid = false;
+      })
+      .addCase(updateVidProgress.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log("Video Progress failed to be updated");
+        // state.loadingVid = false;
       }),
 });
 

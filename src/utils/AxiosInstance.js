@@ -9,7 +9,7 @@ const YomacApi = axios.create({
 // }
 
 YomacApi.interceptors.request.use((request) => {
-  console.log(request);
+  // console.log(request);
   return request;
 });
 
