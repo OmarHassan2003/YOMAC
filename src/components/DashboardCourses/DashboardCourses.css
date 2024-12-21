@@ -72,7 +72,25 @@
   text-align: center;
 }
 
+.view12-course-link {
+  display: block;
+  flex: 0.7; /* Fixed size for the button */
+  background-color: #fff;
+  color: #28a745;
+  border: 1px solid #28a745;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+  text-align: center;
+}
+
 .view12-course-btn:hover {
+  background-color: #28a745;
+  color: #fff;
+}
+.view12-course-link:hover {
   background-color: #28a745;
   color: #fff;
 }
@@ -122,6 +140,11 @@
     width: 100%; /* Full width */
     text-align: center; /* Center align */
   }
+  .view12-course-link {
+    flex: 1; /* Expand button */
+    width: 100%; /* Full width */
+    text-align: center; /* Center align */
+  }
 }
 
 @media (max-width: 480px) {
@@ -145,6 +168,10 @@
   }
 
   .view12-course-btn {
+    font-size: 14px; /* Reduce font size */
+    padding: 6px 10px;
+  }
+  .view12-course-link {
     font-size: 14px; /* Reduce font size */
     padding: 6px 10px;
   }
