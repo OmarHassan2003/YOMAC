@@ -23,6 +23,7 @@ const Contest = () => {
   const [passingMarks, setPassingMarks] = useState(0);
   const [quizTitle, setQuizTitle] = useState("");
 
+  console.log(quiz, questions);
   useEffect(() => {
     dispatch(getContest(params.contestid));
   }, [dispatch, params.contestid]);

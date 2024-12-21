@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import ronaldo from "../../assets/ronaldo.webp";
+import ronaldo from "../../assets/Logo-Photoroom.png";
 import userProfileIcon from "../../assets/user.png";
 import searchIcon from "../../assets/search.png";
 import "./Navbar.css";

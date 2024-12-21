@@ -159,13 +159,21 @@ export const addSection = createAsyncThunk(
 
 export const enrollToCourse = createAsyncThunk(
   "CourseSlice/enrollToCourse",
-  async (courseID, { getState, rejectWithValue }) => {
-    // api call
+  async (data, { getState, rejectWithValue }) => {
     const { token } = getState().Authorization;
+
+    const payload = {
+      courseID: data.courseID,
+    };
+    if (data.offers.length > 0) {
+      payload.offerID = data.offers[0].offerid;
+      payload.discount = data.offers[0].discount;
+    }
+
     try {
       const response = await YomacApi.post(
         "enroll_student_to_course",
-        { courseID: courseID },
+        payload,
         {
           headers: {
             token: token,
@@ -173,10 +181,9 @@ export const enrollToCourse = createAsyncThunk(
           },
         }
       );
-      // console.log(response);
       return response;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return rejectWithValue(error);
     }
   }
