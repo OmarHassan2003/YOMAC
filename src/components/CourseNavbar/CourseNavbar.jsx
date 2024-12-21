@@ -48,7 +48,7 @@ const CourseNavbar = ({ course }) => {
     dispatch(getCourseFeedback(course.courseid));
     dispatch(getInstructorFeedback(course.topinstructorid));
   }, []);
-  console.log(dataFeed);
+  // console.log(dataFeed);
 
   const handlePostQuestion = () => {
     const data = {
@@ -103,7 +103,7 @@ const CourseNavbar = ({ course }) => {
     if (course?.currVid !== null) {
       // console.log(course?.currVid);
       dispatch(getVidQA(course.currVid.videoid));
-      console.log(qa.qa_questions);
+      // console.log(qa.qa_questions);
     }
   }, [course.currVid]);
 
