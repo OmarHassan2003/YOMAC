@@ -32,7 +32,7 @@ const InstructorCourses = ({ data }) => {
                 </div>
                 <div>{Math.ceil(curr.duration / 3600)}</div>
                 <div className="course23-rating">
-                  <span>⭐ 4.3</span>
+                  <span>⭐ {curr.rating}</span>
                 </div>
                 <div>
                   <button

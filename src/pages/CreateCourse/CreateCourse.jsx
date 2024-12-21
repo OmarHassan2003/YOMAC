@@ -97,19 +97,18 @@ const CreateCourse = () => {
 
       for (let y = 0; y < quizTitles.length; ++y) {
         const quizQuestions = Array.from({ length: 2 }, (_, j) => ({
-          text: formData.get(`section_${i}_quiz_${y}_question_${j}`),
+          questiontext: formData.get(`section_${i}_quiz_${y}_question_${j}`),
           choices: Array.from({ length: 4 }, (_, z) =>
             formData.get(`section_${i}_quiz_${y}_question_${j}_choice_${z}`)
           ),
-          correct_answer_index: +formData.get(
-            `section_${i}_quiz_${y}_correct_answer_${j}`
-          ),
+          correctanswerindex:
+            +formData.get(`section_${i}_quiz_${y}__correct_answer_${j}`) - 1,
         }));
 
         quizzes.push({
           title: quizTitles[y],
           quizDuration: +quizDurations[y],
-          totlaMarks: +quizTotalMarks[y],
+          totalMarks: +quizTotalMarks[y],
           passingMarks: +quizPassingMarks[y],
           questions: quizQuestions,
         });
@@ -134,7 +133,7 @@ const CreateCourse = () => {
 
       course.sections.push({
         title: sectionTitles[i],
-        quiz: quizzes,
+        quizzes: quizzes,
         videos: videos,
       });
     }
@@ -249,6 +248,7 @@ const CreateCourse = () => {
                     name={`section_${sectionIndex}_quiz_${quizIndex}__correct_answer_${qIndex}`}
                     type="text"
                     placeholder={`Correct Answer Index `}
+                    onChange={(e) => console.log(e.target.value)}
                   />
                 </div>
               ))}
