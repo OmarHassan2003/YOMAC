@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import ContentList from "../ContentList/ContentList.jsx";
 import LessonContent from "../LessonContent/LessonContent.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { getCourse, setCurrVid } from "../../RTK/Slices/CourseSlice.js";
+import {
+  getCourse,
+  GetStats,
+  setCurrVid,
+} from "../../RTK/Slices/CourseSlice.js";
 import "../Course/Course.css";
 import { useParams } from "react-router-dom";
 const Course = () => {
