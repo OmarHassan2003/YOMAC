@@ -18,15 +18,15 @@ const CourseStat = () => {
   useEffect(() => {
     dispatch(GetStats(currCourseID));
   }, []);
-  data = data.courseStat;
+  data = data?.courseStat;
   console.log(data);
-  const totalStudents = data.total_students;
+  const totalStudents = data?.total_students;
 
   // Calculate pass percentages for quizzes
-  const quizPasses = data.quizzes.flat().reduce((acc, quiz) => {
+  const quizPasses = data?.quizzes?.flat().reduce((acc, quiz) => {
     return (
       acc +
-      quiz.student.filter(
+      quiz?.student?.filter(
         (student) => student.pass === true && student.grade !== null
       ).length
     );
@@ -34,24 +34,26 @@ const CourseStat = () => {
   const quizPassPercentage = ((quizPasses / totalStudents) * 100).toFixed(2);
 
   // Calculate pass percentages for assignments
-  const assignmentPasses = data.assignments.flat().reduce((acc, assignment) => {
-    return (
-      acc +
-      assignment.student.filter(
-        (student) => student.passfail === true && student.grade !== null
-      ).length
-    );
-  }, 0);
+  const assignmentPasses = data?.assignments
+    ?.flat()
+    .reduce((acc, assignment) => {
+      return (
+        acc +
+        assignment.student.filter(
+          (student) => student.passfail === true && student.grade !== null
+        ).length
+      );
+    }, 0);
   const assignmentPassPercentage = (
     (assignmentPasses / totalStudents) *
     100
   ).toFixed(2);
 
   // Calculate pass percentages for contests
-  const contestPasses = data.contests.reduce((acc, contest) => {
+  const contestPasses = data?.contests?.reduce((acc, contest) => {
     return (
       acc +
-      contest.student.filter(
+      contest?.student?.filter(
         (student) => student.pass === true && student.grade !== null
       ).length
     );
@@ -130,7 +132,7 @@ const CourseStat = () => {
         </div>
         <div className="bar-chart">
           <h3 className="h444">Percentage of Students Passing</h3>
-          <Pie data={passBarData} />
+          <Bar data={passBarData} />
         </div>
       </div>
     </div>

@@ -125,13 +125,7 @@ const ContentList = ({ course }) => {
       (contest?.student.pass !== null || contest?.student.status !== "pending")
     )
       return;
-    // if (isStudent && assignment?.student.status === "submitted") return;
-    // if (isStudent)
     navigate(`/course/${course.courseid}/contest/${contestId}/${roleIndex}`);
-    // else
-    //   navigate(
-    //     `/course/${course.courseid}/sec/${secId}/editAssign/${assignId}`
-    //   );
   };
 
   const handleAddSection = (e) => {
@@ -285,7 +279,7 @@ const ContentList = ({ course }) => {
     } else {
       updatedQuestions[index].choices[field] = value;
     }
-    setQuizQuestions(updatedQuestions);
+    setContestQuestions(updatedQuestions);
   };
 
   const handleDeleteSection = (sectionId) => {
