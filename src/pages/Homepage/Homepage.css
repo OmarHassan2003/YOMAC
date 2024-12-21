@@ -2,7 +2,8 @@
   color: rgb(47, 50, 125);
 }
 
-.homepage p {
+.homepage p,
+.homepage-logged-in p {
   color: #696984;
   font-size: 17px;
 }
@@ -287,7 +288,7 @@
     gap: 40px;
   }
 
-  .homepage {
+  .homepage-logged-in {
     padding: 20px 40px;
   }
 
@@ -318,7 +319,7 @@
     gap: 20px;
   }
 
-  .homepage {
+  .homepage-logged-in {
     padding: 20px 80px;
   }
 
@@ -354,7 +355,7 @@
     gap: 40px;
   }
 
-  .homepage {
+  .homepage-logged-in {
     padding: 20px 100px;
   }
 

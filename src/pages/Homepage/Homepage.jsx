@@ -36,7 +36,7 @@ export default function HomePage() {
   };
   return isLoggedIn ? (
     isStudent ? (
-      <div className="homepage">
+      <div className="homepage-logged-in">
         <h1 style={{ marginTop: "20px" }}>
           Welcome Back, {userData.studentname}
         </h1>
@@ -78,7 +78,7 @@ export default function HomePage() {
         </div>
       </div>
     ) : (
-      <div className="homepage">
+      <div className="homepage-logged-in">
         <h1 style={{ marginTop: "20px" }}>
           Welcome Back, {userData.instructorname}
         </h1>
@@ -90,7 +90,9 @@ export default function HomePage() {
                 <li key={index} className="homepage-course-card">
                   <img src={course.courseimage} alt={`${course.title} image`} />
                   <div className="search-course-details">
-                    <h3 className="course-title">{course.title}</h3>
+                    <h3 style={{ fontSize: "20px" }} className="course-title">
+                      {course.title}
+                    </h3>
                     <p className="course-description">{course.description}</p>
                     <p className="course-duration">
                       {course.duration} total hours
