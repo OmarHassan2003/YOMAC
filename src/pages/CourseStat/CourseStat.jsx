@@ -3,7 +3,6 @@ import { Bar, Pie } from "react-chartjs-2";
 import "chart.js/auto";
 import "./CourseStat.css";
 import { useDispatch, useSelector } from "react-redux";
-import { use } from "react";
 import { useParams } from "react-router-dom";
 import { GetStats } from "../../RTK/Slices/CourseSlice";
 
@@ -69,15 +68,17 @@ const CourseStat = () => {
       {
         label: "Percentage of Students Passing",
         data: [
-          quizPassPercentage,
-          assignmentPassPercentage,
-          contestPassPercentage,
+          parseFloat(quizPassPercentage),
+          parseFloat(assignmentPassPercentage),
+          parseFloat(contestPassPercentage),
         ],
         backgroundColor: ["#36A2EB", "#FF6384", "#FFCE56"],
         borderWidth: 1,
       },
     ],
   };
+
+  // Progress distribution
   const progressBuckets = [0, 0, 0, 0]; // Buckets for 0-25, 25-50, 50-75, 75-100
   data?.students_progress?.forEach((student) => {
     const progress = student.student_progress * 100;
@@ -89,8 +90,8 @@ const CourseStat = () => {
 
   // Extract pie chart data
   const pieData = {
-    assignments: data?.assignments?.length,
-    contests: data?.contests?.length,
+    assignments: data?.assignments?.length || 0,
+    contests: data?.contests?.length || 0,
     quizzes: data?.quizzes?.length || 0,
   };
 

@@ -28,6 +28,7 @@ import EditAssignment from "./components/EditAssignment/EditAssignment.jsx";
 import { getCategories } from "./RTK/Slices/CategorySlice.js";
 import Contest from "./components/Contest/Contest.jsx";
 import Purchase from "./pages/Purchase/Purchase.jsx";
+import Stats from "./pages/Stats/Stats.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -91,6 +92,7 @@ function App() {
         <Route path="/whiteboard/:courseid" element={<Whiteboard />} />
         <Route path="/courseStat/:courseid" element={<CourseStat />} />
         <Route path="/createCourse" element={<CreateCourse />} />
+        <Route path="/stats" element={<Stats />} />
       </Routes>
     </>
   );
