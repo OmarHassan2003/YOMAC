@@ -34,11 +34,11 @@ const DashboardCourses = ({ data }) => {
             </div>
             <p className="course_status">{curr.seenstatus}</p>
             <div className="course12-progress">
-              <span>{curr.progress.toFixed(2) * 100}%</span>
+              <span>{Math.ceil(curr.progress.toFixed(2) * 100)}%</span>
               <div className="progress12-bar">
                 <div
                   style={{
-                    width: `${curr.progress.toFixed(2) * 100}%`,
+                    width: `${Math.ceil(curr.progress.toFixed(2) * 100)}%`,
                     height: "100%",
                     backgroundColor: "#28a745",
                   }}
@@ -46,26 +46,25 @@ const DashboardCourses = ({ data }) => {
               </div>
             </div>
             <div className="course12-rating">
-              <span>⭐ 4.3</span>
+              <span>⭐ {curr.rating}</span>
             </div>
-            {
-              curr.seenstatus === 'private'
-              ?
-              <Link to={`http://yomac-private-klli.vercel.app/private?token=${token}&user_id=${user_id}&role=${role}&curr_course_id=${curr.courseid}`}
-              className="view12-course-link"
+            {curr.seenstatus === "private" ? (
+              <Link
+                to={`http://yomac-private-klli.vercel.app/private?token=${token}&user_id=${user_id}&role=${role}&curr_course_id=${curr.courseid}`}
+                className="view12-course-link"
               >
                 View Course
               </Link>
-              :
+            ) : (
               <button
                 className="view12-course-btn"
                 onClick={() => {
-                  handleClick(curr)}
-                }
+                  handleClick(curr);
+                }}
               >
                 View Course
               </button>
-            }
+            )}
           </div>
         ))}
       </div>
