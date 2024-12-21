@@ -7,20 +7,26 @@ import {
   postThenGet,
   postStudentAnswerThenGet,
   postInstructorAnswerThenGet,
+  deleteMessageThenGet,
+  deleteQAThenGet,
 } from "../../RTK/Slices/QASlice";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addCourseFeedbackThenGet,
   getCourseFeedback,
 } from "../../RTK/Slices/FeedbackSlice";
+import delIcon from "../../assets/trash.png";
 const CourseNavbar = ({ course }) => {
   const user = useSelector((state) => state.Authorization);
   const role = user.role;
   let isStudent = false;
   let isInstructor = false;
+  let isTopInstructor = false;
   if (role === "student") isStudent = true;
-  else isInstructor = true;
-
+  else {
+    isInstructor = true;
+    if (user.user_id == course.topinstructorid) isTopInstructor = true;
+  }
   const [activeTab, setActiveTab] = useState("overview");
   const [activeQuestion, setActiveQuestion] = useState("");
   const [questionText, setQuestionText] = useState("");
@@ -28,7 +34,6 @@ const CourseNavbar = ({ course }) => {
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState("");
   let qa = useSelector((state) => state.qa);
-
   const dispatch = useDispatch();
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -87,7 +92,23 @@ const CourseNavbar = ({ course }) => {
     console.log(qa.fetchedQA);
     setActiveQuestion(qaID);
   };
-
+  const handleDeleteQA = (qaID) => {
+    console.log(qaID);
+    const data = {
+      qaID,
+      videoID: course.currVid.videoid,
+    };
+    dispatch(deleteQAThenGet(data));
+  };
+  const handleDeleteAnswer = (messageID, qaID) => {
+    console.log(messageID);
+    const data = {
+      message_id: messageID,
+      course_id: course.courseid,
+      qaID,
+    };
+    dispatch(deleteMessageThenGet(data));
+  };
   return (
     <div className="belowvid">
       <div className="course-navbar">
@@ -145,8 +166,22 @@ const CourseNavbar = ({ course }) => {
                         {message.senderstudent.studentname}
                       </p>
                     </div>
-                    <div className="message-date">
-                      {new Date(message.createdat).toLocaleString()}
+                    <div className="right">
+                      {(isTopInstructor ||
+                        +user.user_id === +message.senderstudent.studentid) && (
+                        <img
+                          src={delIcon}
+                          alt="Delete Icon"
+                          className="lesson-icon"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteQA(message.qaid);
+                          }}
+                        />
+                      )}
+                      <div className="message-date">
+                        {new Date(message.createdat).toLocaleString()}
+                      </div>
                     </div>
                   </div>
 
@@ -187,8 +222,31 @@ const CourseNavbar = ({ course }) => {
                                   : answer.senderstudent.studentname}
                               </p>
                             </div>
-                            <div className="message-date">
-                              {new Date(answer.createdat).toLocaleString()}
+                            <div className="right">
+                              <div className="message-date">
+                                {new Date(answer.createdat).toLocaleString()}
+                              </div>
+                              {(isTopInstructor ||
+                                (isStudent &&
+                                  user.user_id ==
+                                    answer?.senderstudent?.studentid) ||
+                                (isInstructor &&
+                                  user.user_id ==
+                                    answer?.senderinstructor
+                                      ?.instructorid)) && (
+                                <img
+                                  src={delIcon}
+                                  alt="Delete Icon"
+                                  className="lesson-icon"
+                                  onClick={(e) => {
+                                    e.stopPropagation(); // Prevent event bubbling
+                                    handleDeleteAnswer(
+                                      answer.messageid,
+                                      message.qaid
+                                    );
+                                  }}
+                                />
+                              )}
                             </div>
                           </div>
                           <div className="message-text">

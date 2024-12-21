@@ -135,6 +135,62 @@ export const postInstructorAnswerThenGet = createAsyncThunk(
     return dispatch(getQAAnswers(data.QAID));
   }
 );
+export const deleteQA = createAsyncThunk(
+  "QASlice/deleteQA",
+  async (id, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.delete(`delete_qa/${id}`, {
+        headers: {
+          token: token,
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+      //   console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+export const deleteQAThenGet = createAsyncThunk(
+  "QASlice/deleteQAThenGet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(deleteQA(data.qaID));
+    return dispatch(getVidQA(data.videoID));
+  }
+);
+
+export const deleteMessage = createAsyncThunk(
+  "QASlice/deleteMessage",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.delete(`delete_message`, {
+        headers: {
+          "Content-Type": "application/json",
+          token: token,
+        },
+        data,
+      });
+      //   console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+export const deleteMessageThenGet = createAsyncThunk(
+  "QASlice/deleteMessageThenGet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(deleteMessage(data));
+    return dispatch(getQAAnswers(data.qaID));
+  }
+);
 
 const QASlice = createSlice({
   name: "QA",
@@ -244,6 +300,54 @@ const QASlice = createSlice({
         state.loadingQA = false;
       })
       .addCase(postInstructorAnswerThenGet.rejected, (state, action) => {
+        // state.name = action.payload;
+      })
+      .addCase(deleteQA.pending, (state, action) => {
+        // for loading
+        state.loadingQA = true;
+      })
+      .addCase(deleteQA.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("delete done");
+        state.loadingQA = false;
+      })
+      .addCase(deleteQA.rejected, (state, action) => {
+        // state.name = action.payload;
+      })
+      .addCase(deleteQAThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingQA = true;
+      })
+      .addCase(deleteQAThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("get done");
+        state.loadingQA = false;
+      })
+      .addCase(deleteQAThenGet.rejected, (state, action) => {
+        // state.name = action.payload;
+      })
+      .addCase(deleteMessage.pending, (state, action) => {
+        // for loading
+        state.loadingQA = true;
+      })
+      .addCase(deleteMessage.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("delete done");
+        state.loadingQA = false;
+      })
+      .addCase(deleteMessage.rejected, (state, action) => {
+        // state.name = action.payload;
+      })
+      .addCase(deleteMessageThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingQA = true;
+      })
+      .addCase(deleteMessageThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("get done");
+        state.loadingQA = false;
+      })
+      .addCase(deleteMessageThenGet.rejected, (state, action) => {
         // state.name = action.payload;
       }),
 });
