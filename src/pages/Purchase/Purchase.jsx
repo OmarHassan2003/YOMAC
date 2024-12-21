@@ -73,8 +73,8 @@ export default function Purchase() {
       setTimeout(() => {
         dispatch(getStudent());
         setSuccessMessage("");
-      }, 5000);
-      handleCheckout();
+        handleCheckout();
+      }, 3000);
     } else {
       alert("Please enter a valid amount.");
     }
