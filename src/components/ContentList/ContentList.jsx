@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   addContestThenGet,
+  addInstructorToCourse,
   addQuizThenGet,
   addSection,
   addSectionThenGet,
@@ -55,7 +56,9 @@ const ContentList = ({ course }) => {
   const [showAddQuizSection, setShowAddQuizSection] = useState(null);
   const [showAddContestSection, setShowAddContestSection] = useState(false);
   const [showAddSectionForm, setShowAddSectionForm] = useState(false);
+  const [showAddInstructorForm, setShowAddInstructorForm] = useState(false);
 
+  const [newInstructor, setNewInstructor] = useState("");
   const [newSectionTitle, setNewSectionTitle] = useState("");
   const [newVideoTitle, setNewVideoTitle] = useState("");
   const [newQuizTitle, setNewQuizTitle] = useState("");
@@ -138,6 +141,17 @@ const ContentList = ({ course }) => {
     dispatch(addSectionThenGet(sec));
     setShowAddSectionForm(false);
     setNewSectionTitle("");
+  };
+  const handleAddInstructor = (e) => {
+    e.preventDefault();
+    console.log("Adding Instructor:", newInstructor);
+    const data = {
+      courseID: course.courseid,
+      instructors: [newInstructor],
+    };
+    dispatch(addInstructorToCourse(data));
+    setShowAddInstructorForm(false);
+    setNewInstructor("");
   };
 
   async function getVideoDuration(file) {
@@ -811,6 +825,34 @@ const ContentList = ({ course }) => {
                     Save Contest
                   </button>
                 </form>
+              )}
+              {isTopInstructor && (
+                <div className="btns">
+                  <button
+                    className="add-section-btn"
+                    onClick={() =>
+                      setShowAddInstructorForm(!showAddInstructorForm)
+                    }
+                  >
+                    Add Instructor
+                  </button>
+                  {showAddInstructorForm && (
+                    <form
+                      className="inline-form"
+                      onSubmit={handleAddInstructor}
+                    >
+                      <input
+                        type="text"
+                        placeholder="Instructor UserName"
+                        value={newInstructor}
+                        onChange={(e) => setNewInstructor(e.target.value)}
+                      />
+                      <button className="save-btn" type="submit">
+                        Confirm Instructor
+                      </button>
+                    </form>
+                  )}
+                </div>
               )}
             </>
           )}

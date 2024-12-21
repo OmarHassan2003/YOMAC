@@ -570,6 +570,28 @@ export const editVidThenGet = createAsyncThunk(
   }
 );
 
+
+export const addInstructorToCourse = createAsyncThunk(
+  "CourseSlice/addInstructorToCourse",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post("add_instructor_to_course", data, {
+        headers: {
+          token: token,
+          "Content-Type": "application/json",
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const CourseSlice = createSlice({
   name: "Course",
   initialState: initialstate,
@@ -1056,6 +1078,20 @@ const CourseSlice = createSlice({
         console.log(action.payload);
         state.loadingVid = false;
         // state.loadingVid = false;
+      })
+      .addCase(addInstructorToCourse.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(addInstructorToCourse.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("Instructor added to course");
+        state.loadingVid = false;
+      })
+      .addCase(addInstructorToCourse.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log("Instructor not added to course");
+        state.loadingVid = false;
       }),
 });
 
