@@ -14,6 +14,9 @@ const InstructorCourses = ({ data }) => {
   const handleDelete = (course) => {
     dispatch(deleteCourseThenGet(course.courseid));
   };
+  const handleStatClick = (course) => {
+    navigate(`/courseStat/${course.courseid}`);
+  };
   return (
     <>
       {data?.top_courses?.length > 0 && (
@@ -42,6 +45,14 @@ const InstructorCourses = ({ data }) => {
                     }}
                   >
                     Whiteboard
+                  </button>
+                  <button
+                    className="view23-btn"
+                    onClick={() => {
+                      handleStatClick(curr);
+                    }}
+                  >
+                    Stats
                   </button>
                   <button
                     className="view23-btn"

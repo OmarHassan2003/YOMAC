@@ -23,7 +23,7 @@ import LiveQA from "./pages/LiveQA/LiveQA.jsx";
 import Assignment from "./components/Assignment/Assignment.jsx";
 import AddAssignment from "./components/AddAssignment/AddAssignment.jsx";
 import Search from "./pages/Search/Search.jsx";
-
+import CourseStat from "./pages/CourseStat/CourseStat.jsx";
 import EditAssignment from "./components/EditAssignment/EditAssignment.jsx";
 import { getCategories } from "./RTK/Slices/CategorySlice.js";
 import Contest from "./components/Contest/Contest.jsx";
@@ -89,6 +89,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/whiteboard/:courseid" element={<Whiteboard />} />
+        <Route path="/courseStat/:courseid" element={<CourseStat />} />
         <Route path="/createCourse" element={<CreateCourse />} />
       </Routes>
     </>
