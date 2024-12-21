@@ -8,11 +8,10 @@ import store from "./RTK/store.js"
 import { Toaster } from "react-hot-toast";
 
 createRoot(document.getElementById("root")).render(
-    <Provider store={store}>
-      <Toaster>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-      </Toaster>
-    </Provider>
+  <Provider store={store}>
+    <Toaster position="top-right" />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
 );
