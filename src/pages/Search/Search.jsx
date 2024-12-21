@@ -5,7 +5,7 @@ import {
   getCoursesByTitle,
   setCourses,
 } from "../../RTK/Slices/SearchSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./Search.css";
 import { getCategories } from "../../RTK/Slices/CategorySlice";
 export default function Search() {
@@ -16,6 +16,7 @@ export default function Search() {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.category);
   const { courses } = useSelector((state) => state.Search);
+  const [maxOffer, setMaxOffer] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export default function Search() {
           ...course,
           originalPrice: course.price,
           discountedPrice,
+          maxOffer,
         },
       },
     });
@@ -65,14 +67,23 @@ export default function Search() {
     }
   }, [searchQuery, type, dispatch, data.categories]);
 
+  useEffect(() => {
+    setMaxOffer(maxOffer);
+  }, [maxOffer]);
+
   const calculateDisplayPrice = (price, offers) => {
     if (!offers || offers.length === 0) return price;
-    const totalOffers = offers.reduce(
-      (total, offer) => total + offer.discount,
-      0
-    );
-    console.log(totalOffers);
-    return totalOffers >= 100 ? 0 : ((100 - totalOffers) / 100) * price;
+    let maxOffer = offers[0];
+    for (let i = 1; i < offers.length; i++) {
+      if (offers[i].discount > maxOffer.discount) {
+        maxOffer = offers[i];
+      }
+    }
+    console.log(maxOffer);
+
+    return maxOffer.discount >= 100
+      ? 0
+      : ((100 - maxOffer.discount) / 100) * price;
   };
 
   return courses.length === 0 ? (

@@ -8,6 +8,7 @@ import { getStudent, increaseBalance } from "../../RTK/Slices/StudentSlice";
 export default function Purchase() {
   const location = useLocation();
   const { course } = location.state || {};
+  console.log(course);
   const dispatch = useDispatch();
   const data = useSelector((state) => state.Course);
   let userDataBalance = useSelector((state) => state.student);
@@ -38,7 +39,12 @@ export default function Purchase() {
   }`;
 
   const handleCheckout = () => {
-    dispatch(enrollToCourse(course.courseid))
+    dispatch(
+      enrollToCourse({
+        courseID: course.courseid,
+        offers: course.offers.length !== 0 ? course.offers : [],
+      })
+    )
       .unwrap()
       .then((response) => {
         console.log(response);
@@ -53,14 +59,6 @@ export default function Purchase() {
       })
       .catch((error) => {
         console.error(error);
-        if (
-          error.message ===
-          "student has no enough balance to enroll on this course"
-        ) {
-          alert("You don't have enough balance to enroll in this course.");
-        } else {
-          alert("An error occurred while enrolling in the course.");
-        }
       });
   };
 
