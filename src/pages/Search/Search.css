@@ -53,6 +53,7 @@
     width: 100px;
     height: 80px;
     object-fit: cover;
+    border-radius: 5px;
   }
 
   .course-card {
@@ -79,6 +80,7 @@
     width: 220px;
     height: 150px;
     object-fit: cover;
+    border-radius: 10px;
   }
 
   .course-card {

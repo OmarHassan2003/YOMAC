@@ -5,18 +5,120 @@ import calendarImage from "../../assets/calendar2.png";
 import usersImage from "../../assets/users1.png";
 import forStudents from "../../assets/forstudents.png";
 import forInstructors from "../../assets/forinstructors.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCourse } from "../../RTK/Slices/CourseSlice";
+import { getStudent } from "../../RTK/Slices/StudentSlice";
 
 export default function HomePage() {
   const dispatch = useDispatch();
+  let userData = useSelector((state) => state.student);
+  const data = useSelector((state) => state.Authorization);
+  const isLoggedIn = data.token !== null;
+  const navigate = useNavigate();
+  const isStudent = data.role === "student";
+  useEffect(() => {
+    dispatch(getStudent());
+  }, []);
+  console.log(userData, isStudent);
+  userData = userData.object;
   const handleJoinButton = () => {
     const aboutSection = document.querySelector(".about");
     aboutSection.scrollIntoView({ behavior: "smooth" });
   };
-  return (
+  const handleNavigateToDashboard = () => {
+    navigate("/dashboard");
+  };
+
+  const handleNavigateToCourse = (e, courseid) => {
+    navigate(`/course/${courseid}`);
+  };
+  return isLoggedIn ? (
+    isStudent ? (
+      <div className="homepage-logged-in">
+        <h1 style={{ marginTop: "20px" }}>
+          Welcome Back, {userData.studentname}
+        </h1>
+        <div className="instructor-courses">
+          <h2 style={{ marginTop: "20px" }}>My Courses</h2>
+          <ul className="homepage-courses-list">
+            {userData.courses_progress &&
+            userData.courses_progress.length > 0 ? (
+              userData.courses_progress.map((course, index) => (
+                <li key={index} className="homepage-course-card">
+                  <img src={course.courseimage} alt={`${course.title} image`} />
+                  <div className="search-course-details">
+                    <h3 style={{ fontSize: "20px" }} className="course-title">
+                      {course.title}
+                    </h3>
+                    <p className="course-description">{course.description}</p>
+                    <p className="course-duration">
+                      {course.duration} total hours
+                    </p>
+                    <p className="course-duration">
+                      {course.progress * 100}% complete
+                    </p>
+                    <p className="course-rating">⭐ {course.rating}</p>
+                    <button
+                      className="purchase"
+                      onClick={(e) =>
+                        handleNavigateToCourse(e, course.courseid)
+                      }
+                    >
+                      Go to course
+                    </button>
+                  </div>
+                </li>
+              ))
+            ) : (
+              <p>You don't have any courses purchased.</p>
+            )}
+          </ul>
+        </div>
+      </div>
+    ) : (
+      <div className="homepage-logged-in">
+        <h1 style={{ marginTop: "20px" }}>
+          Welcome Back, {userData.instructorname}
+        </h1>
+        <div className="instructor-courses">
+          <h2 style={{ marginTop: "20px" }}>My Courses</h2>
+          <ul className="homepage-courses-list">
+            {userData.top_courses && userData.top_courses.length > 0 ? (
+              userData.top_courses.map((course, index) => (
+                <li key={index} className="homepage-course-card">
+                  <img src={course.courseimage} alt={`${course.title} image`} />
+                  <div className="search-course-details">
+                    <h3 style={{ fontSize: "20px" }} className="course-title">
+                      {course.title}
+                    </h3>
+                    <p className="course-description">{course.description}</p>
+                    <p className="course-duration">
+                      {course.duration} total hours
+                    </p>
+                    <p className="course-rating">⭐ {course.rating}</p>
+                    <button
+                      className="purchase"
+                      onClick={handleNavigateToDashboard}
+                    >
+                      Go to courses
+                    </button>
+                  </div>
+                </li>
+              ))
+            ) : (
+              <p>No courses available.</p>
+            )}
+          </ul>
+        </div>
+        <div className="home-forgot-container">
+          <h1>or</h1>
+          <Link to="/createCourse">Create a new course</Link>
+        </div>
+      </div>
+    )
+  ) : (
     <div className="homepage">
       <div className="first-page">
         <div className="text-content">

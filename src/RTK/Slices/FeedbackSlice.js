@@ -2,7 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import YomacApi from "../../utils/AxiosInstance";
 
 const initialstate = {
-  object: [],
+  courses: [],
+  instructor: [],
   loadingFed: false,
 };
 
@@ -70,12 +71,11 @@ export const getInstructorFeedback = createAsyncThunk(
   async (id, { getState, rejectWithValue }) => {
     const { token } = getState().Authorization;
     try {
-      const response = await YomacApi.post(
-        `get_feedbacks_for_instructor${id}`,
+      const response = await YomacApi.get(
+        `get_feedbacks_for_instructor/${id}`,
         {
           headers: {
             token: token,
-            "Content-Type": "application/json",
           },
         }
       );
@@ -93,6 +93,13 @@ export const addCourseFeedbackThenGet = createAsyncThunk(
   async (data, { dispatch, getState, rejectWithValue }) => {
     await dispatch(addCourseFeedback(data));
     return dispatch(getCourseFeedback(data.course_id));
+  }
+);
+export const addInstructorFeedbackThenGet = createAsyncThunk(
+  "StudentSlice/addInstructorFeedbackThenGet",
+  async (data, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(addInstructorFeedback(data));
+    return dispatch(getInstructorFeedback(data.instructor_id));
   }
 );
 
@@ -132,7 +139,7 @@ const FeedbackSlice = createSlice({
       })
       .addCase(getCourseFeedback.fulfilled, (state, action) => {
         // console.log(action.payload.reviews);
-        state.object = action.payload.reviews;
+        state.courses = action.payload.reviews;
         state.loadingFed = false;
       })
       .addCase(getCourseFeedback.rejected, (state, action) => {
@@ -145,7 +152,7 @@ const FeedbackSlice = createSlice({
       })
       .addCase(getInstructorFeedback.fulfilled, (state, action) => {
         console.log(action.payload.reviews);
-        state.object = action.payload.reviews;
+        state.instructor = action.payload.reviews;
         state.loadingFed = false;
       })
       .addCase(getInstructorFeedback.rejected, (state, action) => {
@@ -162,6 +169,19 @@ const FeedbackSlice = createSlice({
         state.loadingStu = false;
       })
       .addCase(addCourseFeedbackThenGet.rejected, (state, action) => {
+        // state.name = action.payload;
+        state.loadingStu = false;
+      })
+      .addCase(addInstructorFeedbackThenGet.pending, (state, action) => {
+        // for loading
+        state.loadingStu = true;
+      })
+      .addCase(addInstructorFeedbackThenGet.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("al donia 7lwa");
+        state.loadingStu = false;
+      })
+      .addCase(addInstructorFeedbackThenGet.rejected, (state, action) => {
         // state.name = action.payload;
         state.loadingStu = false;
       }),

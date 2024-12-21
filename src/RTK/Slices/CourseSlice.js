@@ -28,6 +28,7 @@ const initialstate = {
   fetchedSingleAssign: null,
   enrollmentErrorMessage: "",
   fetchedVid: {},
+  courseStat: {},
 };
 
 export const getCourse = createAsyncThunk(
@@ -521,6 +522,24 @@ export const updateVidProgress = createAsyncThunk(
   }
 );
 
+export const GetStats = createAsyncThunk(
+  "CourseSlice/GetStats",
+  async (id, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.get(`get_course_statistics/${id}`, {
+        headers: {
+          token: token,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
 
 export const editVid = createAsyncThunk(
   "CourseSlice/editVid",
@@ -1018,6 +1037,24 @@ const CourseSlice = createSlice({
       .addCase(editVid.rejected, (state, action) => {
         // state.name = action.payload;
         console.log("Video edit failed");
+        // state.loadingVid = false;
+      })
+      .addCase(GetStats.pending, (state, action) => {
+        // for loading
+        // state.loadingVid = true;
+        state.loadingVid = true;
+      })
+      .addCase(GetStats.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log(action.payload);
+        state.courseStat = action.payload;
+        state.loadingVid = false;
+        // state.loadingVid = false;
+      })
+      .addCase(GetStats.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log(action.payload);
+        state.loadingVid = false;
         // state.loadingVid = false;
       }),
 });

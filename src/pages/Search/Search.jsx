@@ -97,7 +97,6 @@ export default function Search() {
             course.price,
             course.offers
           );
-          console.log(course.offers);
 
           return (
             <li key={index} className="course-card">
