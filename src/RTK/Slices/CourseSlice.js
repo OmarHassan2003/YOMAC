@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, isFulfilled } from "@reduxjs/toolkit";
 import YomacApi from "../../utils/AxiosInstance";
 import { act } from "react";
+import toast from "react-hot-toast";
 
 const initialstate = {
   courseid: 0,
@@ -570,6 +571,7 @@ const CourseSlice = createSlice({
       .addCase(getCourse.fulfilled, (state, action) => {
         // state.name = action.payload;
         // console.log(action.payload.data);
+        toast.success("Success");
         const data = action.payload.data;
         state.categoryid = data.categoryid;
         state.title = data.title;
