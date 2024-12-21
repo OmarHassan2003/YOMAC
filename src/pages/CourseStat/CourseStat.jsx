@@ -3,7 +3,6 @@ import { Bar, Pie } from "react-chartjs-2";
 import "chart.js/auto";
 import "./CourseStat.css";
 import { useDispatch, useSelector } from "react-redux";
-import { use } from "react";
 import { useParams } from "react-router-dom";
 import { GetStats } from "../../RTK/Slices/CourseSlice";
 
@@ -17,50 +16,53 @@ const CourseStat = () => {
   let data = useSelector((state) => state.Course);
   useEffect(() => {
     dispatch(GetStats(currCourseID));
-  }, []);
+  }, [dispatch, currCourseID]);
+
   data = data?.courseStat;
   console.log(data);
-  const totalStudents = data?.total_students;
+  const totalStudents = data?.total_students || 0;
 
   // Calculate pass percentages for quizzes
-  const quizPasses = data?.quizzes?.flat().reduce((acc, quiz) => {
-    return (
-      acc +
-      quiz?.student?.filter(
-        (student) => student.pass === true && student.grade !== null
-      ).length
-    );
-  }, 0);
-  const quizPassPercentage = ((quizPasses / totalStudents) * 100).toFixed(2);
+  const quizPasses =
+    data?.quizzes?.flat().reduce((acc, quiz) => {
+      return (
+        acc +
+        quiz?.student?.filter(
+          (student) => student.pass === true && student.grade !== null
+        ).length
+      );
+    }, 0) || 0;
+  const quizPassPercentage = totalStudents
+    ? ((quizPasses / totalStudents) * 100).toFixed(2)
+    : 0;
 
   // Calculate pass percentages for assignments
-  const assignmentPasses = data?.assignments
-    ?.flat()
-    .reduce((acc, assignment) => {
+  const assignmentPasses =
+    data?.assignments?.flat().reduce((acc, assignment) => {
       return (
         acc +
         assignment.student.filter(
           (student) => student.passfail === true && student.grade !== null
         ).length
       );
-    }, 0);
-  const assignmentPassPercentage = (
-    (assignmentPasses / totalStudents) *
-    100
-  ).toFixed(2);
+    }, 0) || 0;
+  const assignmentPassPercentage = totalStudents
+    ? ((assignmentPasses / totalStudents) * 100).toFixed(2)
+    : 0;
 
   // Calculate pass percentages for contests
-  const contestPasses = data?.contests?.reduce((acc, contest) => {
-    return (
-      acc +
-      contest?.student?.filter(
-        (student) => student.pass === true && student.grade !== null
-      ).length
-    );
-  }, 0);
-  const contestPassPercentage = ((contestPasses / totalStudents) * 100).toFixed(
-    2
-  );
+  const contestPasses =
+    data?.contests?.reduce((acc, contest) => {
+      return (
+        acc +
+        contest?.student?.filter(
+          (student) => student.pass === true && student.grade !== null
+        ).length
+      );
+    }, 0) || 0;
+  const contestPassPercentage = totalStudents
+    ? ((contestPasses / totalStudents) * 100).toFixed(2)
+    : 0;
 
   // Data for the bar chart showing percentages
   const passBarData = {
@@ -69,15 +71,17 @@ const CourseStat = () => {
       {
         label: "Percentage of Students Passing",
         data: [
-          quizPassPercentage,
-          assignmentPassPercentage,
-          contestPassPercentage,
+          parseFloat(quizPassPercentage),
+          parseFloat(assignmentPassPercentage),
+          parseFloat(contestPassPercentage),
         ],
         backgroundColor: ["#36A2EB", "#FF6384", "#FFCE56"],
         borderWidth: 1,
       },
     ],
   };
+
+  // Progress distribution
   const progressBuckets = [0, 0, 0, 0]; // Buckets for 0-25, 25-50, 50-75, 75-100
   data?.students_progress?.forEach((student) => {
     const progress = student.student_progress * 100;
@@ -89,8 +93,8 @@ const CourseStat = () => {
 
   // Extract pie chart data
   const pieData = {
-    assignments: data?.assignments?.length,
-    contests: data?.contests?.length,
+    assignments: data?.assignments?.length || 0,
+    contests: data?.contests?.length || 0,
     quizzes: data?.quizzes?.length || 0,
   };
 
@@ -132,7 +136,7 @@ const CourseStat = () => {
         </div>
         <div className="bar-chart">
           <h3 className="h444">Percentage of Students Passing</h3>
-          <Pie data={passBarData} />
+          <Bar data={passBarData} />
         </div>
       </div>
     </div>

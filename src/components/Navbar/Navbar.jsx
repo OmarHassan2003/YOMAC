@@ -135,6 +135,12 @@ export default function Navbar({ categories }) {
               >
                 Dashboard
               </Link>
+              <Link
+                style={{ color: isHomePage ? "white" : "black" }}
+                to="/stats"
+              >
+                Stats
+              </Link>
             </>
           ) : (
             <>
@@ -143,6 +149,12 @@ export default function Navbar({ categories }) {
                 to="/dashboard"
               >
                 Dashboard
+              </Link>
+              <Link
+                style={{ color: isHomePage ? "white" : "black" }}
+                to="/stats"
+              >
+                Stats
               </Link>
             </>
           )
