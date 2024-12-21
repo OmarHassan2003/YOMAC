@@ -16,53 +16,50 @@ const CourseStat = () => {
   let data = useSelector((state) => state.Course);
   useEffect(() => {
     dispatch(GetStats(currCourseID));
-  }, [dispatch, currCourseID]);
-
+  }, []);
   data = data?.courseStat;
   console.log(data);
-  const totalStudents = data?.total_students || 0;
+  const totalStudents = data?.total_students;
 
   // Calculate pass percentages for quizzes
-  const quizPasses =
-    data?.quizzes?.flat().reduce((acc, quiz) => {
-      return (
-        acc +
-        quiz?.student?.filter(
-          (student) => student.pass === true && student.grade !== null
-        ).length
-      );
-    }, 0) || 0;
-  const quizPassPercentage = totalStudents
-    ? ((quizPasses / totalStudents) * 100).toFixed(2)
-    : 0;
+  const quizPasses = data?.quizzes?.flat().reduce((acc, quiz) => {
+    return (
+      acc +
+      quiz?.student?.filter(
+        (student) => student.pass === true && student.grade !== null
+      ).length
+    );
+  }, 0);
+  const quizPassPercentage = ((quizPasses / totalStudents) * 100).toFixed(2);
 
   // Calculate pass percentages for assignments
-  const assignmentPasses =
-    data?.assignments?.flat().reduce((acc, assignment) => {
+  const assignmentPasses = data?.assignments
+    ?.flat()
+    .reduce((acc, assignment) => {
       return (
         acc +
         assignment.student.filter(
           (student) => student.passfail === true && student.grade !== null
         ).length
       );
-    }, 0) || 0;
-  const assignmentPassPercentage = totalStudents
-    ? ((assignmentPasses / totalStudents) * 100).toFixed(2)
-    : 0;
+    }, 0);
+  const assignmentPassPercentage = (
+    (assignmentPasses / totalStudents) *
+    100
+  ).toFixed(2);
 
   // Calculate pass percentages for contests
-  const contestPasses =
-    data?.contests?.reduce((acc, contest) => {
-      return (
-        acc +
-        contest?.student?.filter(
-          (student) => student.pass === true && student.grade !== null
-        ).length
-      );
-    }, 0) || 0;
-  const contestPassPercentage = totalStudents
-    ? ((contestPasses / totalStudents) * 100).toFixed(2)
-    : 0;
+  const contestPasses = data?.contests?.reduce((acc, contest) => {
+    return (
+      acc +
+      contest?.student?.filter(
+        (student) => student.pass === true && student.grade !== null
+      ).length
+    );
+  }, 0);
+  const contestPassPercentage = ((contestPasses / totalStudents) * 100).toFixed(
+    2
+  );
 
   // Data for the bar chart showing percentages
   const passBarData = {
