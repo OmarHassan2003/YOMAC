@@ -91,7 +91,9 @@
     object-fit: contain; 
   }
   
-
+  .lesson-icon:hover {
+    cursor: pointer;
+  }
   .add-btn, .add-section-btn,.save-btn {
     display: block;
     padding: 8px 12px;
