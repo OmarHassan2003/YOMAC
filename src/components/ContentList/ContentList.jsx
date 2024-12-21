@@ -348,7 +348,6 @@ const ContentList = ({ course }) => {
                 <h3>{module.title}</h3>
               </div>
               <div className="right-side">
-                <span>{module.duration}</span>
                 {isTopInstructor && (
                   <img
                     src={delIcon}
