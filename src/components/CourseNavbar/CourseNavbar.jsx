@@ -169,6 +169,12 @@ const CourseNavbar = ({ course }) => {
           <p>{course.description}</p>
           <h2>Course Duration</h2>
           <p>{course.duration}</p>
+          {isInstructor && course.seenstatus == "private" && (
+            <>
+              <h2>Course ID</h2>
+              <p>{course.courseid}</p>
+            </>
+          )}
         </div>
         <div
           key={course.currVid?.videoid}
