@@ -136,37 +136,43 @@ export default function Purchase() {
           </>
         )
       ) : (
-        <>
-          <img src={course.courseimage} alt={course.title} />
-          <div className="search-course-details">
-            <div className="course-first-line">
-              <h2 className="course-title">{course.title}</h2>
-              <div className="course-price">
-                {originalPrice !== discountedPrice ? (
-                  <>
-                    <h2 className="discounted-price">
-                      {discountedPrice
-                        ? "E£" + Math.ceil(discountedPrice)
-                        : "Free"}
-                    </h2>
-                    <h2 className="original-price">E£{originalPrice}</h2>
-                  </>
-                ) : (
-                  <h2 className="final-price">E£{originalPrice}</h2>
-                )}
+        successMessage == "" &&
+        purchaseSuccessMessage == "" && (
+          <>
+            <img src={course.courseimage} alt={course.title} />
+            <div className="search-course-details">
+              <div className="course-first-line">
+                <h2 className="course-title">{course.title}</h2>
+                <div className="course-price">
+                  {originalPrice !== discountedPrice ? (
+                    <>
+                      <h2 className="discounted-price">
+                        {discountedPrice
+                          ? "E£" + Math.ceil(discountedPrice)
+                          : "Free"}
+                      </h2>
+                      <h2 className="original-price">E£{originalPrice}</h2>
+                    </>
+                  ) : (
+                    <h2 className="final-price">E£{originalPrice}</h2>
+                  )}
+                </div>
               </div>
+              <h3 className="course-description">{course.description}</h3>
+              <h3 className="course-instructor">
+                By {course.instructor.instructorname}
+              </h3>
+              <h3 className="course-ratingg">⭐ {course.rating}</h3>
+              <h3 className="course-duration">{course.duration} total hours</h3>
+              <button
+                className="purchase"
+                onClick={() => handleCheckout(course)}
+              >
+                Checkout
+              </button>
             </div>
-            <h3 className="course-description">{course.description}</h3>
-            <h3 className="course-instructor">
-              By {course.instructor.instructorname}
-            </h3>
-            <h3 className="course-ratingg">⭐ {course.rating}</h3>
-            <h3 className="course-duration">{course.duration} total hours</h3>
-            <button className="purchase" onClick={() => handleCheckout(course)}>
-              Checkout
-            </button>
-          </div>
-        </>
+          </>
+        )
       )}
     </div>
   );

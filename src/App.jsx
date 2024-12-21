@@ -43,7 +43,7 @@ function App() {
       (location.pathname === "/studentLogin" ||
         location.pathname === "/instructorlogin")
     ) {
-      navigate("/dashboard");
+      navigate("/homepage");
     }
   }, [token]);
   useEffect(() => {

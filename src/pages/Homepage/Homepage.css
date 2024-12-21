@@ -244,3 +244,140 @@
   margin-bottom: 20px;
   font-size: 32px;
 }
+
+.homepage-courses-list {
+  /* display: flex;
+  justify-content: space-between;
+  gap: 40px; */
+  margin-top: 40px;
+}
+
+.homepage-courses-list p {
+  /* display: flex;
+  justify-content: space-between;
+  gap: 40px; */
+  margin-bottom: 6px;
+}
+
+.homepage-course-card {
+  display: flex;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
+  flex: 1;
+}
+
+.homepage-course-card h3 {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+@media (max-width: 680px) {
+  .homepage-course-card img {
+    width: 100px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+
+  .homepage-courses-list {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .homepage {
+    padding: 20px 40px;
+  }
+
+  .homepage-course-card {
+    gap: 10px;
+  }
+
+  .homepage-course-card h3,
+  .homepage-course-card h2 {
+    font-size: 13px;
+  }
+
+  .purchase {
+    padding: 4px;
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 681px) {
+  .homepage-course-card img {
+    width: 220px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .homepage-course-card {
+    gap: 20px;
+  }
+
+  .homepage {
+    padding: 20px 80px;
+  }
+
+  .purchase {
+    padding: 8px;
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 920px) and (max-width: 1430px) {
+  .homepage-courses-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+  }
+}
+
+@media (min-width: 1431px) {
+  .homepage-course-card {
+    border-right: 1px solid #e0e0e0;
+    padding-right: 5px;
+  }
+
+  .homepage-courses-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 40px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .homepage-course-card {
+    gap: 40px;
+  }
+
+  .homepage {
+    padding: 20px 100px;
+  }
+
+  .purchase {
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+}
+
+.home-forgot-container a {
+  text-decoration: underline;
+  text-underline-offset: 0.4rem;
+  text-decoration-color: rgb(73, 187, 189);
+  color: rgb(73, 187, 189);
+  font-size: 24px;
+}
+
+.home-forgot-container h1 {
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 24px;
+}
+
+.home-forgot-container {
+  margin: 20px 0;
+}
