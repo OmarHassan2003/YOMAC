@@ -598,6 +598,25 @@ export const addInstructorToCourse = createAsyncThunk(
     }
   }
 );
+export const startLiveQA = createAsyncThunk(
+  "CourseSlice/startLiveQA",
+  async (id, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post(`start_live_qa/${id}`, "", {
+        headers: {
+          token: token,
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
 
 const CourseSlice = createSlice({
   name: "Course",
@@ -1097,6 +1116,20 @@ const CourseSlice = createSlice({
       .addCase(addInstructorToCourse.rejected, (state, action) => {
         // state.name = action.payload;
         console.log("Instructor not added to course");
+        state.loadingVid = false;
+      })
+      .addCase(startLiveQA.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(startLiveQA.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("session started");
+        state.loadingVid = false;
+      })
+      .addCase(startLiveQA.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log("session failed to start");
         state.loadingVid = false;
       }),
 });

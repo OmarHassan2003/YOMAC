@@ -15,6 +15,7 @@ import {
   getVideo,
   setCurrSection,
   setCurrVid,
+  startLiveQA,
 } from "../../RTK/Slices/CourseSlice";
 import { useDispatch, useSelector } from "react-redux";
 import "../ContentList/ContentList.css";
@@ -339,6 +340,11 @@ const ContentList = ({ course }) => {
     };
     dispatch(deleteContestThenGet(data)); // Dispatch action to delete the assignment
     console.log(contestId);
+  };
+
+  const handleLiveQA = () => {
+    dispatch(startLiveQA(course.courseid));
+    navigate(`/liveqa/${course.courseid}`);
   };
 
   return (
@@ -852,6 +858,9 @@ const ContentList = ({ course }) => {
                       </button>
                     </form>
                   )}
+                  <button className="add-section-btn" onClick={handleLiveQA}>
+                    Start Live QA
+                  </button>
                 </div>
               )}
             </>
