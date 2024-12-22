@@ -597,7 +597,6 @@ const CourseSlice = createSlice({
       .addCase(getCourse.fulfilled, (state, action) => {
         // state.name = action.payload;
         // console.log(action.payload.data);
-        toast.success("Success");
         const data = action.payload.data;
         state.categoryid = data.categoryid;
         state.title = data.title;
