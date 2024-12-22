@@ -546,9 +546,10 @@ const ContentList = ({ course }) => {
                               type="text"
                               placeholder="Video Title"
                               value={newVideoTitle}
+                              required
                               onChange={(e) => setNewVideoTitle(e.target.value)}
                             />
-                            <input type="file" />
+                            <input type="file" required />
                             <button className="save-btn" type="submit">
                               Save Video
                             </button>
@@ -579,24 +580,28 @@ const ContentList = ({ course }) => {
                           type="text"
                           placeholder="Quiz Title"
                           value={newQuizTitle}
+                          required
                           onChange={(e) => setNewQuizTitle(e.target.value)}
                         />
                         <input
                           type="number"
                           placeholder="Quiz Duration in mins"
                           value={newQuizDuration}
+                          required
                           onChange={(e) => setNewQuizDuration(e.target.value)}
                         />
                         <input
                           type="number"
                           placeholder="Quiz Total Marks"
                           value={newQuizTotalMarks}
+                          required
                           onChange={(e) => setNewQuizTotalMarks(e.target.value)}
                         />
                         <input
                           type="number"
                           placeholder="Quiz Passing Marks"
                           value={newQuizPassingMarks}
+                          required
                           onChange={(e) =>
                             setNewQuizPassingMarks(e.target.value)
                           }
@@ -680,6 +685,7 @@ const ContentList = ({ course }) => {
                   type="text"
                   placeholder="Section Title"
                   value={newSectionTitle}
+                  required
                   onChange={(e) => setNewSectionTitle(e.target.value)}
                 />
                 <button className="save-btn" type="submit">
@@ -754,22 +760,26 @@ const ContentList = ({ course }) => {
                   <input
                     type="text"
                     placeholder="Contest Title"
+                    required
                     value={newContestTitle}
                     onChange={(e) => setNewContestTitle(e.target.value)}
                   />
                   <input
                     type="number"
                     placeholder="Contest Duration in mins"
+                    required
                     value={newContestDuration}
                     onChange={(e) => setNewContestDuration(e.target.value)}
                   />
                   <input
                     type="number"
+                    required
                     placeholder="Contest Total Marks"
                     value={newContestTotalMarks}
                     onChange={(e) => setNewContestTotalMarks(e.target.value)}
                   />
                   <input
+                    required
                     type="number"
                     placeholder="Contest Passing Marks"
                     value={newContestPassingMarks}
@@ -780,6 +790,7 @@ const ContentList = ({ course }) => {
                     placeholder="Contest Discount"
                     value={newContestDiscount}
                     onChange={(e) => setNewContestDiscount(e.target.value)}
+                    required
                   />
                   {contestQuestions.map((question, index) => (
                     <div key={index} className="inline-form">
@@ -851,6 +862,7 @@ const ContentList = ({ course }) => {
                         type="text"
                         placeholder="Instructor UserName"
                         value={newInstructor}
+                        required
                         onChange={(e) => setNewInstructor(e.target.value)}
                       />
                       <button className="save-btn" type="submit">
