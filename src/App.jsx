@@ -57,7 +57,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/resetpassword" element={<ForgotPassword />} />
-        <Route path="/liveqa" element={<LiveQA />} />
+        <Route path="/liveqa/:courseID" element={<LiveQA />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/studentlogin" element={<StudentLogin />} />
