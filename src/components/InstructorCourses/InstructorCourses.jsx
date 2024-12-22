@@ -1,12 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./InstructorCourses.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteCourseThenGet } from "../../RTK/Slices/StudentSlice";
 const InstructorCourses = ({ data }) => {
+  const { token, user_id, role } = useSelector((state) => state.Authorization);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleClick = (course) => {
-    navigate(`/course/${course.courseid}`);
+    if (course.seenstatus === "private") {
+      const url = `http://yomac-private-klli.vercel.app/private?token=${token}&user_id=${user_id}&role=${role}&curr_course_id=${course.courseid}`;
+      window.location.href = url;
+    } else navigate(`/course/${course.courseid}`);
   };
   const handleWhiteClick = (course) => {
     navigate(`/whiteboard/${course.courseid}`);
@@ -95,7 +99,7 @@ const InstructorCourses = ({ data }) => {
                   <span>⭐ 4.3</span>
                 </div>
                 <button
-                  className="view23-course-btn"
+                  className="view23-btn"
                   onClick={() => {
                     handleClick(curr);
                   }}
