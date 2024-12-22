@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, isFulfilled } from "@reduxjs/toolkit";
 import YomacApi from "../../utils/AxiosInstance";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const initialstate = {
   user_id: localStorage.getItem("user_id"),
@@ -159,6 +160,9 @@ const AuthorizationSlice = createSlice({
         // console.log(action.payload.data);
         const data = action.payload.data;
         state.token = data.token;
+        toast.success("Login Successful", {
+          duration: 2000,
+        });
         localStorage.setItem("user_id", data.user_data.id);
         localStorage.setItem("token", data.token);
         localStorage.setItem("role", data?.user_data?.role);
@@ -173,6 +177,7 @@ const AuthorizationSlice = createSlice({
         // state.name = action.payload;
         console.log(action.payload);
         state.smthnHappening = false;
+        toast.error(action.payload.response.data.error);
       })
       .addCase(InstructorLoginAPI.pending, (state, action) => {
         // for loading
@@ -189,6 +194,9 @@ const AuthorizationSlice = createSlice({
         state.user_id = data.user_data.id;
         state.role = data.user_data.role;
         state.smthnHappening = false;
+        toast.success("Login Successful", {
+          duration: 2000,
+        });
         // console.log(state.token);
         // console.log(state.role);
       })
@@ -196,6 +204,7 @@ const AuthorizationSlice = createSlice({
         // state.name = action.payload;
         state.smthnHappening = false;
         console.log(action);
+        toast.error(action.payload.response.data.error);
       })
       .addCase(StudentRegisterAPI.pending, (state, action) => {
         // for loading
@@ -210,13 +219,34 @@ const AuthorizationSlice = createSlice({
         // state.user_id = data.user_data.id;
         // state.role = data.user_data.role;
         state.smthnHappening = false;
+        toast.success("Register Successful", {
+          duration: 2000,
+        });
         // console.log(state.token);
         // console.log(state.role);
       })
       .addCase(StudentRegisterAPI.rejected, (state, action) => {
         // state.name = action.payload;
         state.smthnHappening = false;
-        console.log(action);
+        let errorMsg = "";
+        errorMsg =
+          action.payload.response.data.errors.includes(
+            "duplicate key value violates unique constraint"
+          ) &&
+          action.payload.response.data.errors.includes("username") &&
+          "There already exists an account with this username";
+        !errorMsg &&
+          (errorMsg =
+            action.payload.response.data.errors.includes(
+              "duplicate key value violates unique constraint"
+            ) &&
+            action.payload.response.data.errors.includes("email") &&
+            "There already exists an account with this email");
+
+        console.log(action.payload);
+        toast.error(errorMsg, {
+          duration: 2000,
+        });
       })
       .addCase(InstructorRegisterAPI.pending, (state, action) => {
         // for loading
@@ -231,6 +261,9 @@ const AuthorizationSlice = createSlice({
         // state.user_id = data.user_data.id;
         // state.role = data.user_data.role;
         state.smthnHappening = false;
+        toast.success("Register Successful", {
+          duration: 2000,
+        });
         // console.log(state.token);
         // console.log(state.role);
       })
@@ -238,6 +271,25 @@ const AuthorizationSlice = createSlice({
         // state.name = action.payload;
         state.smthnHappening = false;
         console.log(action);
+        let errorMsg = "";
+        errorMsg =
+          action.payload.response.data.errors.includes(
+            "duplicate key value violates unique constraint"
+          ) &&
+          action.payload.response.data.errors.includes("username") &&
+          "There already exists an account with this username";
+        !errorMsg &&
+          (errorMsg =
+            action.payload.response.data.errors.includes(
+              "duplicate key value violates unique constraint"
+            ) &&
+            action.payload.response.data.errors.includes("email") &&
+            "There already exists an account with this email");
+
+        console.log(action.payload);
+        toast.error(errorMsg, {
+          duration: 2000,
+        });
       })
       .addCase(forgotPassword.pending, (state, action) => {
         // for loading
@@ -252,6 +304,9 @@ const AuthorizationSlice = createSlice({
         // state.user_id = data.user_data.id;
         // state.role = data.user_data.role;
         state.smthnHappening = false;
+        toast.success("An Email has been sent to you to reset your password", {
+          duration: 2000,
+        });
         // console.log(state.token);
         // console.log(state.role);
       })
@@ -259,6 +314,7 @@ const AuthorizationSlice = createSlice({
         // state.name = action.payload;
         state.smthnHappening = false;
         console.log(action);
+        toast.error(action.payload.response.data.error);
       })
       .addCase(setNewPasswordAPI.pending, (state, action) => {
         // for loading
@@ -273,6 +329,9 @@ const AuthorizationSlice = createSlice({
         // state.user_id = data.user_data.id;
         // state.role = data.user_data.role;
         state.smthnHappening = false;
+        toast.success("Password reset succesfully", {
+          duration: 2000,
+        });
         // console.log(state.token);
         // console.log(state.role);
       })

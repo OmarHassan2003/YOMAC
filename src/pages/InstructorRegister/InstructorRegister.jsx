@@ -127,7 +127,7 @@ export default function InstructorRegister() {
         <h3>Email</h3>
         <input
           className="input-textbox"
-          type="text"
+          type="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
