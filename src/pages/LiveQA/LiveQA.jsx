@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import "./LiveQA.css";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import back from "../../assets/back.png";
 
 export default function LiveQA() {
