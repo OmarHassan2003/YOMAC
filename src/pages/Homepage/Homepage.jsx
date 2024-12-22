@@ -1,4 +1,4 @@
-import "./HomePage.css";
+import "./Homepage.css";
 import girlImage from "../../assets/homepage-girl.png";
 import fileInvoice from "../../assets/file-invoice-1.png";
 import calendarImage from "../../assets/calendar2.png";

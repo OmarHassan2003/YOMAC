@@ -109,16 +109,17 @@
 
 .back-button {
   position: absolute;
-  top: 10px;
+  top: 25px;
   left: 100px;
   background-color: rgb(73, 187, 189);
   border: none;
   cursor: pointer;
+  padding: 7px 14px;
   /* padding: 15px 10px; */
 }
 
 .back-button img {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   object-fit: cover;
 }

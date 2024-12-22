@@ -149,6 +149,7 @@ export default function InstructorRegister() {
             type={showPassword ? "text" : "password"}
             required
             value={password}
+            minLength={8}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter your password"
           />

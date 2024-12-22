@@ -7,7 +7,7 @@ import {
   rejectRequest,
   rejectRequestThenGet,
 } from "../../RTK/Slices/WhiteboardSlice";
-import "./WhiteBoard.css";
+import "./Whiteboard.css";
 import { useParams } from "react-router-dom";
 
 const WhiteBoard = () => {
