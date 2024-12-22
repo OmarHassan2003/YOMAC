@@ -53,7 +53,7 @@ export default function Purchase() {
             `You have successfully enrolled in ${course.title}!`
           );
           setTimeout(() => {
-            navigate("/dashboard");
+            navigate(`/course/${course.courseid}`);
           }, 3000);
         }
       })
