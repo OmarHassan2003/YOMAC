@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import messi from "../../assets/3mk.jpg";
 import "./StudentCard.css";
 import { useDispatch } from "react-redux";
-import { getStudent, increaseBalance, newIncreaseBalance } from "../../RTK/Slices/StudentSlice";
+import { getStudent, increaseBalance, increaseThenGet, newIncreaseBalance } from "../../RTK/Slices/StudentSlice";
 
 const StudentCard = ({ data }) => {
   const dispatch = useDispatch();
@@ -12,8 +12,7 @@ const StudentCard = ({ data }) => {
   const handleIncreaseBalance = () => {
     console.log(IncreaseBalanceInp.current.value);
     
-    dispatch(newIncreaseBalance(IncreaseBalanceInp.current.value));
-    dispatch(getStudent());
+    dispatch(increaseThenGet(IncreaseBalanceInp.current.value));
   };
   const obj = {
     img: messi,

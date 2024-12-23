@@ -123,9 +123,17 @@ export const newIncreaseBalance = createAsyncThunk(
   }
 );
 
+export const increaseThenGet = createAsyncThunk(
+  "StudentSlice/deleteCourseThenGet",
+  async (newBalance, { dispatch, getState, rejectWithValue }) => {
+    await dispatch(newIncreaseBalance(newBalance));
+    return dispatch(getStudent());
+  }
+);
+
 export const deleteCourseThenGet = createAsyncThunk(
   "StudentSlice/deleteCourseThenGet",
-  async (id, { dispatch, getState, rejectWithValue }) => {
+  async (newBalance, { dispatch, getState, rejectWithValue }) => {
     console.log("a7ma amr1");
     await dispatch(deleteCourse(id));
     return dispatch(getStudent());
