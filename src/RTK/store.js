@@ -9,6 +9,7 @@ import TransactionSlice from "./Slices/TransactionSlice";
 import CategorySlice from "./Slices/CategorySlice";
 import SearchSlice from "./Slices/SearchSlice";
 import FeedbackSlice from "./Slices/FeedbackSlice";
+import StatSlice from "./Slices/StatSlice";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     category: CategorySlice,
     Search: SearchSlice,
     feedback: FeedbackSlice,
+    stat: StatSlice,
   },
 });
 

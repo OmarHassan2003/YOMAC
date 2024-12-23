@@ -4,7 +4,10 @@ import show from "../../assets/show.png";
 import hide from "../../assets/hide.png";
 import "./InstructorLogin.css";
 import { useDispatch } from "react-redux";
-import { InstructorLoginAPI } from "../../RTK/Slices/AuthorizationSlice";
+import {
+  InstructorLoginAPI,
+  setForgotPasswordRole,
+} from "../../RTK/Slices/AuthorizationSlice";
 import desktopPicture from "../../assets/desktop-illustration-x1.webp";
 import mobilePicture from "../../assets/mobile-illustration-x1.webp";
 
@@ -15,6 +18,10 @@ export default function InstructorLogin() {
   const [imageSrc, setImageSrc] = useState(desktopPicture);
 
   const dispatch = useDispatch();
+
+  const handleForgotPassword = () => {
+    dispatch(setForgotPasswordRole("instructor"));
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -79,7 +86,9 @@ export default function InstructorLogin() {
 
         <div className="forgot-container">
           <h4>or</h4>
-          <Link to="/resetpassword">Forgot Password</Link>
+          <Link onClick={handleForgotPassword} to="/resetpassword">
+            Forgot Password
+          </Link>
         </div>
 
         <h2>Don't have an account?</h2>

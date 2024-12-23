@@ -1,0 +1,30 @@
+.stats-graph {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.bar-chart,
+.pie-chart {
+  flex: 1 1 45%;
+  max-width: 400px;
+  margin: 10px;
+}
+
+.h44442 {
+  color: #333;
+}
+
+.h444 {
+  color: #555;
+  margin-bottom: 15px;
+}

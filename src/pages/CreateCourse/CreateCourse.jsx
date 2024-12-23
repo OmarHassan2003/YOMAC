@@ -97,19 +97,18 @@ const CreateCourse = () => {
 
       for (let y = 0; y < quizTitles.length; ++y) {
         const quizQuestions = Array.from({ length: 2 }, (_, j) => ({
-          text: formData.get(`section_${i}_quiz_${y}_question_${j}`),
+          questiontext: formData.get(`section_${i}_quiz_${y}_question_${j}`),
           choices: Array.from({ length: 4 }, (_, z) =>
             formData.get(`section_${i}_quiz_${y}_question_${j}_choice_${z}`)
           ),
-          correct_answer_index: +formData.get(
-            `section_${i}_quiz_${y}_correct_answer_${j}`
-          ),
+          correctanswerindex:
+            +formData.get(`section_${i}_quiz_${y}__correct_answer_${j}`) - 1,
         }));
 
         quizzes.push({
           title: quizTitles[y],
           quizDuration: +quizDurations[y],
-          totlaMarks: +quizTotalMarks[y],
+          totalMarks: +quizTotalMarks[y],
           passingMarks: +quizPassingMarks[y],
           questions: quizQuestions,
         });
@@ -128,12 +127,13 @@ const CreateCourse = () => {
         videos.push({
           title: videoTitles[k],
           video: vidBase64,
+          duration: videoDuration,
         });
       }
 
       course.sections.push({
         title: sectionTitles[i],
-        quiz: quizzes,
+        quizzes: quizzes,
         videos: videos,
       });
     }
@@ -153,12 +153,18 @@ const CreateCourse = () => {
       <h2>Create a Course</h2>
 
       <label>Title</label>
-      <input type="text" name="course_title" placeholder="Course Title" />
+      <input
+        type="text"
+        name="course_title"
+        placeholder="Course Title"
+        required
+      />
 
       <label>Description</label>
       <textarea
         name="course_description"
         placeholder="Course Description"
+        required
       ></textarea>
 
       <label>Category</label>
@@ -177,7 +183,13 @@ const CreateCourse = () => {
       </select>
 
       <label>Price</label>
-      <input name="course_price" type="text" placeholder="Price" />
+      <input
+        name="course_price"
+        type="number"
+        required
+        placeholder="Price"
+        className="input-number"
+      />
 
       <label>Requirements</label>
       <textarea
@@ -186,13 +198,14 @@ const CreateCourse = () => {
       ></textarea>
 
       <label>Course Image</label>
-      <input name="course_image" type="file" accept="image/*" />
+      <input name="course_image" type="file" required accept="image/*" />
 
       <label>Certificate</label>
       <input
         name="course_certificate"
         type="file"
         accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+        required
       />
 
       {sections.map((section, sectionIndex) => (
@@ -202,6 +215,7 @@ const CreateCourse = () => {
             name={`section_title`}
             type="text"
             placeholder="Section Title"
+            required
           />
           {section?.quizzes?.map((quiz, quizIndex) => (
             <div key={quizIndex} className="quiz">
@@ -210,20 +224,27 @@ const CreateCourse = () => {
                 name={`section_${sectionIndex}_quizTitle`}
                 type="text"
                 placeholder="Quiz Title"
+                required
               />
               <input
                 name={`section_${sectionIndex}_Quiz Duration`}
-                type="text"
+                type="number"
+                className="input-number"
+                required
                 placeholder="Quiz Duration"
               />
               <input
                 name={`section_${sectionIndex}_Quiz totalMarks`}
-                type="text"
+                type="number"
+                className="input-number"
+                required
                 placeholder="Total Marks"
               />
               <input
                 name={`section_${sectionIndex}_Quiz passingMarks`}
-                type="text"
+                type="number"
+                className="input-number"
+                required
                 placeholder="Passing Marks"
               />
 
@@ -234,6 +255,7 @@ const CreateCourse = () => {
                   <input
                     name={`section_${sectionIndex}_quiz_${quizIndex}_question_${qIndex}`}
                     type="text"
+                    required
                     placeholder={`Question `}
                   />
                   {[0, 1, 2, 3].map((cIndex) => (
@@ -241,13 +263,17 @@ const CreateCourse = () => {
                       name={`section_${sectionIndex}_quiz_${quizIndex}_question_${qIndex}_choice_${cIndex}`}
                       key={cIndex}
                       type="text"
+                      required
                       placeholder={`Choice ${cIndex + 1}`}
                     />
                   ))}
                   <input
                     name={`section_${sectionIndex}_quiz_${quizIndex}__correct_answer_${qIndex}`}
-                    type="text"
+                    type="number"
+                    required
+                    className="input-number"
                     placeholder={`Correct Answer Index `}
+                    onChange={(e) => console.log(e.target.value)}
                   />
                 </div>
               ))}
@@ -264,11 +290,13 @@ const CreateCourse = () => {
                 name={`section_${sectionIndex}_videoTitle`}
                 type="text"
                 placeholder="Video Title"
+                required
               />
               <input
                 name={`section_${sectionIndex}_videoLink`}
                 type="file"
                 accept="mp4"
+                required
               />
             </div>
           ))}

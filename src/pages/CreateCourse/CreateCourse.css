@@ -68,3 +68,18 @@
 .questions {
   margin-bottom: 10px;
 }
+.input-number {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline: none;
+  margin-bottom: 15px;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.input-number:focus {
+  border-color: #000000;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+}

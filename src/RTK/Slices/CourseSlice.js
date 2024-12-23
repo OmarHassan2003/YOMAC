@@ -28,6 +28,7 @@ const initialstate = {
   fetchedSingleAssign: null,
   enrollmentErrorMessage: "",
   fetchedVid: {},
+  courseStat: {},
 };
 
 export const getCourse = createAsyncThunk(
@@ -158,13 +159,21 @@ export const addSection = createAsyncThunk(
 
 export const enrollToCourse = createAsyncThunk(
   "CourseSlice/enrollToCourse",
-  async (courseID, { getState, rejectWithValue }) => {
-    // api call
+  async (data, { getState, rejectWithValue }) => {
     const { token } = getState().Authorization;
+
+    const payload = {
+      courseID: data.courseID,
+    };
+    if (data.offers.length > 0) {
+      payload.offerID = data.offers[0].offerid;
+      payload.discount = data.offers[0].discount;
+    }
+
     try {
       const response = await YomacApi.post(
         "enroll_student_to_course",
-        { courseID: courseID },
+        payload,
         {
           headers: {
             token: token,
@@ -172,10 +181,9 @@ export const enrollToCourse = createAsyncThunk(
           },
         }
       );
-      // console.log(response);
       return response;
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return rejectWithValue(error);
     }
   }
@@ -521,6 +529,24 @@ export const updateVidProgress = createAsyncThunk(
   }
 );
 
+export const GetStats = createAsyncThunk(
+  "CourseSlice/GetStats",
+  async (id, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.get(`get_course_statistics/${id}`, {
+        headers: {
+          token: token,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
 
 export const editVid = createAsyncThunk(
   "CourseSlice/editVid",
@@ -551,6 +577,69 @@ export const editVidThenGet = createAsyncThunk(
   }
 );
 
+
+export const addInstructorToCourse = createAsyncThunk(
+  "CourseSlice/addInstructorToCourse",
+  async (data, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post("add_instructor_to_course", data, {
+        headers: {
+          token: token,
+          "Content-Type": "application/json",
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+export const startLiveQA = createAsyncThunk(
+  "CourseSlice/startLiveQA",
+  async (id, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post(`start_live_qa/${id}`, "", {
+        headers: {
+          token: token,
+        },
+      });
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const EnrollOnPrivateCourse = createAsyncThunk(
+  "CourseSlice/enrollOnPrivateCourse",
+  async (id, { getState, rejectWithValue }) => {
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post(
+        'enroll_student_to_private_course/' + id,
+        '',
+        {
+          headers: {
+            'token': token
+          }
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const CourseSlice = createSlice({
   name: "Course",
   initialState: initialstate,
@@ -571,7 +660,6 @@ const CourseSlice = createSlice({
       .addCase(getCourse.fulfilled, (state, action) => {
         // state.name = action.payload;
         // console.log(action.payload.data);
-        toast.success("Success");
         const data = action.payload.data;
         state.categoryid = data.categoryid;
         state.title = data.title;
@@ -1019,6 +1107,66 @@ const CourseSlice = createSlice({
         // state.name = action.payload;
         console.log("Video edit failed");
         // state.loadingVid = false;
+      })
+      .addCase(GetStats.pending, (state, action) => {
+        // for loading
+        // state.loadingVid = true;
+        state.loadingVid = true;
+      })
+      .addCase(GetStats.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log(action.payload);
+        state.courseStat = action.payload;
+        state.loadingVid = false;
+        // state.loadingVid = false;
+      })
+      .addCase(GetStats.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log(action.payload);
+        state.loadingVid = false;
+        // state.loadingVid = false;
+      })
+      .addCase(addInstructorToCourse.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(addInstructorToCourse.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("Instructor added to course");
+        state.loadingVid = false;
+      })
+      .addCase(addInstructorToCourse.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log("Instructor not added to course");
+        state.loadingVid = false;
+      })
+      .addCase(startLiveQA.pending, (state, action) => {
+        // for loading
+        state.loadingVid = true;
+      })
+      .addCase(startLiveQA.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log("session started");
+        state.loadingVid = false;
+      })
+      .addCase(startLiveQA.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log("session failed to start");
+        state.loadingVid = false;
+      })
+
+      .addCase(EnrollOnPrivateCourse.pending, (state, action) => {
+        state.loadingVid = true;
+      })
+      .addCase(EnrollOnPrivateCourse.fulfilled, (state, action) => {
+        console.log("Enrolled done");
+        toast.success(action.payload.message);
+      })
+      .addCase(EnrollOnPrivateCourse.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log("Enrolled failed");
+        toast.error(action.payload.response.data.error);
+        state.loadingVid = false;
       }),
 });
 

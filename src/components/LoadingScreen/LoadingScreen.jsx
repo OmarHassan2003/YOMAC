@@ -14,6 +14,7 @@ const LoadingScreen = () => {
   const { loadingCat } = useSelector((state) => state.category);
   const { loadingSearch } = useSelector((state) => state.Search);
   const { loadingFed } = useSelector((state) => state.feedback);
+  const { loadingStat } = useSelector((state) => state.stat);
   if (
     loadingQA ||
     loadingVid ||
@@ -24,7 +25,8 @@ const LoadingScreen = () => {
     loadingWhite ||
     loadingCat ||
     loadingSearch ||
-    loadingFed
+    loadingFed ||
+    loadingStat
   ) {
     return (
       <div className="cont loading-comp">

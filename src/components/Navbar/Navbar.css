@@ -12,8 +12,8 @@
 
 .app-icon {
   border-radius: 50%;
-  width: 45px;
-  height: 45px;
+  width: 60px;
+  height: 60px;
   object-fit: cover;
 }
 
@@ -25,6 +25,58 @@
 
 .quick-container {
   display: inline-block;
+}
+
+@media (max-width: 800px) {
+  .Search-bar {
+    font-size: 12px;
+  }
+
+  .navbar {
+    padding: 20px 40px 20px 40px;
+  }
+
+  .Search-bar::placeholder {
+    font-size: 12px;
+  }
+
+  .search-button {
+    height: 42px;
+  }
+
+  .navbar {
+    font-size: 14px;
+  }
+
+  .app-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .browse-categories {
+    padding: 4px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .navbar {
+    padding: 20px 20px 20px 20px;
+  }
+
+  .app-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .navbar a {
+    margin-left: 8px;
+    font-size: 13px;
+  }
+
+  .navbar {
+    font-size: 13px;
+  }
 }
 
 .profile-menu {
@@ -79,25 +131,6 @@
   cursor: pointer;
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
-}
-
-@media (max-width: 768px) {
-  .Search-bar {
-    font-size: 12px;
-  }
-
-  .Search-bar::placeholder {
-    font-size: 12px;
-  }
-
-  .search-button {
-    height: 42px;
-  }
-
-  .browse-categories {
-    padding: 4px;
-    font-size: 12px;
-  }
 }
 
 .profile:hover .profile-menu {

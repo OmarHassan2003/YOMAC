@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   addContestThenGet,
+  addInstructorToCourse,
   addQuizThenGet,
   addSection,
   addSectionThenGet,
@@ -14,6 +15,7 @@ import {
   getVideo,
   setCurrSection,
   setCurrVid,
+  startLiveQA,
 } from "../../RTK/Slices/CourseSlice";
 import { useDispatch, useSelector } from "react-redux";
 import "../ContentList/ContentList.css";
@@ -55,7 +57,9 @@ const ContentList = ({ course }) => {
   const [showAddQuizSection, setShowAddQuizSection] = useState(null);
   const [showAddContestSection, setShowAddContestSection] = useState(false);
   const [showAddSectionForm, setShowAddSectionForm] = useState(false);
+  const [showAddInstructorForm, setShowAddInstructorForm] = useState(false);
 
+  const [newInstructor, setNewInstructor] = useState("");
   const [newSectionTitle, setNewSectionTitle] = useState("");
   const [newVideoTitle, setNewVideoTitle] = useState("");
   const [newQuizTitle, setNewQuizTitle] = useState("");
@@ -125,13 +129,7 @@ const ContentList = ({ course }) => {
       (contest?.student.pass !== null || contest?.student.status !== "pending")
     )
       return;
-    // if (isStudent && assignment?.student.status === "submitted") return;
-    // if (isStudent)
     navigate(`/course/${course.courseid}/contest/${contestId}/${roleIndex}`);
-    // else
-    //   navigate(
-    //     `/course/${course.courseid}/sec/${secId}/editAssign/${assignId}`
-    //   );
   };
 
   const handleAddSection = (e) => {
@@ -144,6 +142,17 @@ const ContentList = ({ course }) => {
     dispatch(addSectionThenGet(sec));
     setShowAddSectionForm(false);
     setNewSectionTitle("");
+  };
+  const handleAddInstructor = (e) => {
+    e.preventDefault();
+    console.log("Adding Instructor:", newInstructor);
+    const data = {
+      courseID: course.courseid,
+      instructors: [newInstructor],
+    };
+    dispatch(addInstructorToCourse(data));
+    setShowAddInstructorForm(false);
+    setNewInstructor("");
   };
 
   async function getVideoDuration(file) {
@@ -285,7 +294,7 @@ const ContentList = ({ course }) => {
     } else {
       updatedQuestions[index].choices[field] = value;
     }
-    setQuizQuestions(updatedQuestions);
+    setContestQuestions(updatedQuestions);
   };
 
   const handleDeleteSection = (sectionId) => {
@@ -333,6 +342,11 @@ const ContentList = ({ course }) => {
     console.log(contestId);
   };
 
+  const handleLiveQA = () => {
+    dispatch(startLiveQA(course.courseid));
+    navigate(`/liveqa/${course.courseid}`);
+  };
+
   return (
     <div className="content-list">
       <h2>Course Content</h2>
@@ -348,7 +362,6 @@ const ContentList = ({ course }) => {
                 <h3>{module.title}</h3>
               </div>
               <div className="right-side">
-                <span>{module.duration}</span>
                 {isTopInstructor && (
                   <img
                     src={delIcon}
@@ -533,9 +546,10 @@ const ContentList = ({ course }) => {
                               type="text"
                               placeholder="Video Title"
                               value={newVideoTitle}
+                              required
                               onChange={(e) => setNewVideoTitle(e.target.value)}
                             />
-                            <input type="file" />
+                            <input type="file" required />
                             <button className="save-btn" type="submit">
                               Save Video
                             </button>
@@ -566,24 +580,28 @@ const ContentList = ({ course }) => {
                           type="text"
                           placeholder="Quiz Title"
                           value={newQuizTitle}
+                          required
                           onChange={(e) => setNewQuizTitle(e.target.value)}
                         />
                         <input
                           type="number"
                           placeholder="Quiz Duration in mins"
                           value={newQuizDuration}
+                          required
                           onChange={(e) => setNewQuizDuration(e.target.value)}
                         />
                         <input
                           type="number"
                           placeholder="Quiz Total Marks"
                           value={newQuizTotalMarks}
+                          required
                           onChange={(e) => setNewQuizTotalMarks(e.target.value)}
                         />
                         <input
                           type="number"
                           placeholder="Quiz Passing Marks"
                           value={newQuizPassingMarks}
+                          required
                           onChange={(e) =>
                             setNewQuizPassingMarks(e.target.value)
                           }
@@ -667,6 +685,7 @@ const ContentList = ({ course }) => {
                   type="text"
                   placeholder="Section Title"
                   value={newSectionTitle}
+                  required
                   onChange={(e) => setNewSectionTitle(e.target.value)}
                 />
                 <button className="save-btn" type="submit">
@@ -741,22 +760,26 @@ const ContentList = ({ course }) => {
                   <input
                     type="text"
                     placeholder="Contest Title"
+                    required
                     value={newContestTitle}
                     onChange={(e) => setNewContestTitle(e.target.value)}
                   />
                   <input
                     type="number"
                     placeholder="Contest Duration in mins"
+                    required
                     value={newContestDuration}
                     onChange={(e) => setNewContestDuration(e.target.value)}
                   />
                   <input
                     type="number"
+                    required
                     placeholder="Contest Total Marks"
                     value={newContestTotalMarks}
                     onChange={(e) => setNewContestTotalMarks(e.target.value)}
                   />
                   <input
+                    required
                     type="number"
                     placeholder="Contest Passing Marks"
                     value={newContestPassingMarks}
@@ -767,6 +790,7 @@ const ContentList = ({ course }) => {
                     placeholder="Contest Discount"
                     value={newContestDiscount}
                     onChange={(e) => setNewContestDiscount(e.target.value)}
+                    required
                   />
                   {contestQuestions.map((question, index) => (
                     <div key={index} className="inline-form">
@@ -818,6 +842,38 @@ const ContentList = ({ course }) => {
                     Save Contest
                   </button>
                 </form>
+              )}
+              {isTopInstructor && (
+                <div className="btns">
+                  <button
+                    className="add-section-btn"
+                    onClick={() =>
+                      setShowAddInstructorForm(!showAddInstructorForm)
+                    }
+                  >
+                    Add Instructor
+                  </button>
+                  {showAddInstructorForm && (
+                    <form
+                      className="inline-form"
+                      onSubmit={handleAddInstructor}
+                    >
+                      <input
+                        type="text"
+                        placeholder="Instructor UserName"
+                        value={newInstructor}
+                        required
+                        onChange={(e) => setNewInstructor(e.target.value)}
+                      />
+                      <button className="save-btn" type="submit">
+                        Confirm Instructor
+                      </button>
+                    </form>
+                  )}
+                  <button className="add-section-btn" onClick={handleLiveQA}>
+                    Start Live QA
+                  </button>
+                </div>
               )}
             </>
           )}

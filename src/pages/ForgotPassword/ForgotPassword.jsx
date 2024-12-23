@@ -78,7 +78,7 @@ export default function ForgotPassword() {
             </h2>
             <input
               className="input-textbox"
-              type="text"
+              type="email"
               placeholder="Enter your Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}

@@ -8,6 +8,7 @@ import { getStudent, increaseBalance } from "../../RTK/Slices/StudentSlice";
 export default function Purchase() {
   const location = useLocation();
   const { course } = location.state || {};
+  console.log(course);
   const dispatch = useDispatch();
   const data = useSelector((state) => state.Course);
   let userDataBalance = useSelector((state) => state.student);
@@ -38,7 +39,12 @@ export default function Purchase() {
   }`;
 
   const handleCheckout = () => {
-    dispatch(enrollToCourse(course.courseid))
+    dispatch(
+      enrollToCourse({
+        courseID: course.courseid,
+        offers: course.offers.length !== 0 ? course.offers : [],
+      })
+    )
       .unwrap()
       .then((response) => {
         console.log(response);
@@ -47,20 +53,12 @@ export default function Purchase() {
             `You have successfully enrolled in ${course.title}!`
           );
           setTimeout(() => {
-            navigate("/dashboard");
+            navigate(`/course/${course.courseid}`);
           }, 3000);
         }
       })
       .catch((error) => {
         console.error(error);
-        if (
-          error.message ===
-          "student has no enough balance to enroll on this course"
-        ) {
-          alert("You don't have enough balance to enroll in this course.");
-        } else {
-          alert("An error occurred while enrolling in the course.");
-        }
       });
   };
 
@@ -73,8 +71,8 @@ export default function Purchase() {
       setTimeout(() => {
         dispatch(getStudent());
         setSuccessMessage("");
-      }, 5000);
-      handleCheckout();
+        handleCheckout();
+      }, 3000);
     } else {
       alert("Please enter a valid amount.");
     }
@@ -136,37 +134,43 @@ export default function Purchase() {
           </>
         )
       ) : (
-        <>
-          <img src={course.courseimage} alt={course.title} />
-          <div className="search-course-details">
-            <div className="course-first-line">
-              <h2 className="course-title">{course.title}</h2>
-              <div className="course-price">
-                {originalPrice !== discountedPrice ? (
-                  <>
-                    <h2 className="discounted-price">
-                      {discountedPrice
-                        ? "E£" + Math.ceil(discountedPrice)
-                        : "Free"}
-                    </h2>
-                    <h2 className="original-price">E£{originalPrice}</h2>
-                  </>
-                ) : (
-                  <h2 className="final-price">E£{originalPrice}</h2>
-                )}
+        successMessage == "" &&
+        purchaseSuccessMessage == "" && (
+          <>
+            <img src={course.courseimage} alt={course.title} />
+            <div className="search-course-details">
+              <div className="course-first-line">
+                <h2 className="course-title">{course.title}</h2>
+                <div className="course-price">
+                  {originalPrice !== discountedPrice ? (
+                    <>
+                      <h2 className="discounted-price">
+                        {discountedPrice
+                          ? "E£" + Math.ceil(discountedPrice)
+                          : "Free"}
+                      </h2>
+                      <h2 className="original-price">E£{originalPrice}</h2>
+                    </>
+                  ) : (
+                    <h2 className="final-price">E£{originalPrice}</h2>
+                  )}
+                </div>
               </div>
+              <h3 className="course-description">{course.description}</h3>
+              <h3 className="course-instructor">
+                By {course.instructor.instructorname}
+              </h3>
+              <h3 className="course-ratingg">⭐ {course.rating}</h3>
+              <h3 className="course-duration">{course.duration} total hours</h3>
+              <button
+                className="purchase"
+                onClick={() => handleCheckout(course)}
+              >
+                Checkout
+              </button>
             </div>
-            <h3 className="course-description">{course.description}</h3>
-            <h3 className="course-instructor">
-              By {course.instructor.instructorname}
-            </h3>
-            <h3 className="course-ratingg">⭐ {course.rating}</h3>
-            <h3 className="course-duration">{course.duration} total hours</h3>
-            <button className="purchase" onClick={() => handleCheckout(course)}>
-              Checkout
-            </button>
-          </div>
-        </>
+          </>
+        )
       )}
     </div>
   );

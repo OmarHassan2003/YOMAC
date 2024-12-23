@@ -103,3 +103,7 @@
   background-color: #fef3f3;
   transition: background-color 0.3s ease-in-out;
 }
+
+.balance-form {
+  font: 0.5rem;
+}

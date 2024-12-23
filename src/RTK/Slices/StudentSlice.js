@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import YomacApi from "../../utils/AxiosInstance";
 import { act } from "react";
+import toast from "react-hot-toast";
 
 const initialstate = {
   object: {},
@@ -82,6 +83,30 @@ export const increaseBalance = createAsyncThunk(
     try {
       const response = await YomacApi.post(
         `increase_student_balance/${newBalance + balance}`,
+        "",
+        {
+          headers: {
+            token: token,
+          },
+        }
+      );
+      // console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const newIncreaseBalance = createAsyncThunk(
+  "StudentSlice/newIncreaseBalance",
+  async (newBalance, { getState, rejectWithValue }) => {
+    // api call
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post(
+        `increase_student_balance/${newBalance}`,
         "",
         {
           headers: {
@@ -205,6 +230,21 @@ const StudentSlice = createSlice({
       })
       .addCase(increaseBalance.rejected, (state, action) => {
         // state.name = action.payload;
+        state.loadingStu = false;
+      })
+      .addCase(newIncreaseBalance.pending, (state, action) => {
+        // for loading
+        state.loadingStu = true;
+      })
+      .addCase(newIncreaseBalance.fulfilled, (state, action) => {
+        // state.name = action.payload;
+        console.log(action.payload);
+        toast.success("Balance increased successfully")
+        state.loadingStu = false;
+      })
+      .addCase(newIncreaseBalance.rejected, (state, action) => {
+        // state.name = action.payload;
+        toast.error("Error")
         state.loadingStu = false;
       }),
 });

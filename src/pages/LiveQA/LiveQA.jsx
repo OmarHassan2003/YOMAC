@@ -1,17 +1,20 @@
 import { useEffect, useState, useRef } from "react";
 import "./LiveQA.css";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import back from "../../assets/back.png";
 
 export default function LiveQA() {
   const data = useSelector((state) => state.Authorization);
   const token = data.token;
+  const { courseID } = useParams();
   const navigate = useNavigate();
   const [ws, setWs] = useState(null);
+
   const [currMessage, setCurrMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const messagesEndRef = useRef(null);
+  const wsRef = useRef(ws);
 
   const handleBackButton = () => {
     navigate(-1);
@@ -20,13 +23,14 @@ export default function LiveQA() {
   useEffect(() => {
     // Create a WebSocket instance
     const ws = new WebSocket(
-      `ws://yomac.azurewebsites.net/ws/chat/connect_to_liveqa_room/2?token=${token}`
+      `wss://yomac.azurewebsites.net/ws/chat/connect_to_liveqa_room/${courseID}?token=${token}`
     ); // Replace with your WebSocket server URL
 
     // Set up WebSocket event listeners
     ws.onopen = () => {
       console.log("WebSocket connection opened");
       setWs(ws);
+      wsRef.current = ws;
       // setIsConnected(true); // Mark the connection as successful
     };
 
@@ -58,11 +62,12 @@ export default function LiveQA() {
     // Cleanup on component unmount
     // setSocket(ws);
     return () => {
-      if (ws) {
-        ws.close();
+      if (wsRef.current) {
+        console.log("Clean");
+        wsRef.current.close();
       }
     };
-  }, [token]);
+  }, [token, courseID]);
 
   useEffect(() => {
     if (messagesEndRef.current) {
