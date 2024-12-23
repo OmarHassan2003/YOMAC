@@ -1,3 +1,37 @@
+form.private-course-enroll {
+  padding-top: 0.5rem;
+  border-top: 2px solid #28a745;
+  margin-top: 1rem;
+  font-size: 1.3rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+form.private-course-enroll > input {
+  margin: 0 1rem;
+  padding: 0.3rem 0;
+  outline: none;
+  padding-left: 0.2rem;
+}
+
+form.private-course-enroll > button {
+  background-color: #28a745;
+  border: 1px solid #28a745;
+  color: white;
+  padding: 0.3rem 2rem;
+  transition: 300ms;
+  flex: 1;
+}
+
+form.private-course-enroll > button:hover {
+  background-color: transparent;
+  transition: 300ms;
+  color: #28a745;
+}
+
 .form-group {
   display: flex;
   gap: 20px;
@@ -52,4 +86,22 @@ button.cancel {
 button.cancel:hover {
   background-color: #a72828;
   color: #fff;
+}
+
+
+@media (max-width: 1050px) {
+  form.private-course-enroll {
+    font-size: 1rem;
+  }
+  form.private-course-enroll > input {
+    margin: 0 0.6rem;
+  }
+  
+  form.private-course-enroll > button {
+    background-color: #28a745;
+    border: 1px solid #28a745;
+    color: white;
+    padding: 0.3rem 2rem;
+    transition: 300ms;
+  }
 }

@@ -1,7 +1,19 @@
+import { useRef, useState } from "react";
 import messi from "../../assets/3mk.jpg";
 import "./StudentCard.css";
+import { useDispatch } from "react-redux";
+import { getStudent, increaseBalance, increaseThenGet, newIncreaseBalance } from "../../RTK/Slices/StudentSlice";
 
 const StudentCard = ({ data }) => {
+  const dispatch = useDispatch();
+
+  const IncreaseBalanceInp = useRef(null);
+
+  const handleIncreaseBalance = () => {
+    console.log(IncreaseBalanceInp.current.value);
+    
+    dispatch(increaseThenGet(IncreaseBalanceInp.current.value));
+  };
   const obj = {
     img: messi,
     name: "Farag beh",
@@ -51,6 +63,28 @@ const StudentCard = ({ data }) => {
           </li>
         ))}
       </ul>
+      <form onSubmit={(e) => {
+        handleIncreaseBalance();   
+        e.preventDefault();     
+      }} className="balance-form">
+        <p style={{ marginTop: "20px", marginBottom: "20px" }}>Increase Your Balance</p>
+        <label
+          style={{ marginRight: "10px", marginBottom: "15px" }}
+          htmlFor="amount"
+        >
+          Enter Amount:
+        </label>
+        <input
+          ref={IncreaseBalanceInp}
+          type="number"
+          placeholder={data?.balance || 0}
+          min={data?.balance || 0}
+          style={{ padding: "5px" }}
+        />
+          <button className="purchase">
+            Add Balance
+          </button>
+      </form>
     </div>
   );
 };

@@ -618,6 +618,28 @@ export const startLiveQA = createAsyncThunk(
   }
 );
 
+export const EnrollOnPrivateCourse = createAsyncThunk(
+  "CourseSlice/enrollOnPrivateCourse",
+  async (id, { getState, rejectWithValue }) => {
+    const { token } = getState().Authorization;
+    try {
+      const response = await YomacApi.post(
+        'enroll_student_to_private_course/' + id,
+        '',
+        {
+          headers: {
+            'token': token
+          }
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const CourseSlice = createSlice({
   name: "Course",
   initialState: initialstate,
@@ -1130,6 +1152,20 @@ const CourseSlice = createSlice({
       .addCase(startLiveQA.rejected, (state, action) => {
         // state.name = action.payload;
         console.log("session failed to start");
+        state.loadingVid = false;
+      })
+
+      .addCase(EnrollOnPrivateCourse.pending, (state, action) => {
+        state.loadingVid = true;
+      })
+      .addCase(EnrollOnPrivateCourse.fulfilled, (state, action) => {
+        console.log("Enrolled done");
+        toast.success(action.payload.message);
+      })
+      .addCase(EnrollOnPrivateCourse.rejected, (state, action) => {
+        // state.name = action.payload;
+        console.log("Enrolled failed");
+        toast.error(action.payload.response.data.error);
         state.loadingVid = false;
       }),
 });

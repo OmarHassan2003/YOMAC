@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./StudentRegister.css";
 import show from "../../assets/show.png";
@@ -20,6 +20,7 @@ export default function StudentRegister() {
   const [fileName, setFileName] = useState("No file chosen");
   const [file, setFile] = useState(null);
   const [imageSrc, setImageSrc] = useState(desktopPicture);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -57,7 +58,14 @@ export default function StudentRegister() {
     formData.append("image", file);
 
     console.log(formData);
-    dispatch(StudentRegisterAPI(formData));
+    dispatch(StudentRegisterAPI(formData))
+    .then(response => {
+      console.log(response);
+      if(response.payload.message == "Student created successfully")
+      {
+        navigate(`/studentlogin`);
+      }
+    });
   };
 
   return (

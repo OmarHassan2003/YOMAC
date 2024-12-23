@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import show from "../../assets/show.png";
 import hide from "../../assets/hide.png";
@@ -23,6 +23,7 @@ export default function InstructorRegister() {
   const [fileName, setFileName] = useState("No file chosen");
   const [file, setFile] = useState(null);
   const [imageSrc, setImageSrc] = useState(desktopPicture);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -61,7 +62,14 @@ export default function InstructorRegister() {
     formData.append("SocialMedia", socialMedia);
     formData.append("image", file);
     console.log(formData);
-    dispatch(InstructorRegisterAPI(formData));
+    dispatch(InstructorRegisterAPI(formData))
+    .then(response => {
+      console.log(response);
+      if(response.payload.message === "Instructor created successfully")
+      {
+        navigate(`/instructorlogin`);
+      }
+    });
   };
 
   // const handleRegister = (e) => {
