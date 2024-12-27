@@ -10,7 +10,6 @@ Yomac is a feature-rich e-learning platform that facilitates seamless interactio
 
 **🔖 [demo](https://yomac-public-7m6c.vercel.app)**
 <br>
-**🔖 [Server-side code, private courses extension and livestreaming](https://github.com/MoBahgat010/YOMAC)**
 
 ---
 
@@ -34,7 +33,10 @@ Yomac is a feature-rich e-learning platform that facilitates seamless interactio
   - Display transaction history.
   - Track student progress in purchased courses.
 - **Request Management**:
+
   - Handle non-top instructors’ requests in the whiteboard menu.
+
+  **🔖 [Server-side code, private courses extension and livestreaming](https://github.com/MoBahgat010/YOMAC)**
 
 ### 💄 Frontend Functionalities
 
