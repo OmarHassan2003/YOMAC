@@ -1,3 +1,9 @@
+<div align="center">
+  
+  ![YOMAC](https://i.imgur.com/p2nd1Q5.jpeg)
+  
+</div>
+
 # **YOMAC**
 
 Yomac is a feature-rich e-learning platform that facilitates seamless interaction between students and instructors. It provides tools to create and manage courses, track progress, host live sessions, and maintain robust communication through Q&A and feedback systems.
