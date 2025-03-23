@@ -23,7 +23,7 @@ export default function LiveQA() {
   useEffect(() => {
     // Create a WebSocket instance
     const ws = new WebSocket(
-      `wss://yomac.azurewebsites.net/ws/chat/connect_to_liveqa_room/${courseID}?token=${token}`
+     
     ); // Replace with your WebSocket server URL
 
     // Set up WebSocket event listeners
