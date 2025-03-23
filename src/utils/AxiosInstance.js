@@ -1,8 +1,5 @@
 import axios from "axios";
 
-const YomacApi = axios.create({
-  baseURL: "https://yomac.azurewebsites.net/api/auth/",
-});
 
 // function GetNumber() {
 //     return 5;
