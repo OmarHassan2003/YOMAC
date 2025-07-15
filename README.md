@@ -8,8 +8,7 @@
 
 Yomac is a feature-rich e-learning platform that facilitates seamless interaction between students and instructors. It provides tools to create and manage courses, track progress, host live sessions, and maintain robust communication through Q&A and feedback systems.
 
-**🔖 [demo](https://yomac-public-7m6c.vercel.app)**
-<br>
+
 
 ---
 
